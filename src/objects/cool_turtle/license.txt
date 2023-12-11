@@ -1,0 +1,11 @@
+Model Information:
+* title:	Cool Turtle
+* source:	https://sketchfab.com/3d-models/cool-turtle-295480a7a375460797059760c8222d26
+* author:	sebaszayas (https://sketchfab.com/sebaszayas)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Cool Turtle" (https://sketchfab.com/3d-models/cool-turtle-295480a7a375460797059760c8222d26) by sebaszayas (https://sketchfab.com/sebaszayas) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
