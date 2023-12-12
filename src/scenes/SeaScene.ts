@@ -7,6 +7,7 @@ import Boat from '../objects/Boat';
 import Rod from '../objects/Rod';
 import Fish from '../objects/Fish';
 import Cat from '../objects/Cat';
+import Hook from '../objects/Hook';
 
 // Define an object type which describes each object in the update list
 type UpdateChild = {
@@ -45,8 +46,9 @@ class SeedScene extends Scene {
         const boat = new Boat(this, loadManager);
         const rod = new Rod(this, loadManager);
         const cat = new Cat(this, loadManager);
+        const hook = new Hook(this, loadManager);
         const lights = new BasicLights();
-        this.add(lights, boat, turtle, rod, cat);
+        this.add(lights, boat, turtle, rod, cat, hook);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
