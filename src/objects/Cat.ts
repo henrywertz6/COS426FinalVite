@@ -44,7 +44,7 @@ class Cat extends Group {
 
     update(timeStamp: number): void {
         let delta = this.state.clock.getDelta();
-        this.state.mixer.update(delta / 2);
+        this.state.mixer.update(delta / 4);
     }
 }
 
