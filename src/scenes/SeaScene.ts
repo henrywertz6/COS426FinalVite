@@ -6,6 +6,7 @@ import Turtle from '../objects/Turtle';
 import Boat from '../objects/Boat';
 import Rod from '../objects/Rod';
 import Fish from '../objects/Fish';
+import Cat from '../objects/Cat';
 
 // Define an object type which describes each object in the update list
 type UpdateChild = {
@@ -19,6 +20,8 @@ class SeedScene extends Scene {
         gui: dat.GUI;
         rotationSpeed: number;
         updateList: UpdateChild[];
+        spawnFish: () => void;
+        fishList: Array<Fish>;
     };
 
     constructor(loadManager: LoadingManager) {
@@ -30,6 +33,8 @@ class SeedScene extends Scene {
             gui: new dat.GUI(), // Create GUI for scene
             rotationSpeed: 0,
             updateList: [],
+            spawnFish: () => this.spawnFish(),
+            fishList: [],
         };
 
         // Set background to a nice color
@@ -39,16 +44,24 @@ class SeedScene extends Scene {
         const turtle = new Turtle(this, loadManager);
         const boat = new Boat(this, loadManager);
         const rod = new Rod(this, loadManager);
-        const fish = new Fish(this);
+        const cat = new Cat(this, loadManager);
         const lights = new BasicLights();
-        this.add(lights, boat, turtle, rod, fish);
+        this.add(lights, boat, turtle, rod, cat);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
+        this.state.gui.add(this.state, 'spawnFish');
     }
 
     addToUpdateList(object: UpdateChild): void {
         this.state.updateList.push(object);
+    }
+
+    spawnFish(): void {
+        console.log('fish spawned!');
+        const fish = new Fish(this);
+        this.state.fishList.push(fish);
+        this.add(fish);
     }
 
     update(timeStamp: number): void {

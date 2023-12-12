@@ -4,28 +4,28 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import SeedScene from '../scenes/SeaScene';
 
 // Import flower model as a URL using Vite's syntax
-import MODEL from './fish/scene.gltf?url';
+import MODEL from './toon_cat_free/scene.gltf?url';
 
-class Fish extends Group {
+class Cat extends Group {
     state: {
         mixer: AnimationMixer;
         clock: Clock;
         speed: number;
     };
-    constructor(parent: SeedScene) {
+    constructor(parent: SeedScene, loadManager: LoadingManager) {
         // Call parent Group() constructor
         super();
 
         // Init state
 
         // Load object
-        const loader = new GLTFLoader();
+        const loader = new GLTFLoader(loadManager);
         this.state = {
             mixer: new AnimationMixer(),
             clock: new Clock(),
             speed: 2,
         };
-        this.name = 'fish';
+        this.name = 'cat';
         loader.load(MODEL, (gltf) => {
             this.state.mixer = new AnimationMixer(gltf.scene);
             let action = this.state.mixer.clipAction(gltf.animations[0]);
@@ -34,18 +34,18 @@ class Fish extends Group {
         });
 
         // Add self to parent's update list
-        parent.addToUpdateList(this);
-        this.position.y = Math.floor(Math.random() * 9) - 8;
-        this.position.z = -10;
-        let scaleFactor = 7;
+        let scaleFactor = 0.005;
         this.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        parent.addToUpdateList(this);
+        this.translateZ(2.5);
+        this.translateY(3);
+        this.rotateY((3 * Math.PI) / 4);
     }
 
     update(timeStamp: number): void {
         let delta = this.state.clock.getDelta();
-        this.state.mixer.update(delta);
-        this.translateZ(delta * this.state.speed);
+        this.state.mixer.update(delta / 2);
     }
 }
 
-export default Fish;
+export default Cat;
