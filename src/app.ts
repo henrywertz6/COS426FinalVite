@@ -18,6 +18,7 @@ import {
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import SeaScene from './scenes/SeaScene';
+import { handlePointerMove, handleCharacterControls } from './js/handlers.ts';
 
 // Initialize core ThreeJS components
 const manager = new LoadingManager();
@@ -58,7 +59,9 @@ controls.update();
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp: number) => {
-    raycaster.setFromCamera(pointer, camera);
+    // raycaster.setFromCamera(pointer, camera);
+    handleCharacterControls(scene, pointer, raycaster, camera);
+    // console.log(pointer);
     controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
@@ -75,8 +78,11 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
-const pointerMoveHandler = (event: MouseEvent) => {
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = (event.clientY / window.innerHeight) * 2 + 1;
-};
-window.addEventListener('pointermove', pointerMoveHandler, false);
+window.addEventListener('pointermove', event => handlePointerMove(event, pointer), false);
+// const pointerMoveHandler = (event: MouseEvent) => {
+//     pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+//     pointer.y = (event.clientY / window.innerHeight) * 2 + 1;
+// };
+
+// call handler from handlers.ts
+// window.addEventListener('pointermove', pointerMoveHandler, false);
