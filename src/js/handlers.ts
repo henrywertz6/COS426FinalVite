@@ -87,7 +87,7 @@ export function handleCollisions(document, scene, reel, screens, sounds, score, 
 
     // pseudo code -- IF hook collide with fish & no fish already on line -- rotate fish 90 degrees and attach to hook
     // map "ON_HOOK" state to true?
-    // IF hook collides with anything & fish already on line -- rotate fish & fish "swims away" (fast speed)
+    // IF hook collides with non-fish & fish already on line -- fish "swims away" (fast speed)
 
     // let hook = scene.getObjectByName(reel);
 
