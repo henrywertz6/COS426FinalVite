@@ -1,11 +1,10 @@
 import dat from 'dat.gui';
 import { Scene, Color } from 'three';
 
-import Flower from '../objects/Flower';
-import Land from '../objects/Land';
 import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';
 import Boat from '../objects/Boat';
+import Rod from '../objects/Rod';
 
 // Define an object type which describes each object in the update list
 type UpdateChild = {
@@ -28,18 +27,19 @@ class SeedScene extends Scene {
         // Init state
         this.state = {
             gui: new dat.GUI(), // Create GUI for scene
-            rotationSpeed: 1,
+            rotationSpeed: 0,
             updateList: [],
         };
 
         // Set background to a nice color
-        this.background = new Color(0x2b3e5e);
+        this.background = new Color(0x334b66);
 
         // Add meshes to scene
         const turtle = new Turtle(this);
         const boat = new Boat(this);
+        const rod = new Rod(this);
         const lights = new BasicLights();
-        this.add(lights, boat, turtle);
+        this.add(lights, boat, turtle, rod);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);

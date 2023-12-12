@@ -4,6 +4,8 @@ import {
     AmbientLight,
     HemisphereLight,
     DirectionalLight,
+    DirectionalLightHelper,
+    AxesHelper,
 } from 'three';
 
 class BasicLights extends Group {
@@ -22,12 +24,24 @@ class BasicLights extends Group {
         let hemiLight = new HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 300, 0);
 
-        let dirLight = new DirectionalLight(0xffffff, 3);
-        dirLight.position.set(75, 300, -75);
-        let dirLight2 = new DirectionalLight(0xffffff, 3);
-        dirLight.position.set(75, -300, -75);
+        let dirLight = new DirectionalLight(0xffffff, 1.5);
+        dirLight.position.set(75, -10, -75);
+        let dirLight2 = new DirectionalLight(0xffffff, 1.5);
+        dirLight2.position.set(75, -10, 75);
 
-        this.add(ambi, hemi, dirLight, hemiLight, dirLight2);
+        const helper1 = new DirectionalLightHelper(dirLight, 8);
+        const helper2 = new DirectionalLightHelper(dirLight2, 8);
+        const axesHelper = new AxesHelper(2);
+        this.add(
+            ambi,
+            hemi,
+            dirLight,
+            dirLight2,
+            hemiLight,
+            helper1,
+            axesHelper,
+            helper2
+        );
     }
 }
 

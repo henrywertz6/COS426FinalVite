@@ -36,6 +36,7 @@ class Boat extends Group {
 
         this.state.gui.add(this.state, 'spin');
         this.position.y = 2;
+        this.position.z = 3;
         this.scale.set(0.01, 0.01, 0.01);
     }
     spin(): void {
