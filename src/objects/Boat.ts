@@ -1,4 +1,4 @@
-import { Group, Vector2, Vector3 } from 'three';
+import { Group, LoadingManager, Vector2, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 
@@ -13,7 +13,7 @@ class Boat extends Group {
         spin: () => void;
         twirl: number;
     };
-    constructor(parent: SeedScene) {
+    constructor(parent: SeedScene, loadManager: LoadingManager) {
         // Call parent Group() constructor
         super();
 
@@ -24,7 +24,7 @@ class Boat extends Group {
             twirl: 0,
         };
         // Load object
-        const loader = new GLTFLoader();
+        const loader = new GLTFLoader(loadManager);
 
         this.name = 'boat';
         loader.load(MODEL, (gltf) => {

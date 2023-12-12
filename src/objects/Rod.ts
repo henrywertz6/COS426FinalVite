@@ -1,4 +1,4 @@
-import { Group } from 'three';
+import { Group, LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 
@@ -8,14 +8,14 @@ import SeedScene from '../scenes/SeaScene';
 import MODEL from './fishing_rod/scene.gltf?url';
 
 class Rod extends Group {
-    constructor(parent: SeedScene) {
+    constructor(parent: SeedScene, loadManager: LoadingManager) {
         // Call parent Group() constructor
         super();
 
         // Init state
 
         // Load object
-        const loader = new GLTFLoader();
+        const loader = new GLTFLoader(loadManager);
 
         this.name = 'rod';
         loader.load(MODEL, (gltf) => {

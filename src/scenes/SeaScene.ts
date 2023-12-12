@@ -1,10 +1,11 @@
 import dat from 'dat.gui';
-import { Scene, Color } from 'three';
+import { Scene, Color, LoadingManager } from 'three';
 
 import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';
 import Boat from '../objects/Boat';
 import Rod from '../objects/Rod';
+import Fish from '../objects/Fish';
 
 // Define an object type which describes each object in the update list
 type UpdateChild = {
@@ -20,7 +21,7 @@ class SeedScene extends Scene {
         updateList: UpdateChild[];
     };
 
-    constructor() {
+    constructor(loadManager: LoadingManager) {
         // Call parent Scene() constructor
         super();
 
@@ -35,11 +36,12 @@ class SeedScene extends Scene {
         this.background = new Color(0x334b66);
 
         // Add meshes to scene
-        const turtle = new Turtle(this);
-        const boat = new Boat(this);
-        const rod = new Rod(this);
+        const turtle = new Turtle(this, loadManager);
+        const boat = new Boat(this, loadManager);
+        const rod = new Rod(this, loadManager);
+        const fish = new Fish(this);
         const lights = new BasicLights();
-        this.add(lights, boat, turtle, rod);
+        this.add(lights, boat, turtle, rod, fish);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);

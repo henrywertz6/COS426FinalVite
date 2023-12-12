@@ -6,13 +6,26 @@
  * handles window resizes.
  *
  */
-import { WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
+import {
+    WebGLRenderer,
+    PerspectiveCamera,
+    Vector3,
+    Clock,
+    LoadingManager,
+} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import SeaScene from './scenes/SeaScene';
 
 // Initialize core ThreeJS components
-const scene = new SeaScene();
+const manager = new LoadingManager();
+manager.onStart = function () {
+    console.log('loading starting');
+};
+manager.onLoad = function () {
+    console.log('loading complete');
+};
+const scene = new SeaScene(manager);
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 
