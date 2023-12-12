@@ -32,16 +32,7 @@ class BasicLights extends Group {
         const helper1 = new DirectionalLightHelper(dirLight, 8);
         const helper2 = new DirectionalLightHelper(dirLight2, 8);
         const axesHelper = new AxesHelper(2);
-        this.add(
-            ambi,
-            hemi,
-            dirLight,
-            dirLight2,
-            hemiLight,
-            helper1,
-            axesHelper,
-            helper2
-        );
+        this.add(ambi, hemi, dirLight, dirLight2, hemiLight, helper1, helper2);
     }
 }
 

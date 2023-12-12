@@ -7,6 +7,7 @@ import Boat from '../objects/Boat';
 import Rod from '../objects/Rod';
 import Fish from '../objects/Fish';
 import Cat from '../objects/Cat';
+import Reel from '../objects/Reel';
 
 // Define an object type which describes each object in the update list
 type UpdateChild = {
@@ -45,8 +46,9 @@ class SeedScene extends Scene {
         const boat = new Boat(this, loadManager);
         const rod = new Rod(this, loadManager);
         const cat = new Cat(this, loadManager);
+        const reel = new Reel(this);
         const lights = new BasicLights();
-        this.add(lights, boat, turtle, rod, cat);
+        this.add(lights, boat, turtle, rod, cat, reel);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
@@ -67,7 +69,6 @@ class SeedScene extends Scene {
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
-
         // Call update for each object in the updateList
         for (const obj of updateList) {
             if (obj.update !== undefined) {
