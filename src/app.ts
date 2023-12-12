@@ -12,6 +12,8 @@ import {
     Vector3,
     Clock,
     LoadingManager,
+    Raycaster,
+    Vector2,
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -42,6 +44,10 @@ document.body.style.margin = '0'; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
+// Raycaster setup
+const raycaster = new Raycaster();
+const pointer = new Vector2();
+
 // Set up controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
@@ -52,6 +58,7 @@ controls.update();
 
 // Render loop
 const onAnimationFrameHandler = (timeStamp: number) => {
+    raycaster.setFromCamera(pointer, camera);
     controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
@@ -68,3 +75,8 @@ const windowResizeHandler = () => {
 };
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
+const pointerMoveHandler = (event: MouseEvent) => {
+    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = (event.clientY / window.innerHeight) * 2 + 1;
+};
+window.addEventListener('pointermove', pointerMoveHandler, false);
