@@ -1,13 +1,11 @@
 import { Group, Vector2, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { TextureLoader } from 'three/src/loaders/TextureLoader.js';
 import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 
 import SeedScene from '../scenes/SeaScene';
 
 // Import flower model as a URL using Vite's syntax
 import MODEL from './boat_lowpoly.glb?url';
-import TEXTURE from './boat_lowpoly/textures/Material.001_baseColor.png';
 
 class Boat extends Group {
     state: {
@@ -27,7 +25,6 @@ class Boat extends Group {
         };
         // Load object
         const loader = new GLTFLoader();
-        const textureLoader = new TextureLoader();
 
         this.name = 'boat';
         loader.load(MODEL, (gltf) => {
