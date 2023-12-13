@@ -57,6 +57,7 @@ controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
 
+window.addEventListener('pointermove', event => handlePointerMove(event, pointer), false);
 // Render loop
 const onAnimationFrameHandler = (timeStamp: number) => {
     // raycaster.setFromCamera(pointer, camera);
@@ -102,7 +103,7 @@ const visibleHeightAtZDepth = ( depth: number, camera: PerspectiveCamera ) => {
 
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
-window.addEventListener('pointermove', event => handlePointerMove(event, pointer), false);
+
 // const pointerMoveHandler = (event: MouseEvent) => {
 //     pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
 //     pointer.y = (event.clientY / window.innerHeight) * 2 + 1;

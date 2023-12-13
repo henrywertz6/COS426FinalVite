@@ -31,17 +31,18 @@ export function handlePointerMove(event: MouseEvent, pointer: {x: number, y: num
 // move the hook and line in response to user input
 export function handleCharacterControls(scene: { getObjectByName: (arg0: any) => any; }, pointer: Vector2, raycaster: Raycaster, camera: any) {
     let hook = scene.getObjectByName('hook');
-    let reel = scene.getObjectByName('reel');
+    // let reel = scene.getObjectByName('reel');
     let gamePlane = scene.getObjectByName('plane');
     // console.log(gamePlane);
     let y_intersection;
 
     raycaster.setFromCamera( pointer, camera );
 
-    const intersects = raycaster.intersectObject(gamePlane, false );
+    const intersects = raycaster.intersectObject(hook, false );
     // console.log(intersects);
 
     if ( intersects.length > 0 ) {
+        console.log("INTERSECTS");
         y_intersection = intersects[0].point.y;
         // console.log(y_intersection);
 
