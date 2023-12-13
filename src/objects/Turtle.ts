@@ -29,7 +29,7 @@ class Turtle extends Group {
             clock: new Clock(),
             speed: 2,
             obstacle: isObstacle,
-            active: true
+            active : true
         };
         // Load object
         const loader = new GLTFLoader(loadManager);
