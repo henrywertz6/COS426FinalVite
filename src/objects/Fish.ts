@@ -12,6 +12,7 @@ class Fish extends Group {
         clock: Clock;
         speed: number;
         active: boolean;
+        escape: boolean
     };
     constructor(parent: SeedScene) {
         // Call parent Group() constructor
@@ -25,6 +26,7 @@ class Fish extends Group {
             clock: new Clock(),
             speed: 2,
             active: true,
+            escape: false
         };
         this.name = 'fish';
         loader.load(MODEL, (gltf) => {
@@ -43,13 +45,13 @@ class Fish extends Group {
     }
 
     update(timeStamp: number): void {
+        let delta = this.state.clock.getDelta();
         if (this.state.active) {
-            let delta = this.state.clock.getDelta();
             if (this.state.mixer) {
                 this.state.mixer.update(delta);
             }
             this.translateZ(delta * this.state.speed);
-        }
+        } 
     }
 }
 

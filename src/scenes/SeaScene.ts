@@ -1,5 +1,5 @@
 import dat from 'dat.gui';
-import { Scene, Color, LoadingManager, Box3 } from 'three';
+import { Scene, Color, LoadingManager, Box3, Object3D } from 'three';
 
 import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';
@@ -29,6 +29,7 @@ class SeedScene extends Scene {
         updateList: UpdateChild[];
         spawnFish: () => void;
         fishList: Array<Fish>;
+        obstacleList: Array<Object3D>;
         center: number;
         score: number;
         bait: number;
@@ -45,6 +46,7 @@ class SeedScene extends Scene {
             updateList: [],
             spawnFish: () => this.spawnFish(),
             fishList: [],
+            obstacleList: [],
             center: 0,
             score: 0,
             bait: 3
@@ -84,6 +86,14 @@ class SeedScene extends Scene {
         this.state.fishList.push(fish);
         this.add(fish);
     }
+
+    spawnTurtle(): void {
+        console.log('fish spawned!');
+        const turtle = new Turtle(this, new LoadingManager());
+        this.state.obstacleList.push(turtle);
+        this.add(turtle);
+    }
+    
 
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;

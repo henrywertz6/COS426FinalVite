@@ -33,9 +33,6 @@ export function handleKeyUp(
 export function handleMouseDown(
     event: MouseEvent,
     scene: any) {
-    // let pointer = new Vector2();
-    // pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    // pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
     let hook = scene.getObjectByName('hook');
     // CHANGE Y POS to wherever we want the ocean to be 
     if (hook.position.y > 3 && hook.state.fish) {
@@ -45,10 +42,17 @@ export function handleMouseDown(
         scene.remove(fish);
         scene.state.score += 1;
         hook.state.fish = undefined;
+    } // drop the fish if you click under sea level
+    else if(hook.position.y < 3 && hook.state.fish) {
+        let fish = hook.state.fish;
+        //fish swims away faster
+        fish.rotateX(Math.PI/2);
+        fish.state.speed = 4;
+        fish.state.active = true;
+        hook.state.fish = undefined;
     }
 }
 // handle user mouse movement
-// next logic to do
 export function handlePointerMove(
     event: MouseEvent,
     pointer: { x: number; y: number }
@@ -180,7 +184,6 @@ export function handleCollisions(
             let fishBox = new Box3().setFromObject(fish);
             const intersection = hookBox.intersectsBox(fishBox);
             if (intersection) {
-                console.log('orgasm');
                 let index = scene.state.fishList.indexOf(fish);
                 fish.state.active = false;
                 scene.state.fishList.splice(index, 1);
