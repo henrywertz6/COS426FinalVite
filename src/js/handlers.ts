@@ -8,7 +8,8 @@ import {
     LoadingManager,
     Raycaster,
     Vector2,
-    Plane
+    Plane,
+    ArrowHelper
 } from 'three';
 
 // handle user controls input
@@ -24,21 +25,27 @@ export function handleKeyUp(event: { key: string; }, keypress: { [x: string]: bo
 
 // handle user mouse movement
 export function handlePointerMove(event: MouseEvent, pointer: {x: number, y: number}) {
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = (event.clientY / window.innerHeight) * 2 + 1;
+    // console.log(window.innerWidth)
+    pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 }
 
 // move the hook and line in response to user input
-export function handleCharacterControls(scene: { getObjectByName: (arg0: any) => any; }, pointer: Vector2, raycaster: Raycaster, camera: any) {
+export function handleCharacterControls(scene: { add: (arg0: any) => any, getObjectByName: (arg0: any) => any; }, pointer: Vector2, raycaster: Raycaster, camera: any) {
     let hook = scene.getObjectByName('hook');
     // let reel = scene.getObjectByName('reel');
-    let gamePlane = scene.getObjectByName('plane');
+    let gamePlane = scene.getObjectByName('gamePlane');
+    let boat = scene.getObjectByName('boat');
+    // console.log("x", pointer.x);
+    // console.log(pointer.y);
     // console.log(gamePlane);
     let y_intersection;
+    // scene.add(gamePlane)
+    scene.add(new ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 20, 0x00ff00))
 
     raycaster.setFromCamera( pointer, camera );
 
-    const intersects = raycaster.intersectObject(hook, false );
+    const intersects = raycaster.intersectObject(gamePlane, false );
     // console.log(intersects);
 
     if ( intersects.length > 0 ) {

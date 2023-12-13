@@ -9,7 +9,7 @@ class GamePlane extends Group {
     constructor(parent: SeedScene) {
         // Call parent Group() constructor
         super();
-        this.name = 'plane';
+        this.name = 'gamePlane';
         let points = [];
         points.push(new Vector3(0, -50, 50));
         points.push(new Vector3(0, 50, 50));
