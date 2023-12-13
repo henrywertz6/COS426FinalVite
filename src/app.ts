@@ -23,7 +23,6 @@ import {
     handleCharacterControls,
     handleCollisions,
     handleMouseDown,
-    reelFish
 } from './js/handlers.ts';
 
 // Initialize core ThreeJS components
@@ -68,7 +67,8 @@ window.addEventListener(
     (event) => handlePointerMove(event, pointer),
     false
 );
-window.addEventListener('mousedown', handleMouseDown, false);
+window.addEventListener('mousedown', (event) => handleMouseDown(event, scene), false);
+
 // Render loop
 const onAnimationFrameHandler = (timeStamp: number) => {
     // raycaster.setFromCamera(pointer, camera);
@@ -79,7 +79,6 @@ const onAnimationFrameHandler = (timeStamp: number) => {
     scene.update && scene.update(timeStamp);
     handleCharacterControls(scene, pointer, raycaster, camera);
     handleCollisions(scene);
-    reelFish(scene);
     updateScore(scene.state.score);
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
@@ -134,4 +133,4 @@ document.body.appendChild(scoreElement);
 function updateScore(newScore: number) {
     const score = newScore;
     scoreElement.textContent = `Fish caught: ${score}`;
-}  
+  }  

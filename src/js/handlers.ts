@@ -30,10 +30,22 @@ export function handleKeyUp(
     if (event.key == 'ArrowDown') keypress['down'] = false;
 }
 // handle user click: drop the fish
-export function handleMouseDown(event: MouseEvent) {
-    let pointer = new Vector2();
-    pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-    pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+export function handleMouseDown(
+    event: MouseEvent,
+    scene: any) {
+    // let pointer = new Vector2();
+    // pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+    // pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    let hook = scene.getObjectByName('hook');
+    // CHANGE Y POS to wherever we want the ocean to be 
+    if (hook.position.y > 3 && hook.state.fish) {
+        let fish = hook.state.fish;
+        // get rid of fish
+        scene.removeFromUpdateList(fish);
+        scene.remove(fish);
+        scene.state.score += 1;
+        hook.state.fish = undefined;
+    }
 }
 // handle user mouse movement
 // next logic to do
@@ -150,20 +162,6 @@ export function handleCharacterControls(
 //         // pause.classList.remove('invisible');
 //     }
 // }
-
-// adds score when reel is above boat & has fish 
-export function reelFish(scene: any) {
-    let hook = scene.getObjectByName('hook');
-    // CHANGE Y POS to wherever we want the ocean to be 
-    if (hook.position.y > 3 && hook.state.fish) {
-        let fish = hook.state.fish;
-        // get rid of fish
-        scene.removeFromUpdateList(fish);
-        scene.remove(fish);
-        scene.state.score += 1;
-        hook.state.fish = undefined;
-    }
-}
 
 // handle collisions with sea creatures
 export function handleCollisions(
