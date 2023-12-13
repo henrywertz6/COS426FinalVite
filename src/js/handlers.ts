@@ -191,10 +191,25 @@ export function handleCollisions(
                 hook.state.fish = fish;
                 fish.translateZ(0.7);
                 fish.position.z = 0;
-                console.log(fish.position);
+                // console.log(fish.position);
                 fish.rotateX(-Math.PI / 2);
             }
         }
+    } // if we have a fish on the hook and hit an obstacle
+    else if (hook && hook.state.fish) { 
+        let fish = hook.state.fish;
+        let fishBox = new Box3().setFromObject(fish);
+        for (let turtle of scene.state.obstacleList) {
+            let turtleBox = new Box3().setFromObject(turtle);
+            const intersection = fishBox.intersectsBox(turtleBox);
+            if (intersection) {
+                fish.rotateX(Math.PI/2);
+                fish.state.speed = 4;
+                fish.state.active = true;
+                hook.state.fish = undefined;
+            }
+        }
+        
     }
     // give each object a bounding box: https://stackoverflow.com/questions/28453895/how-to-detect-collision-between-two-objects-in-javascript-with-three-js
     // store all creatures on screen in an array

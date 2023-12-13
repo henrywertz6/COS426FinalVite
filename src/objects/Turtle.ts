@@ -41,8 +41,6 @@ class Turtle extends Group {
             parent.addToUpdateList(this);
             this.position.y = Math.floor(Math.random() * 9) - 8;
             this.position.z = -parent.state.center;
-            // let scaleFactor = 7;
-            // this.scale.set(scaleFactor, scaleFactor, scaleFactor);
         } else {
             // Add self to parent's update list
             parent.addToUpdateList(this);
