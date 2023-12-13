@@ -11,6 +11,7 @@ class Fish extends Group {
         mixer: AnimationMixer;
         clock: Clock;
         speed: number;
+        active: boolean;
     };
     constructor(parent: SeedScene) {
         // Call parent Group() constructor
@@ -24,6 +25,7 @@ class Fish extends Group {
             mixer: new AnimationMixer(),
             clock: new Clock(),
             speed: 2,
+            active: true
         };
         this.name = 'fish';
         loader.load(MODEL, (gltf) => {
@@ -36,7 +38,7 @@ class Fish extends Group {
         // Add self to parent's update list
         parent.addToUpdateList(this);
         this.position.y = Math.floor(Math.random() * 9) - 8;
-        this.position.z = parent.state.zSpawn;
+        this.position.z = -parent.state.center;
         let scaleFactor = 7;
         this.scale.set(scaleFactor, scaleFactor, scaleFactor);
     }

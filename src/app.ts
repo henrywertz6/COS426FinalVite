@@ -76,7 +76,7 @@ const windowResizeHandler = () => {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();  
     // find right edge of screen in 3D coordinates
-    scene.state.zSpawn = -(visibleWidthAtZDepth(0, camera) / 2);
+    scene.state.center = visibleWidthAtZDepth(0, camera) / 2;
 };
 
 // used from

@@ -10,6 +10,9 @@ import Cat from '../objects/Cat';
 import Hook from '../objects/Hook';
 import GamePlane from '../objects/GamePlane'
 
+
+function random(min: number, max: number) { return Math.random() * (max - min) + min; }
+
 // Define an object type which describes each object in the update list
 type UpdateChild = {
     // Each object *might* contain an update function
@@ -24,7 +27,7 @@ class SeedScene extends Scene {
         updateList: UpdateChild[];
         spawnFish: () => void;
         fishList: Array<Fish>;
-        zSpawn: number;
+        center: number;
     };
 
     constructor(loadManager: LoadingManager) {
@@ -38,7 +41,7 @@ class SeedScene extends Scene {
             updateList: [],
             spawnFish: () => this.spawnFish(),
             fishList: [],
-            zSpawn: -10
+            center: 0
         };
 
         // Set background to a nice color
@@ -63,6 +66,11 @@ class SeedScene extends Scene {
         this.state.updateList.push(object);
     }
 
+    removeFromUpdateList(object: UpdateChild) : void {
+        const index = this.state.updateList.indexOf(object);
+        this.state.updateList.splice(index, 1);
+    }
+
     spawnFish(): void {
         console.log('fish spawned!');
         const fish = new Fish(this);
@@ -73,6 +81,20 @@ class SeedScene extends Scene {
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
+
+        // randomly generate fish at each time step
+        if(random(0, 1000) < 5) {
+            this.spawnFish();
+        }
+
+        // if fish has passed "out of view", then stop updating + remove from GUI 
+        for(const fish of this.state.fishList) {
+            if(fish.state.active && fish.position.z > (this.state.center + 2)) {
+                fish.state.active = false;
+                this.removeFromUpdateList(fish);
+                this.remove(fish);
+            }
+        }
 
         // Call update for each object in the updateList
         for (const obj of updateList) {
