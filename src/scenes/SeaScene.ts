@@ -24,6 +24,7 @@ class SeedScene extends Scene {
         updateList: UpdateChild[];
         spawnFish: () => void;
         fishList: Array<Fish>;
+        zSpawn: number;
     };
 
     constructor(loadManager: LoadingManager) {
@@ -37,6 +38,7 @@ class SeedScene extends Scene {
             updateList: [],
             spawnFish: () => this.spawnFish(),
             fishList: [],
+            zSpawn: -10
         };
 
         // Set background to a nice color

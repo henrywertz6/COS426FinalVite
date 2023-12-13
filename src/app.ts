@@ -74,8 +74,13 @@ const windowResizeHandler = () => {
     const { innerHeight, innerWidth } = window;
     renderer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;
-    camera.updateProjectionMatrix();
+    camera.updateProjectionMatrix();  
+    // find right edge of screen in 3D coordinates
+    scene.state.zSpawn = -10; // fix!
+
+    
 };
+
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
 window.addEventListener('pointermove', event => handlePointerMove(event, pointer), false);

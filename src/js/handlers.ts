@@ -39,11 +39,11 @@ export function handleCharacterControls(scene: { getObjectByName: (arg0: any) =>
     raycaster.setFromCamera( pointer, camera );
 
     const intersects = raycaster.intersectObject(gamePlane, false );
-    console.log(intersects);
+    // console.log(intersects);
 
     if ( intersects.length > 0 ) {
         y_intersection = intersects[0].point.y;
-        console.log(y_intersection);
+        // console.log(y_intersection);
 
         // if ( INTERSECTED != intersects[ 0 ].object ) {
 
