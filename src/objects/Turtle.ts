@@ -15,6 +15,7 @@ class Turtle extends Group {
         clock: Clock;
         speed: number;
         obstacle?: boolean;
+        active: boolean;
     };
     constructor(parent: SeedScene, loadManager?: LoadingManager, isObstacle?: boolean) {
         // Call parent Group() constructor
@@ -27,7 +28,8 @@ class Turtle extends Group {
             twirl: 0,
             clock: new Clock(),
             speed: 2,
-            obstacle: isObstacle
+            obstacle: isObstacle,
+            active: true
         };
         // Load object
         const loader = new GLTFLoader(loadManager);

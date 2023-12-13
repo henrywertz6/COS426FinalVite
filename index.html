@@ -1,12 +1,49 @@
-<!doctype html>
+<!-- adapted from lightsaber dojo bc they also used typescript! :) -->
+<!-- https://github.com/arcturus3/lightsaber-dojo/blob/master/src/main.ts#L47 -->
+
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>COS 426 Final Project</title>
-    </head>
-    <body>
-        <script type="module" src="/src/app.ts"></script>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat Fishing</title>
+  </head>
+  <body>
+
+    <div id="app" style="display: none;">
+        <div id="fish-count" style="display: flex; align-items: center;">
+            <!-- <object data="assets/icons/droid.svg" style="width: 30px; height: 30px; margin-right: 15px;"></object>
+            <span id="wave-count" style="font-family: Oswald; font-weight: 500; font-size: 28px; color: white;">1</span> -->
+        </div>
+        <div id="bait-count" class="progress">
+        </div>
+	</div>
+
+    <div id="start-screen">
+        <div style="width: 100%; height: 100%; position: fixed; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <p style="font-size: 84px; margin-bottom: 40px;">Cat fishing!</p>
+            <div id="start-button" style="border: 4px solid white; border-radius: 20px; padding: 0 20px; margin-bottom: 40px;">
+                <!-- <object data="assets/icons/jedi.svg" style="width: 50px; height: 50px; margin-right: 20px; pointer-events: none;"></object> -->
+                <span style="font-size: 64px;">Enter</span>
+            </div>
+            <p style="font-size: 48px;">Instructions</p>
+            <ul style="font-size: 24px;">
+                <li>instructions will go here!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="end-screen" style="display: none;">
+        <div style="width: 100%; height: 100%; position: fixed; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <p style="font-size: 64px; margin-bottom: 40px;">"Oh no! you woke up!"</p>
+            <p id="score" style="font-size: 48px; margin-bottom: 40px;">0 fish caught</p>
+            <div id="end-button" style="border: 4px solid white; border-radius: 20px; padding: 0 20px;">
+                <!-- <object data="assets/icons/jedi.svg" style="width: 50px; height: 50px; margin-right: 20px; pointer-events: none;"></object> -->
+                <span style="font-size: 64px;">Restart</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/app.ts"></script>
+  </body>
 </html>

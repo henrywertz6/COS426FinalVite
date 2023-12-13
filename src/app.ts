@@ -36,6 +36,7 @@ manager.onLoad = function () {
 const scene = new SeaScene(manager);
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
+const clock = new Clock();
 
 // Set up camera
 camera.fov = 45;
@@ -50,9 +51,13 @@ document.body.style.margin = '0'; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
+const app = document.getElementById('app')!;
+app.appendChild(renderer.domElement);
+
 // Raycaster setup
 const raycaster = new Raycaster();
 const pointer = new Vector2();
+
 
 // Set up controls
 const controls = new OrbitControls(camera, canvas);
@@ -70,13 +75,13 @@ window.addEventListener(
 window.addEventListener('mousedown', (event) => handleMouseDown(event, scene), false);
 
 // Render loop
-const onAnimationFrameHandler = (timeStamp: number) => {
+const onAnimationFrameHandler = () => {
     // raycaster.setFromCamera(pointer, camera);
 
     // console.log(pointer);
     controls.update();
     renderer.render(scene, camera);
-    scene.update && scene.update(timeStamp);
+    scene.update && scene.update(clock.getDelta());
     handleCharacterControls(scene, pointer, raycaster, camera);
     handleCollisions(scene);
     updateScore(scene.state.score);
@@ -134,3 +139,17 @@ function updateScore(newScore: number) {
     const score = newScore;
     scoreElement.textContent = `Fish caught: ${score}`;
   }  
+
+  document.getElementById('start-button')!.addEventListener('click', () => {
+    document.getElementById('app')!.style.display = 'initial';
+    document.getElementById('start-screen')!.style.display = 'none';
+    document.getElementById('end-screen')!.style.display = 'none';
+    onAnimationFrameHandler();
+});
+
+document.getElementById('end-button')!.addEventListener('click', () => {
+    // document.getElementById('app')!.style.display = 'none';
+    // document.getElementById('start-screen')!.style.display = 'initial';
+    // document.getElementById('end-screen')!.style.display = 'none';
+    location.reload();
+});

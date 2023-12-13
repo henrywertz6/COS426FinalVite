@@ -118,7 +118,8 @@ class SeedScene extends Scene {
 
         // if turtle has passed "out of view", then stop updating + remove from GUI
         for (let turtle of this.state.obstacleList) {
-            if (turtle.position.z > this.state.center + 2) {
+            if (turtle.state.active && turtle.position.z > this.state.center + 2) {
+                turtle.state.active = false;
                 this.removeFromUpdateList(turtle);
                 this.remove(turtle);
             }

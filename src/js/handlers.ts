@@ -42,6 +42,12 @@ export function handleMouseDown(
         scene.remove(fish);
         scene.state.score += 1;
         hook.state.fish = undefined;
+        
+        // spin turtle every 10 fish hehe
+        if(scene.state.score % 10 == 0) {
+            let turtle = scene.getObjectByName('turtle');
+            turtle.spin();
+        }
     } // drop the fish if you click under sea level
     else if(hook.position.y < 3 && hook.state.fish) {
         let fish = hook.state.fish;
