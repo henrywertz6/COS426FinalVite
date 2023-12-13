@@ -8,7 +8,7 @@ import MODEL from './fish/scene.gltf?url';
 
 class Fish extends Group {
     state: {
-        mixer: AnimationMixer;
+        mixer: AnimationMixer | undefined;
         clock: Clock;
         speed: number;
         active: boolean;
@@ -19,13 +19,12 @@ class Fish extends Group {
 
         // Init state
 
-        // Load object
         const loader = new GLTFLoader();
         this.state = {
-            mixer: new AnimationMixer(),
+            mixer: undefined,
             clock: new Clock(),
             speed: 2,
-            active: true
+            active: true,
         };
         this.name = 'fish';
         loader.load(MODEL, (gltf) => {
@@ -44,9 +43,13 @@ class Fish extends Group {
     }
 
     update(timeStamp: number): void {
-        let delta = this.state.clock.getDelta();
-        this.state.mixer.update(delta);
-        this.translateZ(delta * this.state.speed);
+        if (this.state.active) {
+            let delta = this.state.clock.getDelta();
+            if (this.state.mixer) {
+                this.state.mixer.update(delta);
+            }
+            this.translateZ(delta * this.state.speed);
+        }
     }
 }
 

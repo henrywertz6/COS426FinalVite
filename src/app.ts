@@ -18,7 +18,12 @@ import {
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import SeaScene from './scenes/SeaScene';
-import { handlePointerMove, handleCharacterControls } from './js/handlers.ts';
+import {
+    handlePointerMove,
+    handleCharacterControls,
+    handleCollisions,
+    handleMouseDown,
+} from './js/handlers.ts';
 
 // Initialize core ThreeJS components
 const manager = new LoadingManager();
@@ -57,15 +62,22 @@ controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
 
-window.addEventListener('pointermove', event => handlePointerMove(event, pointer), false);
+window.addEventListener(
+    'pointermove',
+    (event) => handlePointerMove(event, pointer),
+    false
+);
+window.addEventListener('mousedown', handleMouseDown, false);
 // Render loop
 const onAnimationFrameHandler = (timeStamp: number) => {
     // raycaster.setFromCamera(pointer, camera);
-    handleCharacterControls(scene, pointer, raycaster, camera);
+
     // console.log(pointer);
     controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(timeStamp);
+    handleCharacterControls(scene, pointer, raycaster, camera);
+    handleCollisions(scene);
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -75,31 +87,30 @@ const windowResizeHandler = () => {
     const { innerHeight, innerWidth } = window;
     renderer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;
-    camera.updateProjectionMatrix();  
+    camera.updateProjectionMatrix();
     // find right edge of screen in 3D coordinates
     scene.state.center = visibleWidthAtZDepth(0, camera) / 2;
 };
 
 // used from
 // https://discourse.threejs.org/t/functions-to-calculate-the-visible-width-height-at-a-given-z-depth-from-a-perspective-camera/269
-const visibleHeightAtZDepth = ( depth: number, camera: PerspectiveCamera ) => {
+const visibleHeightAtZDepth = (depth: number, camera: PerspectiveCamera) => {
     // compensate for cameras not positioned at z=0
     const cameraOffset = camera.position.x;
-    if ( depth < cameraOffset ) depth -= cameraOffset;
+    if (depth < cameraOffset) depth -= cameraOffset;
     else depth += cameraOffset;
-  
+
     // vertical fov in radians
-    const vFOV = camera.fov * Math.PI / 180; 
-  
+    const vFOV = (camera.fov * Math.PI) / 180;
+
     // Math.abs to ensure the result is always positive
-    return 2 * Math.tan( vFOV / 2 ) * Math.abs( depth );
-  };
-  
-  const visibleWidthAtZDepth = ( depth: number, camera: PerspectiveCamera ) => {
-    const height = visibleHeightAtZDepth( depth, camera );
+    return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
+};
+
+const visibleWidthAtZDepth = (depth: number, camera: PerspectiveCamera) => {
+    const height = visibleHeightAtZDepth(depth, camera);
     return height * camera.aspect;
-  };
-  
+};
 
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);

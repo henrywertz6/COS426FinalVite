@@ -29,10 +29,10 @@ class BasicLights extends Group {
         let dirLight2 = new DirectionalLight(0xffffff, 1.5);
         dirLight2.position.set(75, -10, 75);
 
-        const helper1 = new DirectionalLightHelper(dirLight, 8);
-        const helper2 = new DirectionalLightHelper(dirLight2, 8);
+        // const helper1 = new DirectionalLightHelper(dirLight, 8);
+        // const helper2 = new DirectionalLightHelper(dirLight2, 8);
         const axesHelper = new AxesHelper(2);
-        this.add(ambi, hemi, dirLight, dirLight2, hemiLight, helper1, helper2);
+        this.add(ambi, hemi, dirLight, dirLight2, hemiLight);
     }
 }
 

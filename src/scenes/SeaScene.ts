@@ -1,5 +1,5 @@
 import dat from 'dat.gui';
-import { Scene, Color, LoadingManager } from 'three';
+import { Scene, Color, LoadingManager, Box3 } from 'three';
 
 import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';

@@ -26,7 +26,7 @@ class Rod extends Group {
         parent.addToUpdateList(this);
         this.position.y = 3;
         this.position.z = 2;
-        this.rotation.x = -0.55;
+        this.rotation.x = -0.62;
         this.scale.set(0.01, 0.01, 0.01);
     }
 

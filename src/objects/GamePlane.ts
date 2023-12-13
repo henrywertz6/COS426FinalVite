@@ -1,11 +1,18 @@
-import { Group, PlaneGeometry, Vector3, Mesh, MeshBasicMaterial, DoubleSide} from 'three';
+import {
+    Group,
+    PlaneGeometry,
+    Vector3,
+    Mesh,
+    MeshBasicMaterial,
+    DoubleSide,
+} from 'three';
 
 import SeedScene from '../scenes/SeaScene';
 
 class GamePlane extends Group {
     state: {
-        gamePlane: Mesh
-    }
+        gamePlane: Mesh;
+    };
     constructor(parent: SeedScene) {
         // Call parent Group() constructor
         super();
@@ -17,14 +24,17 @@ class GamePlane extends Group {
         points.push(new Vector3(0, 50, -50));
 
         const geometry = new PlaneGeometry().setFromPoints(points);
-        const material = new MeshBasicMaterial( {color: 0xffff00, side: DoubleSide} );
-        // material.transparent = true;
+        const material = new MeshBasicMaterial({
+            color: 0xffff00,
+            side: DoubleSide,
+        });
+        material.transparent = true;
         material.opacity = 0;
-        const plane = new Mesh( geometry, material );
+        const plane = new Mesh(geometry, material);
 
         this.state = {
-            gamePlane: plane
-        }
+            gamePlane: plane,
+        };
         this.add(this.state.gamePlane);
     }
 }

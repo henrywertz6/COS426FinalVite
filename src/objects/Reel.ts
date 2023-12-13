@@ -16,8 +16,6 @@ import { Geometry } from 'three/examples/jsm/deprecated/Geometry.js';
 
 class Reel extends Group {
     state: {
-        gui: dat.GUI;
-        changeLength: () => void;
         geometry: BufferGeometry;
         material: LineBasicMaterial;
         line: Line;
@@ -29,11 +27,9 @@ class Reel extends Group {
         points.push(new Vector3(0, 6, 0));
         points.push(new Vector3(0, 0, 0));
         let geo = new BufferGeometry().setFromPoints(points);
-        let mat = new LineBasicMaterial({ color: 0xff0000 });
+        let mat = new LineBasicMaterial({ color: 0xffffff });
         mat.linewidth = 20;
         this.state = {
-            gui: parent.state.gui,
-            changeLength: () => this.changeLength(),
             geometry: geo,
             material: mat,
             line: new Line(geo, mat),
@@ -42,16 +38,15 @@ class Reel extends Group {
         // 5.5y 0.15z
 
         this.name = 'reel';
-        this.state.gui.add(this.state, 'changeLength');
         this.add(this.state.line);
 
         // Add self to parent's update list
         parent.addToUpdateList(this);
     }
-    changeLength(): void {
+    changeLength(y: number): void {
         const points = [];
-        points.push(new Vector3(0, 6, 0));
-        points.push(new Vector3(0, -6, 0));
+        points.push(new Vector3(0, 5.8, 0));
+        points.push(new Vector3(0, y, 0));
         let geo = new BufferGeometry().setFromPoints(points);
         this.state.line.geometry = geo;
     }
