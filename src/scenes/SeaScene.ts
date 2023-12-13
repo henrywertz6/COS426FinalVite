@@ -30,6 +30,8 @@ class SeedScene extends Scene {
         spawnFish: () => void;
         fishList: Array<Fish>;
         center: number;
+        score: number;
+        bait: number;
     };
 
     constructor(loadManager: LoadingManager) {
@@ -44,6 +46,8 @@ class SeedScene extends Scene {
             spawnFish: () => this.spawnFish(),
             fishList: [],
             center: 0,
+            score: 0,
+            bait: 3
         };
 
         // Set background to a nice color
@@ -91,7 +95,7 @@ class SeedScene extends Scene {
         }
 
         // if fish has passed "out of view", then stop updating + remove from GUI
-        for (const fish of this.state.fishList) {
+        for (let fish of this.state.fishList) {
             if (fish.state.active && fish.position.z > this.state.center + 2) {
                 fish.state.active = false;
                 this.removeFromUpdateList(fish);

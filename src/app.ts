@@ -23,6 +23,7 @@ import {
     handleCharacterControls,
     handleCollisions,
     handleMouseDown,
+    reelFish
 } from './js/handlers.ts';
 
 // Initialize core ThreeJS components
@@ -78,6 +79,7 @@ const onAnimationFrameHandler = (timeStamp: number) => {
     scene.update && scene.update(timeStamp);
     handleCharacterControls(scene, pointer, raycaster, camera);
     handleCollisions(scene);
+    reelFish(scene);
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);

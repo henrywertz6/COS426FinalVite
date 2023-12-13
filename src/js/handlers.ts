@@ -151,6 +151,20 @@ export function handleCharacterControls(
 //     }
 // }
 
+// adds score when reel is above boat & has fish 
+export function reelFish(scene: any) {
+    let hook = scene.getObjectByName('hook');
+    // CHANGE Y POS to wherever we want the ocean to be 
+    if (hook.position.y > 3 && hook.state.fish) {
+        let fish = hook.state.fish;
+        // get rid of fish
+        scene.removeFromUpdateList(fish);
+        scene.remove(fish);
+        scene.state.score += 1;
+        hook.state.fish = undefined;
+    }
+}
+
 // handle collisions with sea creatures
 export function handleCollisions(
     // document: any,
@@ -175,6 +189,8 @@ export function handleCollisions(
 
                 hook.state.fish = fish;
                 fish.translateZ(0.7);
+                fish.position.z = 0;
+                console.log(fish.position);
                 fish.rotateX(-Math.PI / 2);
             }
         }
@@ -186,7 +202,6 @@ export function handleCollisions(
     // IF line collides with crab & still have life -- reduce bait by 1
     // IF line collides with crab & no life -- end game
     // pseudo code -- IF hook collide with fish & no fish already on line -- rotate fish 90 degrees and attach to hook
-    // map "ON_HOOK" state to true?
     // IF hook collides with non-fish & fish already on line -- fish "swims away" (fast speed)
     // let hook = scene.getObjectByName(reel);
     // if (interp.y > obj.position.y) {
