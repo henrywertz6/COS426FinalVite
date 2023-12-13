@@ -1,4 +1,4 @@
-import { Group, LoadingManager } from 'three';
+import { Group, LoadingManager, Clock } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 
@@ -12,8 +12,11 @@ class Turtle extends Group {
         gui: dat.GUI;
         spin: () => void;
         twirl: number;
+        clock: Clock;
+        speed: number;
+        obstacle?: boolean;
     };
-    constructor(parent: SeedScene, loadManager: LoadingManager) {
+    constructor(parent: SeedScene, loadManager?: LoadingManager, isObstacle?: boolean) {
         // Call parent Group() constructor
         super();
 
@@ -22,6 +25,9 @@ class Turtle extends Group {
             gui: parent.state.gui,
             spin: () => this.spin(), // or this.spin.bind(this)
             twirl: 0,
+            clock: new Clock(),
+            speed: 2,
+            obstacle: isObstacle
         };
         // Load object
         const loader = new GLTFLoader(loadManager);
@@ -30,15 +36,24 @@ class Turtle extends Group {
         loader.load(MODEL, (gltf) => {
             this.add(gltf.scene);
         });
+        if(isObstacle) {
+            // Add self to parent's update list
+            parent.addToUpdateList(this);
+            this.position.y = Math.floor(Math.random() * 9) - 8;
+            this.position.z = -parent.state.center;
+            // let scaleFactor = 7;
+            // this.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        } else {
+            // Add self to parent's update list
+            parent.addToUpdateList(this);
+            this.translateZ(4);
+            this.translateY(3.3);
+            this.translateX(0.7);
+            this.rotateY(Math.PI / 2);
 
-        // Add self to parent's update list
-        parent.addToUpdateList(this);
-        this.translateZ(4);
-        this.translateY(3.3);
-        this.translateX(0.7);
-        this.rotateY(Math.PI / 2);
-
-        this.state.gui.add(this.state, 'spin');
+            this.state.gui.add(this.state, 'spin');
+        }
+        
     }
     spin(): void {
         // Add a simple twirl
@@ -66,7 +81,11 @@ class Turtle extends Group {
             this.state.twirl -= Math.PI / 8;
             this.rotation.y += Math.PI / 8;
         }
-
+        if (this.state.obstacle) {
+            let delta = this.state.clock.getDelta();
+            this.translateZ(delta * this.state.speed);
+        }
+        
         // TWEEN.update();
     }
 }

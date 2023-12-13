@@ -29,7 +29,7 @@ class SeedScene extends Scene {
         updateList: UpdateChild[];
         spawnFish: () => void;
         fishList: Array<Fish>;
-        obstacleList: Array<Object3D>;
+        obstacleList: Array<Turtle>;
         center: number;
         score: number;
         bait: number;
@@ -88,8 +88,8 @@ class SeedScene extends Scene {
     }
 
     spawnTurtle(): void {
-        console.log('fish spawned!');
-        const turtle = new Turtle(this, new LoadingManager());
+        console.log('turtle spawned!');
+        const turtle = new Turtle(this, undefined, true);
         this.state.obstacleList.push(turtle);
         this.add(turtle);
     }
@@ -102,6 +102,7 @@ class SeedScene extends Scene {
         // randomly generate fish at each time step
         if (random(0, 1000) < 5) {
             this.spawnFish();
+            this.spawnTurtle();
         }
 
         // if fish has passed "out of view", then stop updating + remove from GUI
@@ -110,6 +111,14 @@ class SeedScene extends Scene {
                 fish.state.active = false;
                 this.removeFromUpdateList(fish);
                 this.remove(fish);
+            }
+        }
+
+        // if turtle has passed "out of view", then stop updating + remove from GUI
+        for (let turtle of this.state.obstacleList) {
+            if (turtle.position.z > this.state.center + 2) {
+                this.removeFromUpdateList(turtle);
+                this.remove(turtle);
             }
         }
 
