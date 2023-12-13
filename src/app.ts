@@ -76,10 +76,29 @@ const windowResizeHandler = () => {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();  
     // find right edge of screen in 3D coordinates
-    scene.state.zSpawn = -10; // fix!
-
-    
+    scene.state.zSpawn = -(visibleWidthAtZDepth(0, camera) / 2);
 };
+
+// used from
+// https://discourse.threejs.org/t/functions-to-calculate-the-visible-width-height-at-a-given-z-depth-from-a-perspective-camera/269
+const visibleHeightAtZDepth = ( depth: number, camera: PerspectiveCamera ) => {
+    // compensate for cameras not positioned at z=0
+    const cameraOffset = camera.position.x;
+    if ( depth < cameraOffset ) depth -= cameraOffset;
+    else depth += cameraOffset;
+  
+    // vertical fov in radians
+    const vFOV = camera.fov * Math.PI / 180; 
+  
+    // Math.abs to ensure the result is always positive
+    return 2 * Math.tan( vFOV / 2 ) * Math.abs( depth );
+  };
+  
+  const visibleWidthAtZDepth = ( depth: number, camera: PerspectiveCamera ) => {
+    const height = visibleHeightAtZDepth( depth, camera );
+    return height * camera.aspect;
+  };
+  
 
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
