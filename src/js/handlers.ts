@@ -215,6 +215,16 @@ export function handleCollisions(
                 hook.state.fish = undefined;
             }
         }
+        for (let shark of scene.state.sharkList) {
+            let sharkBox = new Box3().setFromObject(shark);
+            const intersection = fishBox.intersectsBox(sharkBox);
+            if (intersection) {
+                fish.rotateX(Math.PI/2);
+                fish.state.speed = 4;
+                fish.state.active = true;
+                hook.state.fish = undefined;
+            }
+        }
         
     }
     // give each object a bounding box: https://stackoverflow.com/questions/28453895/how-to-detect-collision-between-two-objects-in-javascript-with-three-js

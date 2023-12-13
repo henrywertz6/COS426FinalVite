@@ -10,6 +10,7 @@ import Cat from '../objects/Cat';
 import Reel from '../objects/Reel';
 import Hook from '../objects/Hook';
 import GamePlane from '../objects/GamePlane';
+import Shark from '../objects/Shark';
 
 function random(min: number, max: number) {
     return Math.random() * (max - min) + min;
@@ -30,6 +31,7 @@ class SeedScene extends Scene {
         spawnFish: () => void;
         fishList: Array<Fish>;
         obstacleList: Array<Turtle>;
+        sharkList: Array<Shark>;
         center: number;
         score: number;
         bait: number;
@@ -47,6 +49,7 @@ class SeedScene extends Scene {
             spawnFish: () => this.spawnFish(),
             fishList: [],
             obstacleList: [],
+            sharkList: [],
             center: 0,
             score: 0,
             bait: 3
@@ -93,20 +96,27 @@ class SeedScene extends Scene {
         this.state.obstacleList.push(turtle);
         this.add(turtle);
     }
-    
+
+    spawnShark(): void {
+        const shark = new Shark(this);
+        this.state.sharkList.push(shark);
+        this.add(shark);
+    }
 
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
 
         // randomly generate fish at each time step
-        if (random(0, 1000) < 5) {
+        let randomNum = random(0, 1500);
+        if (randomNum < 8) {
             this.spawnFish();
+        } else if(randomNum < 10 && this.state.sharkList.length < 1) {
+            this.spawnShark();
         }
-        // randomly generate turtles at each time step (less than fish?)
-        if (random(0, 1000) < 3) {
-            this.spawnTurtle();
-        }
+
+
+        // REMOVE THINGS OFF SCREEN
         // if fish has passed "out of view", then stop updating + remove from GUI
         for (let fish of this.state.fishList) {
             if (fish.state.active && fish.position.z > this.state.center + 2) {
@@ -115,13 +125,21 @@ class SeedScene extends Scene {
                 this.remove(fish);
             }
         }
-
         // if turtle has passed "out of view", then stop updating + remove from GUI
         for (let turtle of this.state.obstacleList) {
             if (turtle.state.active && turtle.position.z > this.state.center + 2) {
                 turtle.state.active = false;
                 this.removeFromUpdateList(turtle);
                 this.remove(turtle);
+            }
+        }
+        // if shark has passed "out of view", then stop updating + remove from GUI
+        for (let shark of this.state.sharkList) {
+            if (shark.position.z > this.state.center + 2) {
+                let index = this.state.sharkList.indexOf(shark);
+                this.state.sharkList.splice(index, 1);
+                this.removeFromUpdateList(shark);
+                this.remove(shark);
             }
         }
 

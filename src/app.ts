@@ -51,6 +51,7 @@ document.body.style.margin = '0'; // Removes margin around page
 document.body.style.overflow = 'hidden'; // Fix scrolling
 document.body.appendChild(canvas);
 
+// Add renderer to main application screen
 const app = document.getElementById('app')!;
 app.appendChild(renderer.domElement);
 
@@ -84,7 +85,7 @@ const onAnimationFrameHandler = () => {
     scene.update && scene.update(clock.getDelta());
     handleCharacterControls(scene, pointer, raycaster, camera);
     handleCollisions(scene);
-    updateScore(scene.state.score);
+    updateScore(scene.state.score, scene.state.bait);
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -122,24 +123,22 @@ const visibleWidthAtZDepth = (depth: number, camera: PerspectiveCamera) => {
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
 
-
-// Create a score display
-const scoreElement = document.createElement('div');
-// FIX to link to CSS file 
-scoreElement.style.fontFamily = 'monospace';
-scoreElement.style.position = 'absolute';
-scoreElement.style.top = '10px';
-scoreElement.style.left = '10px';
-scoreElement.style.color = 'white';
-scoreElement.style.fontSize = '24px';
-document.body.appendChild(scoreElement);
-
-// Update score and display
-function updateScore(newScore: number) {
+// Update score on screen
+function updateScore(newScore: number, newBait: number) {
     const score = newScore;
-    scoreElement.textContent = `Fish caught: ${score}`;
+    let scoreDisplay = document.getElementById('scoreElement');
+    if(scoreDisplay != null) {
+        scoreDisplay.textContent = `Fish caught: ${score}`;
+    }
+
+    const bait = newBait;
+    let baitDisplay = document.getElementById('baitCount');
+    if(baitDisplay != null) {
+        baitDisplay.textContent = `Bait remaining: ${bait}`;
+    }
   }  
 
+  // switch from start to app 
   document.getElementById('start-button')!.addEventListener('click', () => {
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';
@@ -147,6 +146,7 @@ function updateScore(newScore: number) {
     onAnimationFrameHandler();
 });
 
+// switch to end game screen
 document.getElementById('end-button')!.addEventListener('click', () => {
     // document.getElementById('app')!.style.display = 'none';
     // document.getElementById('start-screen')!.style.display = 'initial';
