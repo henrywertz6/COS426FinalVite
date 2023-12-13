@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import * as pages from './pages.js';
 import {
     WebGLRenderer,
     PerspectiveCamera,
