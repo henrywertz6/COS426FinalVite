@@ -80,6 +80,7 @@ const onAnimationFrameHandler = (timeStamp: number) => {
     handleCharacterControls(scene, pointer, raycaster, camera);
     handleCollisions(scene);
     reelFish(scene);
+    updateScore(scene.state.score);
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -117,10 +118,20 @@ const visibleWidthAtZDepth = (depth: number, camera: PerspectiveCamera) => {
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
 
-// const pointerMoveHandler = (event: MouseEvent) => {
-//     pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
-//     pointer.y = (event.clientY / window.innerHeight) * 2 + 1;
-// };
 
-// call handler from handlers.ts
-// window.addEventListener('pointermove', pointerMoveHandler, false);
+// Create a score display
+const scoreElement = document.createElement('div');
+// FIX to link to CSS file 
+scoreElement.style.fontFamily = 'monospace';
+scoreElement.style.position = 'absolute';
+scoreElement.style.top = '10px';
+scoreElement.style.left = '10px';
+scoreElement.style.color = 'white';
+scoreElement.style.fontSize = '24px';
+document.body.appendChild(scoreElement);
+
+// Update score and display
+function updateScore(newScore: number) {
+    const score = newScore;
+    scoreElement.textContent = `Fish caught: ${score}`;
+}  
