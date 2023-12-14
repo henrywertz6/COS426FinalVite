@@ -6,6 +6,7 @@ import {
     LineBasicMaterial,
     Vector3,
 } from 'three';
+
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 

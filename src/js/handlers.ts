@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import {
     WebGLRenderer,
     PerspectiveCamera,
@@ -10,6 +9,7 @@ import {
     Plane,
     ArrowHelper,
     Box3,
+    LineBasicMaterial,
 } from 'three';
 
 // handle user controls input
@@ -183,6 +183,36 @@ export function handleCollisions(
     // camera: any
 ) {
     let hook = scene.getObjectByName('hook');
+    let reel = scene.getObjectByName('reel');
+
+    if(hook && reel) {
+        // if we hit a jellyfish at any time!
+        let hookBox = new Box3().setFromObject(hook);
+        let reelBox = new Box3().setFromObject(reel);
+        for(let jelly of scene.state.jellyList) {
+            // only lets jellies hit one time 
+            if(jelly.state.active) {
+                let jellyBox = new Box3().setFromObject(jelly);
+                const intHook = hookBox.intersectsBox(jellyBox);
+                const intReel = reelBox.intersectsBox(jellyBox);
+                if(intHook || intReel) {
+                    jelly.state.active = false;
+                    // shock reel and get rid of one bait
+                    scene.state.bait -= 1;
+                    jelly.state.speed = 7;
+                
+                    // get rid of rish if on hook when jelly hit
+                    if(hook.state.fish) {
+                        hook.state.fish.rotateX(Math.PI/2);
+                        hook.state.fish.state.speed = 4;
+                        hook.state.fish.state.active = true;
+                        hook.state.fish = undefined;
+                    }
+                }
+            }
+        }
+    }
+
     if (hook && !hook.state.fish) {
         let hookBox = new Box3().setFromObject(hook);
         for (let fish of scene.state.fishList) {

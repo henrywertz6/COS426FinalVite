@@ -11,6 +11,7 @@ import Reel from '../objects/Reel';
 import Hook from '../objects/Hook';
 import GamePlane from '../objects/GamePlane';
 import Shark from '../objects/Shark';
+import Jellyfish from '../objects/Jellyfish';
 
 function random(min: number, max: number) {
     return Math.random() * (max - min) + min;
@@ -32,6 +33,7 @@ class SeedScene extends Scene {
         fishList: Array<Fish>;
         obstacleList: Array<Turtle>;
         sharkList: Array<Shark>;
+        jellyList: Array<Jellyfish>;
         center: number;
         score: number;
         bait: number;
@@ -50,6 +52,7 @@ class SeedScene extends Scene {
             fishList: [],
             obstacleList: [],
             sharkList: [],
+            jellyList: [],
             center: 0,
             score: 0,
             bait: 3
@@ -97,6 +100,13 @@ class SeedScene extends Scene {
         this.add(turtle);
     }
 
+    spawnJelly(): void {
+        // console.log('turtle spawned!');
+        const jellyfish = new Jellyfish(this, undefined);
+        this.state.jellyList.push(jellyfish);
+        this.add(jellyfish);
+    }
+
     spawnShark(): void {
         const shark = new Shark(this);
         this.state.sharkList.push(shark);
@@ -113,6 +123,8 @@ class SeedScene extends Scene {
             this.spawnFish();
         } else if(randomNum < 10 && this.state.sharkList.length < 1) {
             this.spawnShark();
+        } else if(randomNum < 12) {
+            this.spawnJelly();
         }
 
 
@@ -142,6 +154,16 @@ class SeedScene extends Scene {
                 this.remove(shark);
             }
         }
+        // if jellyfish has passed "out of view", then stop updating + remove from GUI
+        for (let jelly of this.state.jellyList) {
+            if (jelly.position.z > this.state.center + 2) {
+                let index = this.state.jellyList.indexOf(jelly);
+                this.state.jellyList.splice(index, 1);
+                this.removeFromUpdateList(jelly);
+                this.remove(jelly);
+            }
+        }
+
 
         // Call update for each object in the updateList
         for (const obj of updateList) {
