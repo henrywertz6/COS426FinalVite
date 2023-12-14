@@ -8,6 +8,22 @@ p {
     font-size: 16px;
 }
 
+.pause-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  font-family: Monaco, monospace;
+  cursor: pointer;
+  color: White; /* Adjust the color as needed */
+  outline: none;
+}
+.pause-button:hover {
+  color: #ADD8E6; /* Adjust the hover color */
+}
+
 .score {
     font-family: Monaco, monospace;
     position: absolute;

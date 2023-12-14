@@ -59,7 +59,6 @@ app.appendChild(renderer.domElement);
 const raycaster = new Raycaster();
 const pointer = new Vector2();
 
-
 // Set up controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
@@ -138,11 +137,40 @@ function updateScore(newScore: number, newBait: number) {
     }
   }  
 
+    // to toggle background music
+    const music = document.getElementById('background_music') as HTMLInputElement;
+    // Add an event listener to the checkbox
+    music!.addEventListener('change', () => {
+        // CREATE FUNC IN HANDLER that mutes/enables background music
+        // pass through music.checked (true = music)
+    });
+    // to toggle background music
+    const soundFX = document.getElementById('sound_effects') as HTMLInputElement;
+    // Add an event listener to the checkbox
+    soundFX!.addEventListener('change', () => {
+        // CREATE FUNC IN HANDLER that mutes/enables sound
+        // pass through soundFX.checked (true = sound effects)
+    });
+
   // switch from start to app 
   document.getElementById('start-button')!.addEventListener('click', () => {
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';
     document.getElementById('end-screen')!.style.display = 'none';
+    onAnimationFrameHandler();
+});
+
+  // switch from app to pause 
+  // FIX TO WHERE animation pauses when the game is paused 
+  document.getElementById('pause-button')!.addEventListener('click', () => {
+    document.getElementById('app')!.style.display = 'none';
+    document.getElementById('pause-screen')!.style.display = 'initial';
+});
+
+  // switch from pause to app 
+  document.getElementById('resume-button')!.addEventListener('click', () => {
+    document.getElementById('app')!.style.display = 'initial';
+    document.getElementById('pause-screen')!.style.display = 'none';
     onAnimationFrameHandler();
 });
 

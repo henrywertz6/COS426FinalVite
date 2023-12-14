@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cat Fishing</title>
     <link rel="stylesheet" href="src/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
   </head>
   <body>
     
@@ -15,16 +16,16 @@
         <div id="scoreElement" class="score"></div>
             <!-- <object data="assets/icons/droid.svg" style="width: 30px; height: 30px; margin-right: 15px;"></object>
             <span id="wave-count" style="font-family: Oswald; font-weight: 500; font-size: 28px; color: white;">1</span> -->
-        <div id="baitCount" class="bait">
-        </div>
-	</div>
+        <div id="baitCount" class="bait"></div>
+        <button id="pause-button" class="pause-button">Pause Game</button>
+    </div>
 
-    <div id="start-screen">
+    <div id="start-screen" >
         <div style="width: 100%; height: 100%; position: fixed; display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <p style="font-size: 84px; margin-bottom: 40px;">Cat fishing!</p>
             <div id="start-button" style="border: 4px solid white; border-radius: 20px; padding: 0 20px; margin-bottom: 40px;">
                 <!-- <object data="assets/icons/jedi.svg" style="width: 50px; height: 50px; margin-right: 20px; pointer-events: none;"></object> -->
-                <span style="font-size: 64px;">Enter</span>
+                <p style="font-size: 64px;">Enter</p>
             </div>
             <p style="font-size: 48px;">Instructions</p>
             <ul style="font-size: 24px;">
@@ -32,6 +33,34 @@
             </ul>
         </div>
     </div>
+
+    <div id="pause-screen"  style="display: none;">
+        <div style="width: 100%; height: 100%; position: fixed; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div id="resume-button" style="border: 4px solid white; border-radius: 20px; padding: 0 20px; margin-bottom: 40px;">
+                <p style="font-size: 64px;">Resume Game</p>
+            </div>
+            <div class="pretty p-image p-plain p-bigger p-tada">
+                <input name="background_music" type="checkbox" class="pause-form-input" id="background_music" checked>
+                <div class="state">
+                    <img class="image" src="https://assets.stickpng.com/images/58aeffb2c869e092af51ee74.png">
+                    <label style="font-family: monospace; font-size: 20px">Background music</label>
+                </div>
+            </div>
+            <br>
+            <div class="pretty p-image p-plain p-bigger p-tada">
+                <input name="sound_effects" type="checkbox" class="pause-form-input" id="sound_effects" checked>
+                <div class="state">
+                    <img class="image" src="https://assets.stickpng.com/images/58aeffb2c869e092af51ee74.png">
+                    <label style= "font-family: monospace; font-size: 20px">Sound effects</label>
+                </div>
+            </div>
+            <p style="font-size: 48px;">Instructions</p>
+            <ul style="font-size: 24px;">
+                <li>instructions will go here!</li>
+            </ul>
+        </div>
+    </div>
+
 
     <div id="end-screen" style="display: none;">
         <div style="width: 100%; height: 100%; position: fixed; display: flex; flex-direction: column; justify-content: center; align-items: center;">
