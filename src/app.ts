@@ -33,7 +33,7 @@ manager.onStart = function () {
 manager.onLoad = function () {
     console.log('loading complete');
 };
-const scene = new SeaScene(manager);
+let scene = new SeaScene(manager);
 const camera = new PerspectiveCamera();
 const renderer = new WebGLRenderer({ antialias: true });
 const clock = new Clock();
@@ -74,23 +74,55 @@ window.addEventListener(
 );
 window.addEventListener('mousedown', (event) => handleMouseDown(event, scene), false);
 
-// Render loop
-const onAnimationFrameHandler = () => {
-    // raycaster.setFromCamera(pointer, camera);
+let currApp = false;
 
-    // console.log(pointer);
+// Define a function for rendering logic
+const renderScene = () => {
     controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(clock.getDelta());
     handleCharacterControls(scene, pointer, raycaster, camera);
     handleCollisions(scene);
     updateScore(scene.state.score, scene.state.bait);
-    if(scene.state.bait == 0) {
+    if (scene.state.bait === 0) {
         endGame(scene.state.score);
     }
-    window.requestAnimationFrame(onAnimationFrameHandler);
+};
+
+// Render loop
+const onAnimationFrameHandler = () => {
+    // raycaster.setFromCamera(pointer, camera);
+    
+    if (currApp) {
+        // console.log(pointer);
+        renderScene();
+        window.requestAnimationFrame(onAnimationFrameHandler);
+    }
+
+    // if(currApp) {
+    //     // console.log(pointer);
+    //     controls.update();
+    //     renderer.render(scene, camera);
+    //     scene.update && scene.update(clock.getDelta());
+    //     handleCharacterControls(scene, pointer, raycaster, camera);
+    //     handleCollisions(scene);
+    //     updateScore(scene.state.score, scene.state.bait);
+    //     if(scene.state.bait == 0) {
+    //         endGame(scene.state.score);
+    //     }
+    //     window.requestAnimationFrame(onAnimationFrameHandler);
+    // }
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
+
+
+// Function to reset the render loop
+const resetRenderLoop = () => {
+    scene = new SeaScene(manager);
+    windowResizeHandler();
+    
+    onAnimationFrameHandler();
+};
 
 // Resize Handler
 const windowResizeHandler = () => {
@@ -168,6 +200,7 @@ function updateScore(newScore: number, newBait: number) {
 
   // switch from start to app 
   document.getElementById('start-button')!.addEventListener('click', () => {
+    currApp = true;
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';
     document.getElementById('end-screen')!.style.display = 'none';
@@ -177,12 +210,14 @@ function updateScore(newScore: number, newBait: number) {
   // switch from app to pause 
   // FIX TO WHERE animation pauses when the game is paused 
   document.getElementById('pause-button')!.addEventListener('click', () => {
+    currApp = false;
     document.getElementById('app')!.style.display = 'none';
     document.getElementById('pause-screen')!.style.display = 'initial';
 });
 
   // switch from pause to app 
   document.getElementById('resume-button')!.addEventListener('click', () => {
+    currApp = true;
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('pause-screen')!.style.display = 'none';
     onAnimationFrameHandler();
@@ -190,10 +225,7 @@ function updateScore(newScore: number, newBait: number) {
 
   // switch from pause to app 
   document.getElementById('play-again')!.addEventListener('click', () => {
-    // reinitialize scene 
-    scene.state.score = 0;
-    scene.state.bait = 3;
-    scene.state.fishSpeed = 2;
+    resetRenderLoop();
     
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';

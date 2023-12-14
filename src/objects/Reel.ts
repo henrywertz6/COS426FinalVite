@@ -44,6 +44,42 @@ class Reel extends Group {
         // Add self to parent's update list
         parent.addToUpdateList(this);
     }
+
+    // Function to make the line shake
+    shakeLine () {
+        const initialPosition = this.state.line.position.clone();
+        console.log(initialPosition);
+
+        const duration = 0.5; // Duration of the shake in seconds
+        const magnitude = 0.1; // Magnitude of the shake
+  
+        const startTime = Date.now();
+  
+        const updatePosition = () => {
+          const elapsed = (Date.now() - startTime) / 1000; // Convert to seconds
+          if (elapsed < duration) {
+            const progress = elapsed / duration;
+            const angle = progress * Math.PI * 2;
+            const offsetX = Math.sin(angle) * magnitude;
+            const offsetY = Math.cos(angle) * magnitude;
+  
+            this.state.line.position.set(
+              initialPosition.x + offsetX,
+              initialPosition.y + offsetY,
+              initialPosition.z
+            );
+  
+            requestAnimationFrame(updatePosition);
+          } else {
+            // Reset position after the shake is complete
+            this.state.line.position.copy(initialPosition);
+          }
+        };
+  
+        updatePosition();
+      };  
+
+
     changeLength(y: number): void {
         const points = [];
         points.push(new Vector3(0, 5.8, 0));

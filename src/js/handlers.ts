@@ -12,6 +12,7 @@ import {
     LineBasicMaterial,
 } from 'three';
 
+
 // handle user controls input
 export function handleKeyDown(
     event: { key: string },
@@ -109,74 +110,10 @@ export function handleCharacterControls(
     }
 }
 
-// THIS is throwing error for some reason, commented out for now oops
-// handle switching between screen states such as menu, game, game over, mute, and pause states
-// export function handleScreens(
-//     event: { key: string },
-//     screens: { [x: string]: boolean },
-//     document: {
-//         getElementById: (arg0: string) => {
-//             (): any;
-//             new (): any;
-//             pause: { (): void; new (): any };
-//         };
-//     },
-//     canvas: any,
-//     reel: any,
-//     scene: { getObjectByName: (arg0: any) => any },
-//     menuCanvas: any,
-//     sounds: any,
-//     score: any
-// ) {
-//     // quit: game -> ending
-//     if (event.key == 'q' && !screens['ending'] && !screens['menu']) {
-//         screens['menu'] = false;
-//         screens['pause'] = false;
-//         screens['ending'] = true;
-//         pages.quit(document, score);
-//         document.getElementById('audio').pause();
-//     }
-//     // restart: ending -> menu
-//     else if (event.key == ' ' && screens['ending']) {
-//         let hook = scene.getObjectByName(reel);
-//         hook.null();
-//         screens['ending'] = false;
-//         screens['pause'] = false;
-//         screens['menu'] = true;
-//         pages.init_page(document, menuCanvas);
-//     }
-//     // start: menu -> game
-//     else if (event.key == ' ' && screens['menu']) {
-//         screens['menu'] = false;
-//         pages.start(document, canvas);
-//         // buffer = false;
-
-//         // ADD SOUNDS
-//         // sounds['whirring'].play()
-//         // document.getElementById('audio').play()
-//     }
-//     // unpause: pause -> game
-//     else if (event.key == ' ' && screens['pause']) {
-//         screens['pause'] = false;
-//         // sounds['whirring'].setVolume(0.4);
-//         // document.getElementById('audio').volume = 1;
-//         let pause = document.getElementById('pause');
-//         // pause.classList.add('invisible');
-//     }
-//     // pause: game -> pause
-//     else if (event.key == ' ' && !screens['ending']) {
-//         screens['pause'] = true;
-//         // sounds['whirring'].setVolume(0.1);
-//         // document.getElementById('audio').volume = 0.5;
-//         let pause = document.getElementById('pause');
-//         // pause.classList.remove('invisible');
-//     }
-// }
-
 // handle collisions with sea creatures
 export function handleCollisions(
     // document: any,
-    scene: any
+    scene: any,
     // reel: any,
     // screens: any,
     // sounds: any,
@@ -201,6 +138,7 @@ export function handleCollisions(
                     // shock reel and get rid of one bait
                     scene.state.bait -= 1;
                     jelly.state.speed = 7;
+                    reel.shakeLine();
                 
                     // get rid of rish if on hook when jelly hit
                     if(hook.state.fish) {
@@ -266,28 +204,4 @@ export function handleCollisions(
             }
         }
     }
-    // give each object a bounding box: https://stackoverflow.com/questions/28453895/how-to-detect-collision-between-two-objects-in-javascript-with-three-js
-    // store all creatures on screen in an array
-    // loop through array of "onScreen" objs
-    // check if any obj bounding box collides with the hook / line bounding boxes
-    // IF line collides with crab & still have life -- reduce bait by 1
-    // IF line collides with crab & no life -- end game
-    // pseudo code -- IF hook collide with fish & no fish already on line -- rotate fish 90 degrees and attach to hook
-    // IF hook collides with non-fish & fish already on line -- fish "swims away" (fast speed)
-    // let hook = scene.getObjectByName(reel);
-    // if (interp.y > obj.position.y) {
-    //     let fillScreen = document.getElementById('fillScreen');
-    //     fillScreen.classList.add('death');
-    //     setTimeout(function() {
-    //         fillScreen.classList.remove('death');
-    //     }, 3000);
-    //     screens['ending'] = true;
-    //     pages.quit(document, score);
-    // }
 }
-
-// // update score counter on the top left corner of game screen
-// export function updateScore(document, score) {
-//     let scoreCounter = document.getElementById('score');
-//     scoreCounter.innerHTML = 'Score: '.concat(score != "Infinity" ? score : "∞");
-// }
