@@ -193,6 +193,7 @@ function updateScore(newScore: number, newBait: number) {
     // reinitialize scene 
     scene.state.score = 0;
     scene.state.bait = 3;
+    scene.state.fishSpeed = 2;
     
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';

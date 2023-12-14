@@ -42,8 +42,9 @@ export function handleMouseDown(
         scene.state.score += 1;
         hook.state.fish = undefined;
         
-        // spin turtle every 10 fish hehe
+        // increase fish speed and spin turtle every 10 fish
         if(scene.state.score % 10 == 0) {
+            scene.state.fishSpeed += 0.3;
             let turtle = scene.getObjectByName('turtle');
             turtle.spin();
         }
@@ -254,7 +255,16 @@ export function handleCollisions(
                 hook.state.fish = undefined;
             }
         }
-        
+        for (let blow of scene.state.blowList) {
+            let blowBox = new Box3().setFromObject(blow);
+            const intersection = fishBox.intersectsBox(blowBox);
+            if (intersection) {
+                fish.rotateX(Math.PI/2);
+                fish.state.speed = 4;
+                fish.state.active = true;
+                hook.state.fish = undefined;
+            }
+        }
     }
     // give each object a bounding box: https://stackoverflow.com/questions/28453895/how-to-detect-collision-between-two-objects-in-javascript-with-three-js
     // store all creatures on screen in an array

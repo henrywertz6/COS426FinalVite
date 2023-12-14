@@ -12,6 +12,7 @@ import Hook from '../objects/Hook';
 import GamePlane from '../objects/GamePlane';
 import Shark from '../objects/Shark';
 import Jellyfish from '../objects/Jellyfish';
+import Blowfish from '../objects/Blowfish';
 
 function random(min: number, max: number) {
     return Math.random() * (max - min) + min;
@@ -34,9 +35,11 @@ class SeedScene extends Scene {
         obstacleList: Array<Turtle>;
         sharkList: Array<Shark>;
         jellyList: Array<Jellyfish>;
+        blowList: Array<Blowfish>;
         center: number;
         score: number;
         bait: number;
+        fishSpeed: number;
     };
 
     constructor(loadManager: LoadingManager) {
@@ -53,9 +56,11 @@ class SeedScene extends Scene {
             obstacleList: [],
             sharkList: [],
             jellyList: [],
+            blowList: [],
             center: 0,
             score: 0,
-            bait: 3
+            bait: 3,
+            fishSpeed: 2,
         };
 
         // Set background to a nice color
@@ -113,6 +118,14 @@ class SeedScene extends Scene {
         this.add(shark);
     }
 
+    spawnBlowfish(): void {
+        // console.log('fish spawned!');
+        const blow = new Blowfish(this);
+        this.state.blowList.push(blow);
+        this.add(blow);
+    }
+
+
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
@@ -123,7 +136,11 @@ class SeedScene extends Scene {
             this.spawnFish();
         } else if(randomNum < 10 && this.state.sharkList.length < 1) {
             this.spawnShark();
-        } else if(randomNum < 12) {
+        } else if(randomNum < 12 && this.state.blowList.length < 3) {
+            this.spawnBlowfish();
+        }
+        // generate more jellyfish as the player's score gets higher?
+        else if(randomNum < (13 * (1 + this.state.score / 150))) {
             this.spawnJelly();
         }
 
@@ -163,7 +180,15 @@ class SeedScene extends Scene {
                 this.remove(jelly);
             }
         }
-
+        // if blowfish has passed "out of view", then stop updating + remove from GUI
+        for (let blow of this.state.blowList) {
+            if (blow.position.z > this.state.center + 2) {
+                let index = this.state.blowList.indexOf(blow);
+                this.state.blowList.splice(index, 1);
+                this.removeFromUpdateList(blow);
+                this.remove(blow);
+            }
+        }
 
         // Call update for each object in the updateList
         for (const obj of updateList) {

@@ -24,7 +24,7 @@ class Fish extends Group {
         this.state = {
             mixer: undefined,
             clock: new Clock(),
-            speed: 2,
+            speed: parent.state.fishSpeed,
             active: true,
             escape: false
         };
