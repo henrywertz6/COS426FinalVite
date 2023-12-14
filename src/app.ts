@@ -85,6 +85,9 @@ const onAnimationFrameHandler = () => {
     handleCharacterControls(scene, pointer, raycaster, camera);
     handleCollisions(scene);
     updateScore(scene.state.score, scene.state.bait);
+    if(scene.state.bait == 0) {
+        endGame(scene.state.score);
+    }
     window.requestAnimationFrame(onAnimationFrameHandler);
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
@@ -121,6 +124,17 @@ const visibleWidthAtZDepth = (depth: number, camera: PerspectiveCamera) => {
 
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
+
+// switch to end game screen
+function endGame(finalScore: number) {
+    let score = document.getElementById('score');
+    if(score != null) {
+        score.textContent = `Total fish caught: ${finalScore}`;
+    }
+
+    document.getElementById('app')!.style.display = 'none';
+    document.getElementById('end-screen')!.style.display = 'initial';
+}
 
 // Update score on screen
 function updateScore(newScore: number, newBait: number) {
@@ -174,10 +188,14 @@ function updateScore(newScore: number, newBait: number) {
     onAnimationFrameHandler();
 });
 
-// switch to end game screen
-document.getElementById('end-button')!.addEventListener('click', () => {
-    // document.getElementById('app')!.style.display = 'none';
-    // document.getElementById('start-screen')!.style.display = 'initial';
-    // document.getElementById('end-screen')!.style.display = 'none';
-    location.reload();
+  // switch from pause to app 
+  document.getElementById('play-again')!.addEventListener('click', () => {
+    // reinitialize scene 
+    scene.state.score = 0;
+    scene.state.bait = 3;
+    
+    document.getElementById('app')!.style.display = 'initial';
+    document.getElementById('start-screen')!.style.display = 'none';
+    document.getElementById('end-screen')!.style.display = 'none';
+    onAnimationFrameHandler();
 });
