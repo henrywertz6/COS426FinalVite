@@ -28,9 +28,11 @@ import {
 // Initialize core ThreeJS components
 const manager = new LoadingManager();
 manager.onStart = function () {
+    document.getElementById('loading-screen')!.style.display = 'none';
     console.log('loading starting');
 };
 manager.onLoad = function () {
+    document.getElementById('loading-screen')!.style.display = 'none';
     console.log('loading complete');
 };
 let scene = new SeaScene(manager);
