@@ -62,11 +62,8 @@ class Ocean extends Group {
             material = material2;
           }
         const mesh = new Mesh(geometry, material);
-        // mesh.lookAt(new Vector3(0.2, 0.9, 0));
-        // mesh.position.y = 7.6;
-        // mesh.position.x = -23.8;
-        mesh.lookAt(new Vector3(0, -1, 0));
-        mesh.position.y = -0.8;
+        mesh.lookAt(new Vector3(0, 1, 0));
+        mesh.position.y = 5.8;
         mesh.position.x = -33;
         mesh.rotateY(Math.PI/32);
 
