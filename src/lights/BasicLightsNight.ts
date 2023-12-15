@@ -3,8 +3,6 @@ import {
     SpotLight,
     AmbientLight,
     HemisphereLight,
-    DirectionalLight,
-    DirectionalLightHelper,
     AxesHelper,
     SpotLightHelper,
 } from 'three';

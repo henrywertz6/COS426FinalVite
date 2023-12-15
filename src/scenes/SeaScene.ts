@@ -115,7 +115,7 @@ class SeedScene extends Scene {
         } else {
             this.background = new Color(0x0059b3);
         }
-        this.fog = new FogExp2(0x161e57, 0.005);
+        this.fog = new FogExp2(0x161e57, 0.01);
         // Add meshes to scene
         const plane = new GamePlane(this);
         const ocean = new Ocean(this, this.state.timeOfDay != 'night');
