@@ -18,20 +18,21 @@ class Sky extends Group {
         super();
         this.name = 'sky';
         let points = [];
-        points.push(new Vector3(-30, 0, 50));
-        points.push(new Vector3(-30, 0, -50));
-        points.push(new Vector3(-30, 50, 50));
-        points.push(new Vector3(-30, 50, -50));
+        points.push(new Vector3(-25, 0, 50));
+        points.push(new Vector3(-25, 0, -50));
+        points.push(new Vector3(-25, 50, 50));
+        points.push(new Vector3(-25, 50, -50));
 
         const geometry = new PlaneGeometry().setFromPoints(points);
         let material = new MeshBasicMaterial({
-            color: 0x87CEEB,
+            color: 0xADD8E6,
             side: DoubleSide,
             transparent: true,
             opacity: 0.8,
         });
         const material2 = new MeshBasicMaterial({
             color: 0x0c1445,
+            side: DoubleSide,
             transparent: true,
             opacity: 0.8,
         });
