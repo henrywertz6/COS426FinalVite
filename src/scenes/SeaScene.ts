@@ -42,6 +42,7 @@ class SeedScene extends Scene {
         score: number;
         numBait: number;
         fishSpeed: number;
+        hasBait: boolean;
     };
 
     constructor(loadManager: LoadingManager) {
@@ -62,6 +63,7 @@ class SeedScene extends Scene {
             score: 0,
             numBait: 3,
             fishSpeed: 2,
+            hasBait: true,
         };
 
         // Set background to a nice color
@@ -127,7 +129,21 @@ class SeedScene extends Scene {
         this.state.blowList.push(blow);
         this.add(blow);
     }
-
+    
+    spawnBait(): void {
+        let oldBait = this.getObjectByName('bait');
+        if(oldBait != null) {
+            this.remove(oldBait);
+        }
+        this.state.hasBait = true;    
+        let newBait = new Bait(this, undefined);
+        let hook = this.getObjectByName('hook');
+        let newPos = hook?.position;
+        if(newPos != null) {
+        newBait.position.set(newPos.x, newPos?.y - 0.2, newPos.z);
+        }
+        this.add(newBait);
+    }
 
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;

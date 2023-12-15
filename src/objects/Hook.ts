@@ -12,9 +12,8 @@ class Hook extends Group {
     state: {
         fishHooked: boolean;
         fish: Fish | undefined;
-        hasBait: boolean;
     };
-    constructor(parent: SeedScene, loadManager: LoadingManager) {
+    constructor(parent: SeedScene, loadManager?: LoadingManager) {
         // Call parent Group() constructor
         super();
 
@@ -22,7 +21,6 @@ class Hook extends Group {
         this.state = {
             fishHooked: false,
             fish: undefined,
-            hasBait: true
         };
         // Load object
         const loader = new GLTFLoader(loadManager);

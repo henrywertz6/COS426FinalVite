@@ -17,6 +17,7 @@
             <!-- <object data="assets/icons/droid.svg" style="width: 30px; height: 30px; margin-right: 15px;"></object>
             <span id="wave-count" style="font-family: Oswald; font-weight: 500; font-size: 28px; color: white;">1</span> -->
         <div id="baitCount" class="bait"></div>
+        <button id='bait-button' class="bait-button"><img src="bait.png" alt="Button Image" width="30" height="30"> Restock Bait!</button>        
         <button id="pause-button" class="pause-button">Pause Game</button>
     </div>
 
@@ -56,24 +57,29 @@
 
     <div id="pause-screen"  style="display: none;">
         <div style="width: 100%; height: 100%; position: fixed; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <div id="resume-button" style="border: 4px solid white; border-radius: 20px; padding: 0 20px; margin-bottom: 40px;">
-                <p style="font-size: 64px;">Resume Game</p>
-            </div>
-            <div class="pretty p-image p-plain p-bigger p-tada">
-                <input name="background_music" type="checkbox" class="pause-form-input" id="background_music">
-                <div class="state">
-                    <img class="image" src="paw.png">
-                    <label style="font-family: monospace; font-size: 20px">Background music</label>
-                </div>
+            <div id="resume-button" class="resume-button">
+                Resume Game
             </div>
             <br>
-            <div class="pretty p-image p-plain p-bigger p-tada">
+
+            <div class="pretty p-icon p-round p-jelly p-bigger">
+                <input name="background_music" type="checkbox" class="pause-form-input" id="background_music">
+                <div class="state p-primary">
+                    <i class="icon mdi mdi-check"></i>
+                    <label style= "font-family: monospace; font-size: 20px">Background Music</label>
+                </div>
+            </div>
+        
+            <br>
+
+            <div class="pretty p-icon p-round p-jelly p-bigger">
                 <input name="sound_effects" type="checkbox" class="pause-form-input" id="sound_effects">
-                <div class="state">
-                    <img class="image" src="paw.png">
+                <div class="state p-primary">
+                    <i class="icon mdi mdi-check"></i>
                     <label style= "font-family: monospace; font-size: 20px">Sound effects</label>
                 </div>
             </div>
+
             <p style="font-size: 48px;">Instructions</p>
             <ul style="font-size: 24px;">
                 <li>instructions will go here!</li>

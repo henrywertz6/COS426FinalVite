@@ -186,6 +186,18 @@ function updateScore(newScore: number, newBait: number) {
     if(baitDisplay != null) {
         baitDisplay.textContent = `Bait remaining: ${bait}`;
     }
+
+    let hasBait = scene.state.hasBait;
+    let baitButton = document.getElementById('bait-button');
+    if(baitButton != null) {
+    if(!hasBait) {
+            baitButton.style.display = 'block';
+        }
+    else {
+        baitButton.style.display = 'none';
+    }
+    }
+
   }  
 
   
@@ -227,6 +239,13 @@ function updateScore(newScore: number, newBait: number) {
         // CREATE FUNC IN HANDLER that mutes/enables sound
         // pass through soundFX.checked (true = sound effects)
     });
+
+
+  // restock bait! 
+  document.getElementById('bait-button')!.addEventListener('click', () => {
+    scene.spawnBait();
+});
+
 
   // switch from start to app 
   document.getElementById('start-button')!.addEventListener('click', () => {

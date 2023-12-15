@@ -129,7 +129,7 @@ export function handleCollisions(
     let bait = scene.getObjectByName('bait');
 
     // jellyfish collisions only happen when we have bait on the hook
-    if(hook && reel && hook.state.hasBait) {
+    if(hook && reel && scene.state.hasBait) {
         // if we hit a jellyfish at any time!
         let hookBox = new Box3().setFromObject(hook);
         let reelBox = new Box3().setFromObject(reel);
@@ -145,7 +145,7 @@ export function handleCollisions(
                     scene.state.numBait -= 1;
                     jelly.state.speed = 7;
                     bait.state.active = false;
-                    hook.state.hasBait = false;
+                    scene.state.hasBait = false;
                     reel.shakeLine();
                 
                     // get rid of fish if on hook when jelly hit
@@ -160,7 +160,7 @@ export function handleCollisions(
         }
     }
     // if no fish on hook yet but we have bait, we can catch a fish
-    if (hook && !hook.state.fish && hook.state.hasBait) {
+    if (hook && !hook.state.fish && scene.state.hasBait) {
         let hookBox = new Box3().setFromObject(hook);
         for (let fish of scene.state.fishList) {
             let fishBox = new Box3().setFromObject(fish);
