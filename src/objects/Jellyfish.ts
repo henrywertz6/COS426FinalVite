@@ -1,7 +1,7 @@
 import { Group, LoadingManager, Clock, Vector3 } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-import SeedScene from '../scenes/SeaScene';
+import SeedScene from '../scenes/SeaSceneNight';
 
 // Import flower model as a URL using Vite's syntax
 import MODEL from './simple_jellyfish/scene.gltf?url';
@@ -22,7 +22,7 @@ class Jellyfish extends Group {
             gui: parent.state.gui,
             clock: new Clock(),
             speed: 3,
-            active: true
+            active: true,
         };
         // Load object
         const loader = new GLTFLoader(loadManager);

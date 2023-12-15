@@ -2,7 +2,7 @@ import { Group, LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 
-import SeedScene from '../scenes/SeaScene';
+import SeedScene from '../scenes/SeaSceneNight';
 import Fish from '../objects/Fish';
 
 // Import flower model as a URL using Vite's syntax

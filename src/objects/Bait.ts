@@ -1,10 +1,17 @@
-import { Group, AnimationMixer, Clock, LoadingManager, Mesh, MeshStandardMaterial } from 'three';
+import {
+    Group,
+    AnimationMixer,
+    Clock,
+    LoadingManager,
+    Mesh,
+    MeshStandardMaterial,
+} from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-import SeedScene from '../scenes/SeaScene';
+import SeedScene from '../scenes/SeaSceneNight';
 
 // Import earthworm model as a URL using Vite's syntax
-import MODEL from './low_poly_earthworm/scene.gltf?url';
+import MODEL from './worm2/worm2.gltf?url';
 
 class Bait extends Group {
     state: {
@@ -23,20 +30,11 @@ class Bait extends Group {
         this.state = {
             clock: new Clock(),
             speed: 2,
-            active: true
+            active: true,
         };
         this.name = 'bait';
         loader.load(MODEL, (gltf) => {
             this.add(gltf.scene);
-        });
-        this.traverse(function (child) {
-            if (child instanceof Mesh) {
-                if (child.material instanceof MeshStandardMaterial) {
-                    // Use 'as MeshStandardMaterial' to assert the type
-                    const material = child.material as THREE.MeshStandardMaterial;
-                    material.color.setHex(0xFFC0CB); // Set your desired color
-                }
-            }
         });
 
         // Add self to parent's update list

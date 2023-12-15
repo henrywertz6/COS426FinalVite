@@ -1,7 +1,7 @@
 import dat from 'dat.gui';
-import { Scene, Color, LoadingManager, Box3, Object3D } from 'three';
+import { Scene, Color, LoadingManager, Box3, Object3D, Clock } from 'three';
 
-import BasicLights from '../lights/BasicLights';
+import BasicLights from '../lights/BasicLightsNight';
 import Turtle from '../objects/Turtle';
 import Boat from '../objects/Boat';
 import Rod from '../objects/Rod';
@@ -41,6 +41,11 @@ class SeedScene extends Scene {
         score: number;
         numBait: number;
         fishSpeed: number;
+        stage: number;
+        elapsedTime: number;
+        spawnIntervals: { [key: string]: number };
+        spawnTimers: { [key: string]: number };
+        timeOfDay: string;
     };
 
     constructor(loadManager: LoadingManager) {
@@ -62,10 +67,23 @@ class SeedScene extends Scene {
             score: 0,
             numBait: 3,
             fishSpeed: 2,
+            stage: 0,
+            elapsedTime: 0,
+            spawnIntervals: {
+                fish: 3,
+                pufferfish: 4,
+            },
+            spawnTimers: {
+                fish: 0,
+                pufferfish: 0,
+            },
+            timeOfDay: 'day',
         };
 
         // Set background to a nice color
-        this.background = new Color(0x334b66);
+        if (this.state.timeOfDay == 'night') {
+            this.background = new Color(0x060a1c);
+        }
 
         // Add meshes to scene
         const plane = new GamePlane(this);
@@ -126,26 +144,76 @@ class SeedScene extends Scene {
         this.state.blowList.push(blow);
         this.add(blow);
     }
+    updateSpawners(deltaTime: number): void {
+        this.state.elapsedTime += deltaTime;
 
+        if (this.state.elapsedTime >= this.getStageDuration()) {
+            this.advanceToNextStage();
+        }
 
+        for (const objectType in this.state.spawnIntervals) {
+            if (
+                this.state.spawnTimers[objectType] >=
+                this.state.spawnIntervals[objectType]
+            ) {
+                console.log('I got here');
+                this.spawnObject(objectType);
+                this.state.spawnTimers[objectType] = 0;
+            } else {
+                this.state.spawnTimers[objectType] += deltaTime;
+            }
+        }
+    }
+
+    getStageDuration(): number {
+        switch (this.state.stage) {
+            case 0:
+                return 10;
+            case 1:
+                return 15;
+            default:
+                return 0;
+        }
+    }
+    spawnObject(objectType: string): void {
+        if (objectType == 'fish') {
+            this.spawnFish();
+        } else if (objectType == 'pufferfish') {
+            this.spawnBlowfish();
+        }
+    }
+    advanceToNextStage() {
+        this.state.stage++;
+        this.state.elapsedTime = 0;
+
+        switch (this.state.stage) {
+            case 1:
+                this.state.spawnIntervals['fish'] = 3;
+                break;
+            case 2:
+                this.state.spawnIntervals['fish'] = 2;
+                break;
+        }
+    }
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
 
-        // randomly generate fish at each time step
-        let randomNum = random(0, 1500);
-        if (randomNum < 8) {
-            this.spawnFish();
-        } else if(randomNum < 10 && this.state.sharkList.length < 1) {
-            this.spawnShark();
-        } else if(randomNum < 12 && this.state.blowList.length < 3) {
-            this.spawnBlowfish();
-        }
-        // generate more jellyfish as the player's score gets higher?
-        else if(randomNum < (13 * (1 + this.state.score / 150))) {
-            this.spawnJelly();
-        }
+        this.updateSpawners(timeStamp);
 
+        // randomly generate fish at each time step
+        // let randomNum = random(0, 1500);
+        // if (randomNum < 8) {
+        //     this.spawnFish();
+        // } else if (randomNum < 10 && this.state.sharkList.length < 1) {
+        //     this.spawnShark();
+        // } else if (randomNum < 12 && this.state.blowList.length < 3) {
+        //     this.spawnBlowfish();
+        // }
+        // // generate more jellyfish as the player's score gets higher?
+        // else if (randomNum < 13 * (1 + this.state.score / 150)) {
+        //     this.spawnJelly();
+        // }
 
         // REMOVE THINGS OFF SCREEN
         // if fish has passed "out of view", then stop updating + remove from GUI
@@ -158,7 +226,10 @@ class SeedScene extends Scene {
         }
         // if turtle has passed "out of view", then stop updating + remove from GUI
         for (let turtle of this.state.obstacleList) {
-            if (turtle.state.active && turtle.position.z > this.state.center + 2) {
+            if (
+                turtle.state.active &&
+                turtle.position.z > this.state.center + 2
+            ) {
                 turtle.state.active = false;
                 this.removeFromUpdateList(turtle);
                 this.remove(turtle);

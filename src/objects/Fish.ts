@@ -1,7 +1,7 @@
 import { Group, AnimationMixer, Clock, LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-import SeedScene from '../scenes/SeaScene';
+import SeedScene from '../scenes/SeaSceneNight';
 
 // Import flower model as a URL using Vite's syntax
 import MODEL from './fish/scene.gltf?url';
@@ -12,7 +12,7 @@ class Fish extends Group {
         clock: Clock;
         speed: number;
         active: boolean;
-        escape: boolean
+        escape: boolean;
     };
     constructor(parent: SeedScene) {
         // Call parent Group() constructor
@@ -26,7 +26,7 @@ class Fish extends Group {
             clock: new Clock(),
             speed: parent.state.fishSpeed,
             active: true,
-            escape: false
+            escape: false,
         };
         this.name = 'fish';
         loader.load(MODEL, (gltf) => {
@@ -51,7 +51,7 @@ class Fish extends Group {
                 this.state.mixer.update(delta);
             }
             this.translateZ(delta * this.state.speed);
-        } 
+        }
     }
 }
 

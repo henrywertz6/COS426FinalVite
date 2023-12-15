@@ -17,7 +17,7 @@ import {
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-import SeaScene from './scenes/SeaScene';
+import SeaScene from './scenes/SeaSceneNight.ts';
 import {
     handlePointerMove,
     handleCharacterControls,
@@ -74,7 +74,11 @@ window.addEventListener(
     (event) => handlePointerMove(event, pointer),
     false
 );
-window.addEventListener('mousedown', (event) => handleMouseDown(event, scene), false);
+window.addEventListener(
+    'mousedown',
+    (event) => handleMouseDown(event, scene),
+    false
+);
 
 let currApp = false;
 
@@ -94,7 +98,7 @@ const renderScene = () => {
 // Render loop
 const onAnimationFrameHandler = () => {
     // raycaster.setFromCamera(pointer, camera);
-    
+
     if (currApp) {
         // console.log(pointer);
         renderScene();
@@ -117,12 +121,11 @@ const onAnimationFrameHandler = () => {
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
 
-
 // Function to reset the render loop
 const resetRenderLoop = () => {
     scene = new SeaScene(manager);
     windowResizeHandler();
-    
+
     onAnimationFrameHandler();
 };
 
@@ -162,7 +165,7 @@ window.addEventListener('resize', windowResizeHandler, false);
 // switch to end game screen
 function endGame(finalScore: number) {
     let score = document.getElementById('score');
-    if(score != null) {
+    if (score != null) {
         score.textContent = `Total fish caught: ${finalScore}`;
     }
 
@@ -174,34 +177,34 @@ function endGame(finalScore: number) {
 function updateScore(newScore: number, newBait: number) {
     const score = newScore;
     let scoreDisplay = document.getElementById('scoreElement');
-    if(scoreDisplay != null) {
+    if (scoreDisplay != null) {
         scoreDisplay.textContent = `Fish caught: ${score}`;
     }
 
     const bait = newBait;
     let baitDisplay = document.getElementById('baitCount');
-    if(baitDisplay != null) {
+    if (baitDisplay != null) {
         baitDisplay.textContent = `Bait remaining: ${bait}`;
     }
-  }  
+}
 
-    // to toggle background music
-    const music = document.getElementById('background_music') as HTMLInputElement;
-    // Add an event listener to the checkbox
-    music!.addEventListener('change', () => {
-        // CREATE FUNC IN HANDLER that mutes/enables background music
-        // pass through music.checked (true = music)
-    });
-    // to toggle background music
-    const soundFX = document.getElementById('sound_effects') as HTMLInputElement;
-    // Add an event listener to the checkbox
-    soundFX!.addEventListener('change', () => {
-        // CREATE FUNC IN HANDLER that mutes/enables sound
-        // pass through soundFX.checked (true = sound effects)
-    });
+// to toggle background music
+const music = document.getElementById('background_music') as HTMLInputElement;
+// Add an event listener to the checkbox
+music!.addEventListener('change', () => {
+    // CREATE FUNC IN HANDLER that mutes/enables background music
+    // pass through music.checked (true = music)
+});
+// to toggle background music
+const soundFX = document.getElementById('sound_effects') as HTMLInputElement;
+// Add an event listener to the checkbox
+soundFX!.addEventListener('change', () => {
+    // CREATE FUNC IN HANDLER that mutes/enables sound
+    // pass through soundFX.checked (true = sound effects)
+});
 
-  // switch from start to app 
-  document.getElementById('start-button')!.addEventListener('click', () => {
+// switch from start to app
+document.getElementById('start-button')!.addEventListener('click', () => {
     currApp = true;
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';
@@ -209,26 +212,26 @@ function updateScore(newScore: number, newBait: number) {
     onAnimationFrameHandler();
 });
 
-  // switch from app to pause 
-  // FIX TO WHERE animation pauses when the game is paused 
-  document.getElementById('pause-button')!.addEventListener('click', () => {
+// switch from app to pause
+// FIX TO WHERE animation pauses when the game is paused
+document.getElementById('pause-button')!.addEventListener('click', () => {
     currApp = false;
     document.getElementById('app')!.style.display = 'none';
     document.getElementById('pause-screen')!.style.display = 'initial';
 });
 
-  // switch from pause to app 
-  document.getElementById('resume-button')!.addEventListener('click', () => {
+// switch from pause to app
+document.getElementById('resume-button')!.addEventListener('click', () => {
     currApp = true;
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('pause-screen')!.style.display = 'none';
     onAnimationFrameHandler();
 });
 
-  // switch from pause to app 
-  document.getElementById('play-again')!.addEventListener('click', () => {
+// switch from pause to app
+document.getElementById('play-again')!.addEventListener('click', () => {
     resetRenderLoop();
-    
+
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';
     document.getElementById('end-screen')!.style.display = 'none';
