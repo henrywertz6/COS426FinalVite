@@ -1,4 +1,3 @@
-import dat from 'dat.gui';
 import {
     Scene,
     Color,
@@ -39,7 +38,6 @@ type UpdateChild = {
 class SeedScene extends Scene {
     // Define the type of the state field
     state: {
-        gui: dat.GUI;
         rotationSpeed: number;
         updateList: UpdateChild[];
         spawnFish: () => void;
@@ -65,7 +63,6 @@ class SeedScene extends Scene {
         super();
         // Init state
         this.state = {
-            gui: new dat.GUI(), // Create GUI for scene
             rotationSpeed: 0,
             updateList: [],
             spawnFish: () => this.spawnFish(),
@@ -106,10 +103,6 @@ class SeedScene extends Scene {
         const bait = new Bait(this, loadManager);
         const lights = new BasicLights();
         this.add(lights, boat, turtle, rod, cat, hook, plane, reel, bait);
-
-        // Populate GUI
-        this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
-        this.state.gui.add(this.state, 'spawnFish');
     }
 
     addToUpdateList(object: UpdateChild): void {
@@ -181,7 +174,6 @@ class SeedScene extends Scene {
                 this.state.spawnTimers[objectType] >=
                 this.state.spawnIntervals[objectType]
             ) {
-                console.log('I got here');
                 this.spawnObject(objectType);
                 this.state.spawnTimers[objectType] = 0;
             } else {
@@ -223,20 +215,20 @@ class SeedScene extends Scene {
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
-
+        this.updateSpawners(timeStamp);
         // randomly generate fish at each time step
-        let randomNum = random(0, 1500);
-        if (randomNum < 8) {
-            this.spawnFish();
-        } else if (randomNum < 10 && this.state.sharkList.length < 1) {
-            this.spawnShark();
-        } else if (randomNum < 12 && this.state.blowList.length < 3) {
-            this.spawnBlowfish();
-        }
-        // generate more jellyfish as the player's score gets higher?
-        else if (randomNum < 13 * (1 + this.state.score / 150)) {
-            this.spawnJelly();
-        }
+        // let randomNum = random(0, 1500);
+        // if (randomNum < 8) {
+        //     this.spawnFish();
+        // } else if (randomNum < 10 && this.state.sharkList.length < 1) {
+        //     this.spawnShark();
+        // } else if (randomNum < 12 && this.state.blowList.length < 3) {
+        //     this.spawnBlowfish();
+        // }
+        // // generate more jellyfish as the player's score gets higher?
+        // else if (randomNum < 13 * (1 + this.state.score / 150)) {
+        //     this.spawnJelly();
+        // }
 
         // REMOVE THINGS OFF SCREEN
         // if fish has passed "out of view", then stop updating + remove from GUI
