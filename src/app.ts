@@ -363,6 +363,7 @@ let playSound = true;
     if (nightModeRadio != null && nightModeRadio.checked) {
         mode = 'night';
         scene = nightScene;
+        scene.state.center = visibleWidthAtZDepth(0, camera) / 2;
     }
 
     // NON-audio things
