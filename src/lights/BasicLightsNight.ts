@@ -70,7 +70,7 @@ class BasicLights extends Group {
             waterLight,
             waterLight2,
             regularLight,
-            helper5
+            // helper5
         );
     }
 }

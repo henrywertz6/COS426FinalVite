@@ -8,7 +8,6 @@ import MODEL from './low_poly_shark/scene.gltf?url';
 
 class Shark extends Group {
     state: {
-        gui: dat.GUI;
         clock: Clock;
         speed: number;
     };
@@ -18,7 +17,6 @@ class Shark extends Group {
 
         // Init state
         this.state = {
-            gui: parent.state.gui,
             clock: new Clock(),
             speed: 1.5,
         };

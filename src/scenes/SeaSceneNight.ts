@@ -1,6 +1,7 @@
 import dat from 'dat.gui';
 import { Scene, Color, LoadingManager, Box3, Object3D, Clock } from 'three';
 
+import SeedScene from './SeaScene.ts';
 import BasicLights from '../lights/BasicLightsNight';
 import Turtle from '../objects/Turtle';
 import Boat from '../objects/Boat';
@@ -25,7 +26,7 @@ type UpdateChild = {
     update?: (timeStamp: number) => void;
 };
 
-class SeedScene extends Scene {
+class SeaSceneNight extends SeedScene {
     // Define the type of the state field
     state: {
         gui: dat.GUI;
@@ -272,4 +273,4 @@ class SeedScene extends Scene {
     }
 }
 
-export default SeedScene;
+export default SeaSceneNight;

@@ -39,7 +39,8 @@ manager.onLoad = function () {
     console.log('loading complete');
 };
 const camera = new PerspectiveCamera();
-let scene = new SeaScene(manager);
+let mode = 'light';
+let scene = new SeaScene(manager, mode);
 const renderer = new WebGLRenderer({ antialias: true });
 const clock = new Clock();
 
@@ -105,8 +106,8 @@ const onAnimationFrameHandler = () => {
 window.requestAnimationFrame(onAnimationFrameHandler);
 
 // Function to reset the render loop
-const resetRenderLoop = () => {
-    scene = new SeaScene(manager);
+const resetRenderLoop = (mode: string) => {
+    scene = new SeaScene(manager, mode);
     windowResizeHandler();
     
     onAnimationFrameHandler();
@@ -293,6 +294,13 @@ let playSound = true;
         turtleSpin.setVolume(0.4);
     });
 
+    // Get radio buttons
+    var nightModeRadio = document.getElementById('night-mode') as HTMLInputElement;
+    if (nightModeRadio != null && nightModeRadio.checked) {
+        mode = 'night';
+        resetRenderLoop(mode);
+    }
+
     // NON-audio things
     currApp = true;
     document.getElementById('app')!.style.display = 'initial';
@@ -319,7 +327,7 @@ let playSound = true;
 
   // switch from pause to app 
 document.getElementById('play-again')!.addEventListener('click', () => {
-    resetRenderLoop();
+    resetRenderLoop(mode);
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';
     document.getElementById('end-screen')!.style.display = 'none';

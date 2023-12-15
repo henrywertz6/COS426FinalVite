@@ -8,8 +8,10 @@ import {
     Box3,
     Object3D,
     Clock,
+    Group
 } from 'three';
 
+import BasicLightsNight from '../lights/BasicLightsNight';
 import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';
 import Boat from '../objects/Boat';
@@ -58,7 +60,7 @@ class SeedScene extends Scene {
         timeOfDay: string;
     };
 
-    constructor(loadManager: LoadingManager) {
+    constructor(loadManager: LoadingManager, mode: string) {
         // Call parent Scene() constructor
         super();
         // Init state
@@ -86,10 +88,18 @@ class SeedScene extends Scene {
                 fish: 0,
                 pufferfish: 0,
             },
-            timeOfDay: 'day',
+            timeOfDay: mode,
         };
+
+        let lights = new BasicLights();
         // Set background to a nice color
-        this.background = new Color(0x334b66);
+        if (this.state.timeOfDay == 'night') {
+            this.background = new Color(0x060a1c);
+            lights = new BasicLightsNight();
+        }
+        else {
+            this.background = new Color(0x334b66);
+        }
 
         // Add meshes to scene
         const plane = new GamePlane(this);
@@ -101,7 +111,6 @@ class SeedScene extends Scene {
         const reel = new Reel(this);
         const hook = new Hook(this, loadManager);
         const bait = new Bait(this, loadManager);
-        const lights = new BasicLights();
         this.add(
             lights,
             boat,
