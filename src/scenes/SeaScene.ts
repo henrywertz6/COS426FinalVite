@@ -21,7 +21,7 @@ import Reel from '../objects/Reel';
 import Hook from '../objects/Hook';
 import Bait from '../objects/Bait';
 import GamePlane from '../objects/GamePlane';
-// import Wave from '../objects/Wave';
+import Ocean from '../objects/Ocean';
 import Shark from '../objects/Shark';
 import Jellyfish from '../objects/Jellyfish';
 import Blowfish from '../objects/Blowfish';
@@ -96,7 +96,7 @@ class SeedScene extends Scene {
 
         // Add meshes to scene
         const plane = new GamePlane(this);
-        // const wave = new Wave(this, loadManager);
+        const ocean = new Ocean(this);
         const turtle = new Turtle(this, loadManager);
         const boat = new Boat(this, loadManager);
         const rod = new Rod(this, loadManager);
@@ -105,7 +105,7 @@ class SeedScene extends Scene {
         const hook = new Hook(this, loadManager);
         const bait = new Bait(this, loadManager);
         const lights = new BasicLights();
-        this.add(lights, boat, turtle, rod, cat, hook, plane, reel, bait);
+        this.add(lights, boat, turtle, rod, cat, hook, plane, reel, bait, ocean);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
