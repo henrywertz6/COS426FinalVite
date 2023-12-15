@@ -8,7 +8,7 @@ import {
     Box3,
     Object3D,
     Clock,
-    Group
+    Group,
 } from 'three';
 
 import BasicLightsNight from '../lights/BasicLightsNight';
@@ -60,6 +60,7 @@ class SeedScene extends Scene {
         spawnIntervals: { [key: string]: number };
         spawnTimers: { [key: string]: number };
         timeOfDay: string;
+        spawnSet: Set<string>;
     };
 
     constructor(loadManager: LoadingManager, mode: string) {
@@ -85,7 +86,7 @@ class SeedScene extends Scene {
             elapsedTime: 0,
             spawnIntervals: {
                 fish: 3,
-                pufferfish: 4,
+                pufferfish: 10,
                 shark: 5,
                 jellyfish: 4,
                 turtle: 6,
@@ -98,15 +99,15 @@ class SeedScene extends Scene {
                 turtle: 0,
             },
             timeOfDay: mode,
+            spawnSet: new Set(),
         };
-
+        this.state.spawnSet.add('fish');
         let lights = new BasicLights();
         // Set background to a nice color
         if (this.state.timeOfDay == 'night') {
             this.background = new Color(0x060a1c);
             lights = new BasicLightsNight();
-        }
-        else {
+        } else {
             this.background = new Color(0x0059b3);
         }
 
@@ -204,16 +205,17 @@ class SeedScene extends Scene {
         if (this.state.elapsedTime >= this.getStageDuration()) {
             this.advanceToNextStage();
         }
-
-        for (const objectType in this.state.spawnIntervals) {
-            if (
-                this.state.spawnTimers[objectType] >=
-                this.state.spawnIntervals[objectType]
-            ) {
-                this.spawnObject(objectType);
-                this.state.spawnTimers[objectType] = 0;
-            } else {
-                this.state.spawnTimers[objectType] += deltaTime;
+        for (const objectType in this.state.spawnSet) {
+            for (const objectType in this.state.spawnIntervals) {
+                if (
+                    this.state.spawnTimers[objectType] >=
+                    this.state.spawnIntervals[objectType]
+                ) {
+                    this.spawnObject(objectType);
+                    this.state.spawnTimers[objectType] = 0;
+                } else {
+                    this.state.spawnTimers[objectType] += deltaTime;
+                }
             }
         }
     }
@@ -276,10 +278,7 @@ class SeedScene extends Scene {
 
         // if bubble is out of view
         for (let bubble of this.state.bubbleList) {
-            if (
-                bubble.state.active &&
-                bubble.position.y > 2.2
-            ) {
+            if (bubble.state.active && bubble.position.y > 2.2) {
                 bubble.state.active = false;
                 this.removeFromUpdateList(bubble);
                 this.remove(bubble);
