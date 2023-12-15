@@ -31,7 +31,7 @@ import {
 // Initialize core ThreeJS components
 const manager = new LoadingManager();
 manager.onStart = function () {
-    document.getElementById('loading-screen')!.style.display = 'none';
+    document.getElementById('loading-screen')!.style.display = 'initial';
     console.log('loading starting');
 };
 manager.onLoad = function () {

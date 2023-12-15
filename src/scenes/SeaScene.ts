@@ -11,6 +11,7 @@ import Reel from '../objects/Reel';
 import Hook from '../objects/Hook';
 import Bait from '../objects/Bait';
 import GamePlane from '../objects/GamePlane';
+// import Wave from '../objects/Wave';
 import Shark from '../objects/Shark';
 import Jellyfish from '../objects/Jellyfish';
 import Blowfish from '../objects/Blowfish';
@@ -68,6 +69,7 @@ class SeedScene extends Scene {
 
         // Add meshes to scene
         const plane = new GamePlane(this);
+        // const wave = new Wave(this, loadManager);
         const turtle = new Turtle(this, loadManager);
         const boat = new Boat(this, loadManager);
         const rod = new Rod(this, loadManager);

@@ -1,4 +1,4 @@
-import { Group, Clock, LoadingManager, Mesh, MeshStandardMaterial } from 'three';
+import { Group, Clock, LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import SeedScene from '../scenes/SeaScene';
