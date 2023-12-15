@@ -86,7 +86,7 @@ class SeedScene extends Scene {
             numBait: 3,
             fishSpeed: 4,
             hasBait: true,
-            stage: 1,
+            stage: 0,
             elapsedTime: 0,
             spawnIntervals: {
                 fish: 3,
