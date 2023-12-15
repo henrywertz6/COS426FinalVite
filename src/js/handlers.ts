@@ -142,6 +142,25 @@ export function handleCollisions(
     let reel = scene.getObjectByName('reel');
     let bait = scene.getObjectByName('bait');
 
+    // if find extra bait, add life
+    if(hook && reel) {
+        for (let extraBait of scene.state.bonusBait) {
+            let hookBox = new Box3().setFromObject(hook);
+            let baitBox = new Box3().setFromObject(extraBait);
+            const intHook = hookBox.intersectsBox(baitBox);
+                if (intHook) {
+                    scene.state.numBait += 1;
+                    let index = scene.state.bonusBait.indexOf(extraBait);
+                    scene.state.bonusBait.splice(index, 1);
+                    scene.removeFromUpdateList(extraBait);
+                    scene.remove(extraBait);
+                    if (playSound) {
+                        sounds['newBait'].play();
+                    }
+                }
+            }
+        }
+
     // jellyfish collisions only happen when we have bait on the hook
     if (hook && reel && scene.state.hasBait) {
         // if we hit a jellyfish at any time!

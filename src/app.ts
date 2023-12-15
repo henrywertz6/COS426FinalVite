@@ -279,10 +279,10 @@ let playSound = true;
     backgroundMusic = new Audio(listener);
     // ADD OUR BACKGROUND MUSIC
     // not explosions lol . this is for testing :D
-    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', (buffer) => {
+    audioLoader.load('https://audio.jukehost.co.uk/Au0hzLKqJTt0aM0krXkmt8jT2TkwcDto', (buffer) => {
     backgroundMusic.setBuffer(buffer);
     backgroundMusic.setLoop(true);
-    backgroundMusic.setVolume(0.5); // Adjust the volume as needed
+    backgroundMusic.setVolume(0.1); // Adjust the volume as needed
     backgroundMusic.play();
     })
     // ADD OUR SOUND FX
@@ -293,6 +293,7 @@ let playSound = true;
     const collision = new Audio(listener);
     const turtleSpin = new Audio(listener);
     const sharkSound = new Audio(listener);
+    const newBait = new Audio(listener);
 
     sounds['meow'] = meow;
     sounds['shock'] = shock;
@@ -301,6 +302,7 @@ let playSound = true;
     sounds['collision'] = collision;
     sounds['turtleSpin'] = turtleSpin;
     sounds['sharkSound'] = sharkSound;
+    sounds['newBait'] = newBait;
     // SUB IN OUR SOUND
     audioLoader.load('https://audio.jukehost.co.uk/sdoBgQ57rIUNlhb9ZdIktnUcXdrHnaxr', function(buffer) {
         meow.setBuffer(buffer);
@@ -336,6 +338,11 @@ let playSound = true;
         sharkSound.setBuffer(buffer);
         sharkSound.setLoop(false);
         sharkSound.setVolume(0.4);
+    });
+    audioLoader.load('https://audio.jukehost.co.uk/qYWNBNV7aMm2KjRTrVQtB5HeajwaT07M', function(buffer) {
+        newBait.setBuffer(buffer);
+        newBait.setLoop(false);
+        newBait.setVolume(0.2);
     });
 
     // Get radio buttons

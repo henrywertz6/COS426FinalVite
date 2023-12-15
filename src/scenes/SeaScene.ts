@@ -2,14 +2,6 @@ import {
     Scene,
     Color,
     LoadingManager,
-    Audio,
-    AudioListener,
-    AudioLoader,
-    Box3,
-    Object3D,
-    Clock,
-    Group,
-    Fog,
     FogExp2,
 } from 'three';
 
@@ -31,6 +23,7 @@ import Shark from '../objects/Shark';
 import Jellyfish from '../objects/Jellyfish';
 import Blowfish from '../objects/Blowfish';
 import SwimTurtle from '../objects/SwimTurtle';
+import ExtraBait from '../objects/ExtraBait';
 
 function random(min: number, max: number) {
     return Math.random() * (max - min) + min;
@@ -54,6 +47,7 @@ class SeedScene extends Scene {
         sharkList: Array<Shark>;
         jellyList: Array<Jellyfish>;
         blowList: Array<Blowfish>;
+        bonusBait: Array<ExtraBait>;
         center: number;
         score: number;
         numBait: number;
@@ -81,6 +75,7 @@ class SeedScene extends Scene {
             sharkList: [],
             jellyList: [],
             blowList: [],
+            bonusBait: [],
             center: 0,
             score: 0,
             numBait: 3,
@@ -94,6 +89,7 @@ class SeedScene extends Scene {
                 shark: 18,
                 jellyfish: 4,
                 turtle: 6,
+                bait: 15
             },
             spawnTimers: {
                 fish: 0,
@@ -102,6 +98,7 @@ class SeedScene extends Scene {
                 jellyfish: 0,
                 turtle: 0,
                 bubble: 0,
+                bait: 0
             },
             timeOfDay: mode,
             spawnSet: new Set(),
@@ -206,6 +203,13 @@ class SeedScene extends Scene {
         }
         this.add(newBait);
     }
+
+    spawnBonusBait(): void {
+        const bait = new ExtraBait(this);
+        this.state.bonusBait.push(bait);
+        this.add(bait); 
+    }
+
     updateSpawners(deltaTime: number): void {
         this.state.elapsedTime += deltaTime;
 
@@ -246,6 +250,7 @@ class SeedScene extends Scene {
     spawnObject(objectType: string): void {
         if (objectType == 'fish') {
             this.spawnFish();
+            this.spawnBonusBait();
         } else if (objectType == 'pufferfish') {
             this.spawnBlowfish();
         } else if (objectType == 'jellyfish') {
@@ -254,6 +259,9 @@ class SeedScene extends Scene {
             this.spawnShark();
         } else if (objectType == 'turtle') {
             this.spawnTurtle();
+        }
+        else if(objectType == 'bonusbait') {
+            this.spawnBonusBait();
         }
     }
     advanceToNextStage() {
@@ -277,6 +285,7 @@ class SeedScene extends Scene {
                 break;
             case 4:
                 this.state.fishSpeed = 8;
+                this.state.spawnSet.add('bonusbait');
                 this.state.spawnSet.add('pufferfish');
                 this.state.spawnSet.add('shark');
                 break;
@@ -291,18 +300,8 @@ class SeedScene extends Scene {
         if (randomNum < 8) {
             this.spawnBubble();
         }
-        // } else if (randomNum < 10 && this.state.sharkList.length < 1) {
-        //     this.spawnShark();
-        // } else if (randomNum < 12 && this.state.blowList.length < 3) {
-        //     this.spawnBlowfish();
-        // }
-        // // generate more jellyfish as the player's score gets higher?
-        // else if (randomNum < 13 * (1 + this.state.score / 150)) {
-        //     this.spawnJelly();
-        // }
 
         // REMOVE THINGS OFF SCREEN
-
         // if bubble is out of view
         for (let bubble of this.state.bubbleList) {
             if (bubble.state.active && bubble.position.y > 2.2) {
@@ -311,7 +310,6 @@ class SeedScene extends Scene {
                 this.remove(bubble);
             }
         }
-
         // if fish has passed "out of view", then stop updating + remove from GUI
         for (let fish of this.state.fishList) {
             if (fish.state.directionGoing == 'left') {
@@ -380,6 +378,15 @@ class SeedScene extends Scene {
                 this.state.blowList.splice(index, 1);
                 this.removeFromUpdateList(blow);
                 this.remove(blow);
+            }
+        }
+        // if extra bait has passed "out of view", then stop updating + remove from GUI
+        for (let extraBait of this.state.bonusBait) {
+            if (extraBait.position.z > this.state.center + 2) {
+                let index = this.state.bonusBait.indexOf(extraBait);
+                this.state.bonusBait.splice(index, 1);
+                this.removeFromUpdateList(extraBait);
+                this.remove(extraBait);
             }
         }
 
