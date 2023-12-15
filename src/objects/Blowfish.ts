@@ -8,7 +8,6 @@ import MODEL from './blowfish/scene.gltf?url';
 
 class Blowfish extends Group {
     state: {
-        gui: dat.GUI;
         clock: Clock;
         speed: number;
     };
@@ -18,7 +17,6 @@ class Blowfish extends Group {
 
         // Init state
         this.state = {
-            gui: parent.state.gui,
             clock: new Clock(),
             speed: 2,
         };
@@ -33,7 +31,7 @@ class Blowfish extends Group {
         parent.addToUpdateList(this);
         this.scale.set(0.2, 0.2, 0.2);
         this.position.z = -parent.state.center * 1.2;
-        this.position.y = Math.floor(Math.random() * 9) - 8;
+        this.position.y = Math.floor(Math.random() * 8) - 7;
     }
 
     update(timeStamp: number): void {

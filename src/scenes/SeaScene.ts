@@ -272,6 +272,7 @@ class SeedScene extends Scene {
                 break;
             case 3:
                 this.state.spawnSet.delete('shark');
+                this.state.spawnSet.add('turtle');
                 this.state.spawnSet.add('jellyfish');
                 break;
             case 4:

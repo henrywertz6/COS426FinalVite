@@ -33,7 +33,7 @@ class Jellyfish extends Group {
         this.scale.set(0.005, 0.005, 0.005);
         parent.addToUpdateList(this);
         this.position.z = -parent.state.center * 1.2;
-        this.position.y = Math.floor(Math.random() * 9) - 8;
+        this.position.y = Math.floor(Math.random() * 8) - 7;
     }
 
     update(timeStamp: number): void {

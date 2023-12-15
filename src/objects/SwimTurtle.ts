@@ -12,10 +12,7 @@ class SwimTurtle extends Group {
         speed: number;
         active: boolean;
     };
-    constructor(
-        parent: SeedScene,
-        loadManager?: LoadingManager,
-    ) {
+    constructor(parent: SeedScene, loadManager?: LoadingManager) {
         // Call parent Group() constructor
         super();
 
@@ -35,12 +32,12 @@ class SwimTurtle extends Group {
         this.scale.set(3.5, 3.5, 3.5);
         // Add self to parent's update list
         parent.addToUpdateList(this);
-        this.position.y = Math.floor(Math.random() * 9) - 8;
-        this.position.z = -parent.state.center;
+        this.position.y = Math.floor(Math.random() * 8) - 7;
+        this.position.z = -parent.state.center * 1.4;
     }
     update(timeStamp: number): void {
-            let delta = this.state.clock.getDelta();
-            this.translateZ(delta * this.state.speed);
+        let delta = this.state.clock.getDelta();
+        this.translateZ(delta * this.state.speed);
     }
 }
 
