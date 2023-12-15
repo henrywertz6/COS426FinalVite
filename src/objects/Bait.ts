@@ -1,4 +1,4 @@
-import { Group, AnimationMixer, Clock, LoadingManager, Mesh, MeshStandardMaterial } from 'three';
+import { Group, Clock, LoadingManager, Mesh, MeshStandardMaterial } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import SeedScene from '../scenes/SeaScene';
@@ -11,7 +11,6 @@ class Bait extends Group {
         clock: Clock;
         speed: number;
         active: boolean;
-        startFall: number;
     };
     constructor(parent: SeedScene, loadManager: LoadingManager) {
         // Call parent Group() constructor
@@ -25,7 +24,6 @@ class Bait extends Group {
             clock: new Clock(),
             speed: 2,
             active: true,
-            startFall: 0
         };
         this.name = 'bait';
         loader.load(MODEL, (gltf) => {
