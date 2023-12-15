@@ -97,13 +97,16 @@ p {
 
 #start-screen p.instructions {
   font-size: 48px;
+  padding: 0px;
 }
 
 #start-screen ul {
   font-size: 24px;
+  font-family: 'secondary';
+  text-align: center;
   list-style-type: none; /* Remove default list styling */
-  padding: 0; /* Remove default padding on the list */
-  margin: 0; /* Remove default margin on the list */
+  padding: 10px; /* Remove default padding on the list */
+  margin: 10px; /* Remove default margin on the list */
 }
 #start-screen > div {
   flex: 1;
@@ -143,6 +146,16 @@ p {
     background-position: center;
     color: #fff;
   }
+
+  #pause-screen ul {
+    font-size: 24px;
+    font-family: 'secondary';
+    text-align: center;
+    list-style-type: none; /* Remove default list styling */
+    padding: 10px; /* Remove default padding on the list */
+    margin: 10px; /* Remove default margin on the list */
+  }
+  
 
 #resume-button {
   border: 4px solid white;
@@ -257,6 +270,7 @@ p {
   
   #end-screen ul {
     font-size: 24px;
+    font-family: 'secondary';
     list-style-type: none; /* Remove default list styling */
     padding: 0; /* Remove default padding on the list */
     margin: 0; /* Remove default margin on the list */
