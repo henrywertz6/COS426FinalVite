@@ -155,28 +155,37 @@ function endGame(finalScore: number) {
     let message = document.getElementById('gameMessage');
     if(message != null) {
         if(finalScore < 10) {
-            message.textContent = ``;
+            message.textContent = `Just a small fish in a big ocean. Keep fishing!`;
         }
         else if(finalScore < 20) {
-            message.textContent = ``;
+            message.textContent = `Reel it in, cat angler! You're on the prowl.`;
         }
         else if(finalScore < 30) {
-            message.textContent = ``;
+            message.textContent = `Cat-tastic! The ocean applauds.`;
+        }
+        else if(finalScore < 40) {
+            message.textContent = `Pawsitively great! Keep swimming upstream.`;  
         }
         else if(finalScore < 50) {
-            message.textContent = ``;  
+            message.textContent = `Fin-tastic performance! You're casting a purr-fect line.`;
         }
-        else if(finalScore < 75) {
-            message.textContent = ``;
+        else if(finalScore < 60) {
+            message.textContent = `Fur-bulous fishing! You're mastering the currents.`;
+        }
+        else if(finalScore < 70) {
+            message.textContent = `Masterful meow-mentum! You're reeling in victories.`;
+        }
+        else if(finalScore < 80) {
+            message.textContent = `Legendary fisher-cat! You're ruling the deep blue.`;
+        }
+        else if(finalScore < 90) {
+            message.textContent = `Fishing purr-fection! The ocean bows to your feline prowess.`;
         }
         else if(finalScore < 100) {
-            message.textContent = ``;
-        }
-        else if(finalScore < 150) {
-            message.textContent = ``;
+            message.textContent = `Whiskers of the deep! You're a true sea-faring champion.`;
         }
         else {
-            message.textContent = ``;
+            message.textContent = `Beyond the nine lives! You've surpassed even the most daring fish feats.`;
         }
     }
 
@@ -283,6 +292,7 @@ let playSound = true;
     const refillBait = new Audio(listener);
     const collision = new Audio(listener);
     const turtleSpin = new Audio(listener);
+    const sharkSound = new Audio(listener);
 
     sounds['meow'] = meow;
     sounds['shock'] = shock;
@@ -290,6 +300,7 @@ let playSound = true;
     sounds['refillBait'] = refillBait;
     sounds['collision'] = collision;
     sounds['turtleSpin'] = turtleSpin;
+    sounds['sharkSound'] = sharkSound;
     // SUB IN OUR SOUND
     audioLoader.load('https://audio.jukehost.co.uk/sdoBgQ57rIUNlhb9ZdIktnUcXdrHnaxr', function(buffer) {
         meow.setBuffer(buffer);
@@ -320,6 +331,11 @@ let playSound = true;
         turtleSpin.setBuffer(buffer);
         turtleSpin.setLoop(false);
         turtleSpin.setVolume(0.4);
+    });
+    audioLoader.load('https://audio.jukehost.co.uk/TKy5VdkY9PdWoF4yQeJS7aB9tQoOK4Nt', function(buffer) {
+        sharkSound.setBuffer(buffer);
+        sharkSound.setLoop(false);
+        sharkSound.setVolume(0.4);
     });
 
     // Get radio buttons

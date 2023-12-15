@@ -17,6 +17,7 @@ body {
     color: white;
     font-size: 4rem;
 }
+
 p {
     font-family: 'juice', monospace;
     font-size: 16px;
@@ -239,20 +240,18 @@ p {
   }
   
   #end-screen p {
-    font-size: 84px;
-    margin-bottom: 40px;
+    font-size: 40px;
   }
-  
+  #end-screen p.message {
+    font-family: 'secondary', monospace;
+    font-size: 30px;
+  }
   #play-again {
     font-family: 'secondary';
     border: 4px solid white;
     border-radius: 10px; /* Make the button smaller with rounded corners */
     padding: 0px 10px; /* Adjust padding to make the button smaller */
     font-size: 40px; /* Adjust font size for the button text */
-  }
-  
-  #end-screen p.instructions {
-    font-size: 48px;
   }
   
   #end-screen ul {

@@ -1,15 +1,7 @@
 import {
-    WebGLRenderer,
-    PerspectiveCamera,
-    Vector3,
-    Clock,
-    LoadingManager,
     Raycaster,
     Vector2,
-    Plane,
-    ArrowHelper,
     Box3,
-    LineBasicMaterial,
 } from 'three';
 import Hook from '../objects/Hook';
 
@@ -198,7 +190,7 @@ export function handleCollisions(
                     scene.state.hasBait = false;
                     reel.shakeLine();
                     if (playSound) {
-                        sounds['shock'].play();
+                        sounds['sharkSound'].play();
                     }
 
                     // get rid of fish if on hook when jelly hit
