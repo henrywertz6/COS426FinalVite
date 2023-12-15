@@ -152,6 +152,34 @@ window.addEventListener('resize', windowResizeHandler, false);
 
 // switch to end game screen
 function endGame(finalScore: number) {
+    let message = document.getElementById('gameMessage');
+    if(message != null) {
+        if(finalScore < 10) {
+            message.textContent = ``;
+        }
+        else if(finalScore < 20) {
+            message.textContent = ``;
+        }
+        else if(finalScore < 30) {
+            message.textContent = ``;
+        }
+        else if(finalScore < 50) {
+            message.textContent = ``;  
+        }
+        else if(finalScore < 75) {
+            message.textContent = ``;
+        }
+        else if(finalScore < 100) {
+            message.textContent = ``;
+        }
+        else if(finalScore < 150) {
+            message.textContent = ``;
+        }
+        else {
+            message.textContent = ``;
+        }
+    }
+
     let score = document.getElementById('score');
     if(score != null) {
         score.textContent = `Total fish caught: ${finalScore}`;
@@ -263,27 +291,27 @@ let playSound = true;
     sounds['collision'] = collision;
     sounds['turtleSpin'] = turtleSpin;
     // SUB IN OUR SOUND
-    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+    audioLoader.load('https://audio.jukehost.co.uk/sdoBgQ57rIUNlhb9ZdIktnUcXdrHnaxr', function(buffer) {
         meow.setBuffer(buffer);
         meow.setLoop(false);
-        meow.setVolume(0.4);
+        meow.setVolume(0.3);
     });
-    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+    audioLoader.load('https://audio.jukehost.co.uk/NUFqeBjUGIA5NotTuiYiH5JKk8UEDiwH', function(buffer) {
         shock.setBuffer(buffer);
         shock.setLoop(false);
         shock.setVolume(0.4);
     });
-    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+    audioLoader.load('https://audio.jukehost.co.uk/qYWNBNV7aMm2KjRTrVQtB5HeajwaT07M', function(buffer) {
         reelFish.setBuffer(buffer);
         reelFish.setLoop(false);
-        reelFish.setVolume(0.4);
+        reelFish.setVolume(0.1);
     });
-    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+    audioLoader.load('https://audio.jukehost.co.uk/zfVNGVgtseWLWN8eCaNcefoEo01FNkGI', function(buffer) {
         refillBait.setBuffer(buffer);
         refillBait.setLoop(false);
         refillBait.setVolume(0.4);
     });
-    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+    audioLoader.load('https://audio.jukehost.co.uk/11LSwQN5rii9pZKJ7waueW50acDePEgP', function(buffer) {
         collision.setBuffer(buffer);
         collision.setLoop(false);
         collision.setVolume(0.4);

@@ -50,7 +50,7 @@ class Turtle extends Group {
             parent.addToUpdateList(this);
             this.translateZ(4);
             this.translateY(3.3);
-            this.translateX(0.7);
+            this.translateX(0.6);
             this.rotateY(Math.PI / 2);
         }
     }

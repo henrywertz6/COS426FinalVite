@@ -1,0 +1,11 @@
+Model Information:
+* title:	Torti - Stylized Turtle
+* source:	https://sketchfab.com/3d-models/torti-stylized-turtle-29b083db392a468c8726e5b42d644c29
+* author:	Bato Balvanera (https://sketchfab.com/batobalvanera)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Torti - Stylized Turtle" (https://sketchfab.com/3d-models/torti-stylized-turtle-29b083db392a468c8726e5b42d644c29) by Bato Balvanera (https://sketchfab.com/batobalvanera) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
