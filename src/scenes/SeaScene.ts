@@ -13,6 +13,7 @@ import Rod from '../objects/Rod';
 import Bubble from '../objects/Bubble';
 import Fish from '../objects/Fish';
 import Cat from '../objects/Cat';
+import Cloud from '../objects/Cloud';
 import Reel from '../objects/Reel';
 import Hook from '../objects/Hook';
 import Bait from '../objects/Bait';
@@ -44,6 +45,7 @@ class SeedScene extends Scene {
         bubbleList: Array<Bubble>;
         fishList: Array<Fish>;
         obstacleList: Array<SwimTurtle>;
+        cloudList:Array<Cloud>;
         sharkList: Array<Shark>;
         jellyList: Array<Jellyfish>;
         blowList: Array<Blowfish>;
@@ -72,6 +74,7 @@ class SeedScene extends Scene {
             bubbleList: [],
             fishList: [],
             obstacleList: [],
+            cloudList: [],
             sharkList: [],
             jellyList: [],
             blowList: [],
@@ -112,7 +115,7 @@ class SeedScene extends Scene {
         } else {
             this.background = new Color(0x0059b3);
         }
-        this.fog = new FogExp2(0x161e57, 0.01);
+        this.fog = new FogExp2(0x161e57, 0.005);
         // Add meshes to scene
         const plane = new GamePlane(this);
         const ocean = new Ocean(this, this.state.timeOfDay != 'night');
@@ -147,9 +150,13 @@ class SeedScene extends Scene {
         const index = this.state.updateList.indexOf(object);
         this.state.updateList.splice(index, 1);
     }
+    spawnCloud(): void {
+        const cloud = new Cloud(this);
+        this.state.cloudList.push(cloud);
+        this.add(cloud);
+    }
 
     spawnBubble(): void {
-        // console.log('fish spawned!');
         const bubble = new Bubble(this);
         this.state.bubbleList.push(bubble);
         this.add(bubble);
@@ -298,6 +305,7 @@ class SeedScene extends Scene {
         let randomNum = random(0, 1500);
         if (randomNum < 8) {
             this.spawnBubble();
+            this.spawnCloud();
         }
 
         // REMOVE THINGS OFF SCREEN
@@ -307,6 +315,15 @@ class SeedScene extends Scene {
                 bubble.state.active = false;
                 this.removeFromUpdateList(bubble);
                 this.remove(bubble);
+            }
+        }
+
+        // if cloud is out of view
+        for (let cloud of this.state.cloudList) {
+            if (cloud.state.active && cloud.position.z < -this.state.center - 10) {
+                cloud.state.active = false;
+                this.removeFromUpdateList(cloud);
+                this.remove(cloud);
             }
         }
         // if fish has passed "out of view", then stop updating + remove from GUI
