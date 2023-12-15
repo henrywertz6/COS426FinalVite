@@ -200,6 +200,7 @@ p {
   background-color: rgb(208, 191, 169); /* Adjust the hover color */
 }
 
+
 .score {
   font-family: 'secondary';
     position: absolute;
@@ -230,7 +231,7 @@ p {
     height: 100%;
     position: fixed;
     display: flex;
-    flex-direction: row; /* Set to row for a horizontal layout */
+    flex-direction: row; 
     justify-content: center;
     align-items: center;
     background-image: linear-gradient(109.6deg, rgba(156,252,248,1) 11.2%, rgba(110,123,251,1) 91.1%);

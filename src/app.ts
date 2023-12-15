@@ -195,7 +195,7 @@ function endGame(finalScore: number) {
     }
     backgroundMusic.stop();
     document.getElementById('app')!.style.display = 'none';
-    document.getElementById('end-screen')!.style.display = 'initial';
+    document.getElementById('end-screen')!.style.display = 'flex';
 }
 
 // restock bait! 
