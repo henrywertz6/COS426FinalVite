@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import SeedScene from '../scenes/SeaScene';
 
 // Import flower model as a URL using Vite's syntax
-import MODEL from './clouds/scene.gltf?url';
+import MODEL from './clouds.glb?url';
 
 class Cloud extends Group {
     state: {
