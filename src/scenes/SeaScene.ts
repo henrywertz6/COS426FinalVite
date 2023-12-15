@@ -1,5 +1,5 @@
 import dat from 'dat.gui';
-import { Scene, Color, LoadingManager, Box3, Object3D } from 'three';
+import { Scene, Color, LoadingManager, Audio, AudioListener, AudioLoader } from 'three';
 
 import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';
@@ -46,7 +46,6 @@ class SeedScene extends Scene {
     constructor(loadManager: LoadingManager) {
         // Call parent Scene() constructor
         super();
-
         // Init state
         this.state = {
             gui: new dat.GUI(), // Create GUI for scene

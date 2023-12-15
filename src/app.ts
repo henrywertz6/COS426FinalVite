@@ -14,6 +14,9 @@ import {
     LoadingManager,
     Raycaster,
     Vector2,
+    AudioListener,
+    AudioLoader,
+    Audio
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -35,8 +38,8 @@ manager.onLoad = function () {
     document.getElementById('loading-screen')!.style.display = 'none';
     console.log('loading complete');
 };
-let scene = new SeaScene(manager);
 const camera = new PerspectiveCamera();
+let scene = new SeaScene(manager);
 const renderer = new WebGLRenderer({ antialias: true });
 const clock = new Clock();
 
@@ -185,13 +188,38 @@ function updateScore(newScore: number, newBait: number) {
     }
   }  
 
+  
+//   // Add this function somewhere in your code
+//   function toggleBackgroundMusic(shouldPlay: boolean) {
+//       if (scene.backgroundMusic) {
+//           if (shouldPlay) {
+//               scene.backgroundMusic.play();
+//           } else {
+//               scene.backgroundMusic.pause();
+//           }
+//       }
+//   }
+  
     // to toggle background music
     const music = document.getElementById('background_music') as HTMLInputElement;
     // Add an event listener to the checkbox
     music!.addEventListener('change', () => {
-        // CREATE FUNC IN HANDLER that mutes/enables background music
-        // pass through music.checked (true = music)
-    });
+        if(music.checked) {
+            var context = new AudioContext();
+            // Inside the SeaScene class constructor or setup method
+            const listener = new AudioListener();
+            const audioLoader = new AudioLoader();
+            console.log(context.state);
+        const backgroundMusic = new Audio(listener);
+
+        audioLoader.load('./audio/meow.mp3', (buffer) => {
+        backgroundMusic.setBuffer(buffer);
+        backgroundMusic.setLoop(true);
+        backgroundMusic.setVolume(0.5); // Adjust the volume as needed
+        backgroundMusic.play();
+        }
+        )
+    }});
     // to toggle background music
     const soundFX = document.getElementById('sound_effects') as HTMLInputElement;
     // Add an event listener to the checkbox

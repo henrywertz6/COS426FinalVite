@@ -1,10 +1,19 @@
+@font-face {
+  font-family: 'juice'; 
+  src: url('fonts/orange juice 2.0.ttf') format('truetype');
+}
+
+body {
+  font-family: 'monospace'; /* Use your custom font for the entire document */
+}
+
 #title {
-    font-family: Monaco, monospace;
+    font-family: monospace;
     color: white;
     font-size: 4rem;
 }
 p {
-    font-family: Monaco, monospace;
+    font-family: 'juice', monospace;
     font-size: 16px;
 }
 #loading-screen {
@@ -96,6 +105,23 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.start-button {
+  background-color: tan;
+  border: white;
+  font-size: 100px;
+  font-family: Monaco, monospace;
+  cursor: pointer;
+  color: white;
+  width: 350px;
+  height: 100px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 12px;
+}
+.start-button:hover {
+  background-color: rgb(208, 191, 169); /* Adjust the hover color */
 }
 
 .pause-button {
