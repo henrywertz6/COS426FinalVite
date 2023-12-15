@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import SeedScene from '../scenes/SeaScene';
 
 // Import earthworm model as a URL using Vite's syntax
-import MODEL from './low_poly_earthworm/scene.gltf?url';
+import MODEL from './worm2/worm2.gltf?url';
 
 class Bait extends Group {
     state: {
@@ -45,8 +45,8 @@ class Bait extends Group {
 
         if (!this.state.active) {
             this.translateY(-delta * this.state.speed);
-            this.position.z = (Math.sin(this.position.y)); 
-        } 
+            this.position.z = Math.sin(this.position.y);
+        }
     }
 }
 
