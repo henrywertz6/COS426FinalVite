@@ -301,10 +301,10 @@ let playSound = true;
         shock.setLoop(false);
         shock.setVolume(0.4);
     });
-    audioLoader.load('https://audio.jukehost.co.uk/qYWNBNV7aMm2KjRTrVQtB5HeajwaT07M', function(buffer) {
+    audioLoader.load('https://audio.jukehost.co.uk/rWZEhatzec95WalcEwJ5FoEYBmmzgAup', function(buffer) {
         reelFish.setBuffer(buffer);
         reelFish.setLoop(false);
-        reelFish.setVolume(0.1);
+        reelFish.setVolume(0.3);
     });
     audioLoader.load('https://audio.jukehost.co.uk/zfVNGVgtseWLWN8eCaNcefoEo01FNkGI', function(buffer) {
         refillBait.setBuffer(buffer);

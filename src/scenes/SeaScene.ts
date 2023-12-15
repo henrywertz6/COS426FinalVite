@@ -30,6 +30,8 @@ import Ocean from '../objects/Ocean';
 import Shark from '../objects/Shark';
 import Jellyfish from '../objects/Jellyfish';
 import Blowfish from '../objects/Blowfish';
+import SwimTurtle from '../objects/SwimTurtle';
+
 
 function random(min: number, max: number) {
     return Math.random() * (max - min) + min;
@@ -49,7 +51,7 @@ class SeedScene extends Scene {
         spawnFish: () => void;
         bubbleList: Array<Bubble>;
         fishList: Array<Fish>;
-        obstacleList: Array<Turtle>;
+        obstacleList: Array<SwimTurtle>;
         sharkList: Array<Shark>;
         jellyList: Array<Jellyfish>;
         blowList: Array<Blowfish>;
@@ -166,7 +168,7 @@ class SeedScene extends Scene {
 
     spawnTurtle(): void {
         // console.log('turtle spawned!');
-        const turtle = new Turtle(this, undefined, true);
+        const turtle = new SwimTurtle(this, undefined);
         this.state.obstacleList.push(turtle);
         this.add(turtle);
     }
