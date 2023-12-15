@@ -16,6 +16,7 @@ import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';
 import Boat from '../objects/Boat';
 import Rod from '../objects/Rod';
+import Bubble from '../objects/Bubble';
 import Fish from '../objects/Fish';
 import Cat from '../objects/Cat';
 import Reel from '../objects/Reel';
@@ -43,6 +44,7 @@ class SeedScene extends Scene {
         rotationSpeed: number;
         updateList: UpdateChild[];
         spawnFish: () => void;
+        bubbleList: Array<Bubble>;
         fishList: Array<Fish>;
         obstacleList: Array<Turtle>;
         sharkList: Array<Shark>;
@@ -68,6 +70,7 @@ class SeedScene extends Scene {
             rotationSpeed: 0,
             updateList: [],
             spawnFish: () => this.spawnFish(),
+            bubbleList: [],
             fishList: [],
             obstacleList: [],
             sharkList: [],
@@ -104,7 +107,7 @@ class SeedScene extends Scene {
             lights = new BasicLightsNight();
         }
         else {
-            this.background = new Color(0x334b66);
+            this.background = new Color(0x0059b3);
         }
 
         // Add meshes to scene
@@ -138,6 +141,13 @@ class SeedScene extends Scene {
     removeFromUpdateList(object: UpdateChild): void {
         const index = this.state.updateList.indexOf(object);
         this.state.updateList.splice(index, 1);
+    }
+
+    spawnBubble(): void {
+        // console.log('fish spawned!');
+        const bubble = new Bubble(this);
+        this.state.bubbleList.push(bubble);
+        this.add(bubble);
     }
 
     spawnFish(): void {
@@ -263,6 +273,19 @@ class SeedScene extends Scene {
         // }
 
         // REMOVE THINGS OFF SCREEN
+
+        // if bubble is out of view
+        for (let bubble of this.state.bubbleList) {
+            if (
+                bubble.state.active &&
+                bubble.position.y > 2.2
+            ) {
+                bubble.state.active = false;
+                this.removeFromUpdateList(bubble);
+                this.remove(bubble);
+            }
+        }
+
         // if fish has passed "out of view", then stop updating + remove from GUI
         for (let fish of this.state.fishList) {
             if (fish.state.directionGoing == 'left') {
