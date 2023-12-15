@@ -76,17 +76,23 @@ class SeedScene extends Scene {
             center: 0,
             score: 0,
             numBait: 3,
-            fishSpeed: 2,
+            fishSpeed: 4,
             hasBait: true,
             stage: 0,
             elapsedTime: 0,
             spawnIntervals: {
                 fish: 3,
                 pufferfish: 4,
+                shark: 5,
+                jellyfish: 4,
+                turtle: 6,
             },
             spawnTimers: {
                 fish: 0,
                 pufferfish: 0,
+                shark: 0,
+                jellyfish: 0,
+                turtle: 0,
             },
             timeOfDay: mode,
         };
@@ -217,6 +223,12 @@ class SeedScene extends Scene {
             this.spawnFish();
         } else if (objectType == 'pufferfish') {
             this.spawnBlowfish();
+        } else if (objectType == 'jellyfish') {
+            this.spawnJelly();
+        } else if (objectType == 'shark') {
+            this.spawnShark();
+        } else if (objectType == 'turtle') {
+            this.spawnTurtle();
         }
     }
     advanceToNextStage() {
@@ -253,10 +265,24 @@ class SeedScene extends Scene {
         // REMOVE THINGS OFF SCREEN
         // if fish has passed "out of view", then stop updating + remove from GUI
         for (let fish of this.state.fishList) {
-            if (fish.state.active && fish.position.z > this.state.center + 2) {
-                fish.state.active = false;
-                this.removeFromUpdateList(fish);
-                this.remove(fish);
+            if (fish.state.directionGoing == 'left') {
+                if (
+                    fish.state.active &&
+                    fish.position.z > this.state.center + 2
+                ) {
+                    fish.state.active = false;
+                    this.removeFromUpdateList(fish);
+                    this.remove(fish);
+                }
+            } else {
+                if (
+                    fish.state.active &&
+                    fish.position.z < -this.state.center - 2
+                ) {
+                    fish.state.active = false;
+                    this.removeFromUpdateList(fish);
+                    this.remove(fish);
+                }
             }
         }
         // if turtle has passed "out of view", then stop updating + remove from GUI

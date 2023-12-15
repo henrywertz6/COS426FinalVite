@@ -10,6 +10,7 @@ class Shark extends Group {
     state: {
         clock: Clock;
         speed: number;
+        active: boolean;
     };
     constructor(parent: SeedScene, loadManager?: LoadingManager) {
         // Call parent Group() constructor
@@ -19,6 +20,7 @@ class Shark extends Group {
         this.state = {
             clock: new Clock(),
             speed: 1.5,
+            active: true,
         };
         // Load object
         const loader = new GLTFLoader(loadManager);
@@ -28,7 +30,7 @@ class Shark extends Group {
             this.add(gltf.scene);
         });
         // shark big and scary
-        this.scale.set(2, 2, 2);
+        this.scale.set(3, 3, 3);
         // Add self to parent's update list
         parent.addToUpdateList(this);
         this.position.z = -parent.state.center * 1.2;

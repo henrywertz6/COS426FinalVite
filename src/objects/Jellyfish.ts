@@ -8,7 +8,6 @@ import MODEL from './simple_jellyfish/scene.gltf?url';
 
 class Jellyfish extends Group {
     state: {
-        gui: dat.GUI;
         clock: Clock;
         speed: number;
         active: boolean;
@@ -19,10 +18,9 @@ class Jellyfish extends Group {
 
         // Init state
         this.state = {
-            gui: parent.state.gui,
             clock: new Clock(),
             speed: 3,
-            active: true
+            active: true,
         };
         // Load object
         const loader = new GLTFLoader(loadManager);

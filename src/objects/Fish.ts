@@ -12,7 +12,8 @@ class Fish extends Group {
         clock: Clock;
         speed: number;
         active: boolean;
-        escape: boolean
+        escape: boolean;
+        directionGoing: string;
     };
     constructor(parent: SeedScene) {
         // Call parent Group() constructor
@@ -26,7 +27,8 @@ class Fish extends Group {
             clock: new Clock(),
             speed: parent.state.fishSpeed,
             active: true,
-            escape: false
+            escape: false,
+            directionGoing: 'left',
         };
         this.name = 'fish';
         loader.load(MODEL, (gltf) => {
@@ -39,7 +41,15 @@ class Fish extends Group {
         // Add self to parent's update list
         parent.addToUpdateList(this);
         this.position.y = Math.floor(Math.random() * 9) - 8;
-        this.position.z = -parent.state.center;
+        let chooseSide = Math.random();
+        if (chooseSide < 0.5) {
+            this.state.directionGoing = 'right';
+            this.position.z = parent.state.center;
+            this.rotateY(Math.PI);
+        } else {
+            this.position.z = -parent.state.center;
+        }
+
         let scaleFactor = 7;
         this.scale.set(scaleFactor, scaleFactor, scaleFactor);
     }
@@ -51,7 +61,8 @@ class Fish extends Group {
                 this.state.mixer.update(delta);
             }
             this.translateZ(delta * this.state.speed);
-        } 
+            // this.position.y = Math.sin(this.position.z);
+        }
     }
 }
 

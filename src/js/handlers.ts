@@ -13,7 +13,6 @@ import {
 } from 'three';
 import Hook from '../objects/Hook';
 
-
 // handle user controls input
 export function handleKeyDown(
     event: { key: string },
@@ -36,9 +35,9 @@ export function handleMouseDown(
     scene: any,
     sounds: any,
     playSound: boolean
-    ) {
+) {
     let hook = scene.getObjectByName('hook');
-    // CHANGE Y POS to wherever we want the ocean to be 
+    // CHANGE Y POS to wherever we want the ocean to be
     if (hook.position.y > 3 && hook.state.fish) {
         let fish = hook.state.fish;
         // get rid of fish
@@ -46,26 +45,25 @@ export function handleMouseDown(
         scene.remove(fish);
         scene.state.score += 1;
         hook.state.fish = undefined;
-        
+
         // increase fish speed and spin turtle every 10 fish
-        if(scene.state.score % 10 == 0) {
+        if (scene.state.score % 10 == 0) {
             scene.state.fishSpeed += 0.3;
             let turtle = scene.getObjectByName('turtle');
             turtle.spin();
-            if(playSound){
+            if (playSound) {
                 sounds['turtleSpin'].play();
             }
-        }
-        else {
-            if(playSound){
+        } else {
+            if (playSound) {
                 sounds['reelFish'].play();
-            }    
+            }
         }
     } // drop the fish if you click under sea level
-    else if(hook.position.y < 3 && hook.state.fish) {
+    else if (hook.position.y < 3 && hook.state.fish) {
         let fish = hook.state.fish;
         //fish swims away faster
-        fish.rotateX(Math.PI/2);
+        fish.rotateX(Math.PI / 2);
         fish.state.speed = 4;
         fish.state.active = true;
         hook.state.fish = undefined;
@@ -116,8 +114,8 @@ export function handleCharacterControls(
         if (y_intersection < 5.8) {
             reel.changeLength(y_intersection);
             hook.changeHook(y_intersection);
-            if(bait.state.active) {
-               bait.changeBait(y_intersection);
+            if (bait.state.active) {
+                bait.changeBait(y_intersection);
             }
             if (hook.state.fish) {
                 hook.state.fish.position.y = y_intersection - 1;
@@ -127,14 +125,14 @@ export function handleCharacterControls(
 }
 
 function fishCollision(hook: Hook, sounds: any, playSound: boolean) {
-    if(playSound) {
+    if (playSound) {
         sounds['collision'].play();
     }
-    if(hook.state.fish != null) {
-    hook.state.fish.rotateX(Math.PI/2);
-    hook.state.fish.state.speed = 4;
-    hook.state.fish.state.active = true;
-    hook.state.fish = undefined;
+    if (hook.state.fish != null) {
+        hook.state.fish.rotateX(Math.PI / 2);
+        hook.state.fish.state.speed = 4;
+        hook.state.fish.state.active = true;
+        hook.state.fish = undefined;
     }
 }
 
@@ -145,7 +143,7 @@ export function handleCollisions(
     // reel: any,
     // screens: any,
     sounds: any,
-    playSound: boolean,
+    playSound: boolean
     // camera: any
 ) {
     let hook = scene.getObjectByName('hook');
@@ -153,17 +151,17 @@ export function handleCollisions(
     let bait = scene.getObjectByName('bait');
 
     // jellyfish collisions only happen when we have bait on the hook
-    if(hook && reel && scene.state.hasBait) {
+    if (hook && reel && scene.state.hasBait) {
         // if we hit a jellyfish at any time!
         let hookBox = new Box3().setFromObject(hook);
         let reelBox = new Box3().setFromObject(reel);
-        for(let jelly of scene.state.jellyList) {
-            // only lets jellies hit one time 
-            if(jelly.state.active) {
+        for (let jelly of scene.state.jellyList) {
+            // only lets jellies hit one time
+            if (jelly.state.active) {
                 let jellyBox = new Box3().setFromObject(jelly);
                 const intHook = hookBox.intersectsBox(jellyBox);
                 const intReel = reelBox.intersectsBox(jellyBox);
-                if(intHook || intReel) {
+                if (intHook || intReel) {
                     jelly.state.active = false;
                     // shock reel and get rid of one bait
                     scene.state.numBait -= 1;
@@ -171,13 +169,41 @@ export function handleCollisions(
                     bait.state.active = false;
                     scene.state.hasBait = false;
                     reel.shakeLine();
-                    if(playSound){
+                    if (playSound) {
                         sounds['shock'].play();
                     }
-                
+
                     // get rid of fish if on hook when jelly hit
-                    if(hook.state.fish) {
-                        hook.state.fish.rotateX(Math.PI/2);
+                    if (hook.state.fish) {
+                        hook.state.fish.rotateX(Math.PI / 2);
+                        hook.state.fish.state.speed = 4;
+                        hook.state.fish.state.active = true;
+                        hook.state.fish = undefined;
+                    }
+                }
+            }
+        }
+        for (let shark of scene.state.sharkList) {
+            // only lets shark hit one time
+            if (shark.state.active) {
+                let sharkBox = new Box3().setFromObject(shark);
+                const intHook = hookBox.intersectsBox(sharkBox);
+                const intReel = reelBox.intersectsBox(sharkBox);
+                if (intHook || intReel) {
+                    shark.state.active = false;
+                    // shock reel and get rid of one bait
+                    scene.state.numBait -= 1;
+                    shark.state.speed = 7;
+                    bait.state.active = false;
+                    scene.state.hasBait = false;
+                    reel.shakeLine();
+                    if (playSound) {
+                        sounds['shock'].play();
+                    }
+
+                    // get rid of fish if on hook when jelly hit
+                    if (hook.state.fish) {
+                        hook.state.fish.rotateX(Math.PI / 2);
                         hook.state.fish.state.speed = 4;
                         hook.state.fish.state.active = true;
                         hook.state.fish = undefined;
@@ -205,7 +231,7 @@ export function handleCollisions(
             }
         }
     } // if we have a fish on the hook and hit an obstacle
-    else if (hook && hook.state.fish) { 
+    else if (hook && hook.state.fish) {
         let fish = hook.state.fish;
         let fishBox = new Box3().setFromObject(fish);
         for (let turtle of scene.state.obstacleList) {
