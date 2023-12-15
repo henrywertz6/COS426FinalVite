@@ -32,7 +32,6 @@ import Jellyfish from '../objects/Jellyfish';
 import Blowfish from '../objects/Blowfish';
 import SwimTurtle from '../objects/SwimTurtle';
 
-
 function random(min: number, max: number) {
     return Math.random() * (max - min) + min;
 }
@@ -236,6 +235,10 @@ class SeedScene extends Scene {
                 return 20;
             case 3:
                 return 20;
+            case 4:
+                return 20;
+            case 5:
+                return 20;
             default:
                 return 0;
         }
@@ -268,7 +271,14 @@ class SeedScene extends Scene {
                 this.state.spawnIntervals['fish'] = 2;
                 break;
             case 3:
+                this.state.spawnSet.delete('shark');
                 this.state.spawnSet.add('jellyfish');
+                break;
+            case 4:
+                this.state.fishSpeed = 8;
+                this.state.spawnSet.add('pufferfish');
+                this.state.spawnSet.add('shark');
+                break;
         }
     }
     update(timeStamp: number): void {

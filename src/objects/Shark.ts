@@ -44,7 +44,11 @@ class Shark extends Group {
     update(timeStamp: number): void {
         let delta = this.state.clock.getDelta();
         this.translateZ(delta * this.state.speed);
-        this.position.y = 0.5 * Math.sin(0.25 * this.position.z) - 16;
+        if (this.state.approach == true) {
+            this.position.y = 0.5 * Math.sin(0.25 * this.position.z) - 16;
+        } else {
+            this.position.y = 0.5 * Math.sin(0.25 * this.position.z) - 3;
+        }
     }
 }
 
