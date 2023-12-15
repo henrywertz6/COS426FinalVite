@@ -1,8 +1,10 @@
-# COS 426 Final Project Template
+# COS 426 Final Project: Feline Fishing Frenzy
 
-This skeleton project will help you get started with a ThreeJS project and provide a strong foundation for extension. It sets up a simple scene, camera, and renderer in a modern JavaScript environment, and is written using some common best-practices that you may want to draw from.
+To see the 1-3 minute video demo: [VIDEO](https://drive.google.com/file/d/1SyWu3Q-8RLIxs-zrGarpZrqK_297aHGW/view)
 
-To see it running live on the web, check out the [Online Demo](https://adamfinkelstein.github.io/cos426finalproject-vite/)
+To read the write-up, click on "writeup.pdf" in the repo.
+
+To see it running live on the web, check out the [Online Demo](https://henrywertz6.github.io/cos426finalproject-vite/)
 
 ## Cloning this template at Github
 
