@@ -276,6 +276,16 @@ let playSound = true;
     // INITIALIZE AUDIO
     const listener = new AudioListener();
     const audioLoader = new AudioLoader();
+
+    // switch into game with dream sound
+    const dream = new Audio(listener);
+    audioLoader.load('https://audio.jukehost.co.uk/wzNVl72DZTJCcKeQ3qqZ1Ahq8WCz7Tjd', function(buffer) {
+        dream.setBuffer(buffer);
+        dream.setLoop(false);
+        dream.setVolume(0.3);
+        dream.play();
+    });
+
     backgroundMusic = new Audio(listener);
     audioLoader.load('https://audio.jukehost.co.uk/Au0hzLKqJTt0aM0krXkmt8jT2TkwcDto', (buffer) => {
     backgroundMusic.setBuffer(buffer);
@@ -283,6 +293,8 @@ let playSound = true;
     backgroundMusic.setVolume(0.1); // Adjust the volume as needed
     backgroundMusic.play();
     })
+
+    
     // ADD OUR SOUND FX
     const meow = new Audio(listener);
     const shock = new Audio(listener);
@@ -301,6 +313,7 @@ let playSound = true;
     sounds['turtleSpin'] = turtleSpin;
     sounds['sharkSound'] = sharkSound;
     sounds['newBait'] = newBait;
+
     // SUB IN OUR SOUND
     audioLoader.load('https://audio.jukehost.co.uk/sdoBgQ57rIUNlhb9ZdIktnUcXdrHnaxr', function(buffer) {
         meow.setBuffer(buffer);
