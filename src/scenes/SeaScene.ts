@@ -1,5 +1,15 @@
 import dat from 'dat.gui';
-import { Scene, Color, LoadingManager, Audio, AudioListener, AudioLoader } from 'three';
+import {
+    Scene,
+    Color,
+    LoadingManager,
+    Audio,
+    AudioListener,
+    AudioLoader,
+    Box3,
+    Object3D,
+    Clock,
+} from 'three';
 
 import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';
@@ -43,6 +53,11 @@ class SeedScene extends Scene {
         numBait: number;
         fishSpeed: number;
         hasBait: boolean;
+        stage: number;
+        elapsedTime: number;
+        spawnIntervals: { [key: string]: number };
+        spawnTimers: { [key: string]: number };
+        timeOfDay: string;
     };
 
     constructor(loadManager: LoadingManager) {
@@ -64,8 +79,18 @@ class SeedScene extends Scene {
             numBait: 3,
             fishSpeed: 2,
             hasBait: true,
+            stage: 0,
+            elapsedTime: 0,
+            spawnIntervals: {
+                fish: 3,
+                pufferfish: 4,
+            },
+            spawnTimers: {
+                fish: 0,
+                pufferfish: 0,
+            },
+            timeOfDay: 'day',
         };
-
         // Set background to a nice color
         this.background = new Color(0x334b66);
 
@@ -129,22 +154,72 @@ class SeedScene extends Scene {
         this.state.blowList.push(blow);
         this.add(blow);
     }
-    
+
     spawnBait(): void {
         let oldBait = this.getObjectByName('bait');
-        if(oldBait != null) {
+        if (oldBait != null) {
             this.remove(oldBait);
         }
-        this.state.hasBait = true;    
+        this.state.hasBait = true;
         let newBait = new Bait(this, undefined);
         let hook = this.getObjectByName('hook');
         let newPos = hook?.position;
-        if(newPos != null) {
-        newBait.position.set(newPos.x, newPos?.y - 0.2, newPos.z);
+        if (newPos != null) {
+            newBait.position.set(newPos.x, newPos?.y - 0.2, newPos.z);
         }
         this.add(newBait);
     }
+    updateSpawners(deltaTime: number): void {
+        this.state.elapsedTime += deltaTime;
 
+        if (this.state.elapsedTime >= this.getStageDuration()) {
+            this.advanceToNextStage();
+        }
+
+        for (const objectType in this.state.spawnIntervals) {
+            if (
+                this.state.spawnTimers[objectType] >=
+                this.state.spawnIntervals[objectType]
+            ) {
+                console.log('I got here');
+                this.spawnObject(objectType);
+                this.state.spawnTimers[objectType] = 0;
+            } else {
+                this.state.spawnTimers[objectType] += deltaTime;
+            }
+        }
+    }
+
+    getStageDuration(): number {
+        switch (this.state.stage) {
+            case 0:
+                return 10;
+            case 1:
+                return 15;
+            default:
+                return 0;
+        }
+    }
+    spawnObject(objectType: string): void {
+        if (objectType == 'fish') {
+            this.spawnFish();
+        } else if (objectType == 'pufferfish') {
+            this.spawnBlowfish();
+        }
+    }
+    advanceToNextStage() {
+        this.state.stage++;
+        this.state.elapsedTime = 0;
+
+        switch (this.state.stage) {
+            case 1:
+                this.state.spawnIntervals['fish'] = 3;
+                break;
+            case 2:
+                this.state.spawnIntervals['fish'] = 2;
+                break;
+        }
+    }
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
@@ -153,16 +228,15 @@ class SeedScene extends Scene {
         let randomNum = random(0, 1500);
         if (randomNum < 8) {
             this.spawnFish();
-        } else if(randomNum < 10 && this.state.sharkList.length < 1) {
+        } else if (randomNum < 10 && this.state.sharkList.length < 1) {
             this.spawnShark();
-        } else if(randomNum < 12 && this.state.blowList.length < 3) {
+        } else if (randomNum < 12 && this.state.blowList.length < 3) {
             this.spawnBlowfish();
         }
         // generate more jellyfish as the player's score gets higher?
-        else if(randomNum < (13 * (1 + this.state.score / 150))) {
+        else if (randomNum < 13 * (1 + this.state.score / 150)) {
             this.spawnJelly();
         }
-
 
         // REMOVE THINGS OFF SCREEN
         // if fish has passed "out of view", then stop updating + remove from GUI
@@ -175,7 +249,10 @@ class SeedScene extends Scene {
         }
         // if turtle has passed "out of view", then stop updating + remove from GUI
         for (let turtle of this.state.obstacleList) {
-            if (turtle.state.active && turtle.position.z > this.state.center + 2) {
+            if (
+                turtle.state.active &&
+                turtle.position.z > this.state.center + 2
+            ) {
                 turtle.state.active = false;
                 this.removeFromUpdateList(turtle);
                 this.remove(turtle);
