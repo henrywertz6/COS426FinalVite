@@ -3,6 +3,10 @@ import {
     PlaneGeometry,
     Vector3,
     Mesh,
+    MeshBasicMaterial,
+    DoubleSide,
+    ObjectSpaceNormalMap,
+    LoadingManager,
     ShaderMaterial
 } from 'three';
 
@@ -16,7 +20,7 @@ class Ocean extends Group {
         // Call parent Group() constructor
         super();
         this.name = 'ocean';
-        const geometry = new PlaneGeometry(70, 120, 50, 50); // Adjust size and segments as needed
+        const geometry = new PlaneGeometry(70, 120, 40, 40); // Adjust size and segments as needed
 
         // Create custom shader material for water effect
         let material = new ShaderMaterial({
@@ -51,25 +55,26 @@ class Ocean extends Group {
           
               void main() {
                 float color = sin(vUv.x * 10.0) * 0.1 + sin(vUv.y * 10.0) * 0.1;
-                vec3 darkBlue = vec3(0.0, 0.1, 0.3); // Adjust the RGB values for a darker shade
+                vec3 darkBlue = vec3(0.0, 0.2, 0.4); // Adjust the RGB values for a darker shade
                 gl_FragColor = vec4(darkBlue, 1.0 - color);
               }
             `,
           });
-        
-        if(!day){
+          if(!day){
             material = material2;
-        }
+          }
         const mesh = new Mesh(geometry, material);
-
+        // mesh.lookAt(new Vector3(0.2, 0.9, 0));
+        // mesh.position.y = 7.6;
+        // mesh.position.x = -23.8;
         mesh.lookAt(new Vector3(0, -1, 0));
         mesh.position.y = -0.8;
         mesh.position.x = -33;
         mesh.rotateY(Math.PI/32);
+
         this.state = {
             ocean: mesh,
         };
-        
         this.add(this.state.ocean);
     }
     update(timeStamp: number): void {
