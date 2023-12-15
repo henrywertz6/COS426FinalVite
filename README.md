@@ -4,7 +4,7 @@ To see the 1-3 minute video demo: [VIDEO](https://drive.google.com/file/d/1SyWu3
 
 To read the write-up, click on "writeup.pdf" in the repo.
 
-To see it running live on the web, check out the [Online Demo](https://henrywertz6.github.io/cos426finalproject-vite/)
+To see it running live on the web, check out the [Online Demo](https://henrywertz6.github.io/COS426FinalVite/)
 
 ## Cloning this template at Github
 
