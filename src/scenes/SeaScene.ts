@@ -250,7 +250,6 @@ class SeedScene extends Scene {
     spawnObject(objectType: string): void {
         if (objectType == 'fish') {
             this.spawnFish();
-            this.spawnBonusBait();
         } else if (objectType == 'pufferfish') {
             this.spawnBlowfish();
         } else if (objectType == 'jellyfish') {

@@ -277,8 +277,6 @@ let playSound = true;
     const listener = new AudioListener();
     const audioLoader = new AudioLoader();
     backgroundMusic = new Audio(listener);
-    // ADD OUR BACKGROUND MUSIC
-    // not explosions lol . this is for testing :D
     audioLoader.load('https://audio.jukehost.co.uk/Au0hzLKqJTt0aM0krXkmt8jT2TkwcDto', (buffer) => {
     backgroundMusic.setBuffer(buffer);
     backgroundMusic.setLoop(true);
@@ -329,7 +327,7 @@ let playSound = true;
         collision.setLoop(false);
         collision.setVolume(0.4);
     });
-    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+    audioLoader.load('https://audio.jukehost.co.uk/qomVHbehMFTPyw2zeHoH5yq6iaKvdjQf', function(buffer) {
         turtleSpin.setBuffer(buffer);
         turtleSpin.setLoop(false);
         turtleSpin.setVolume(0.4);

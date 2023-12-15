@@ -162,25 +162,25 @@ p {
   border-radius: 12px;
 }
 .resume-button:hover {
-  background-color: rgb(208, 191, 169); /* Adjust the hover color */
+  background-color: rgb(208, 191, 169); 
 }
-
-
 
 .pause-button {
   position: fixed;
   top: 10px;
   right: 10px;
-  background-color: transparent;
-  border: none;
   font-size: 24px;
   font-family: 'secondary';
   cursor: pointer;
   color: White; /* Adjust the color as needed */
-  outline: none;
+  background-color: tan;
+  border: white;
+  border-radius: 12px;
+  text-align: center;
+  display: inline-block;
 }
 .pause-button:hover {
-  color: #ADD8E6; /* Adjust the hover color */
+  background-color: rgb(208, 191, 169); 
 }
 
 .bait-button {
