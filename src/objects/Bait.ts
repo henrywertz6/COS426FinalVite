@@ -29,15 +29,6 @@ class Bait extends Group {
         loader.load(MODEL, (gltf) => {
             this.add(gltf.scene);
         });
-        this.traverse(function (child) {
-            if (child instanceof Mesh) {
-                if (child.material instanceof MeshStandardMaterial) {
-                    // Use 'as MeshStandardMaterial' to assert the type
-                    const material = child.material as THREE.MeshStandardMaterial;
-                    material.color.setHex(0xFFC0CB); // Set your desired color
-                }
-            }
-        });
 
         // Add self to parent's update list
         parent.addToUpdateList(this);
@@ -53,7 +44,7 @@ class Bait extends Group {
         let delta = this.state.clock.getDelta();
 
         if (!this.state.active) {
-            this.translateY(-delta * this.state.speed); // Adjust the speed and direction by modifying the coefficient (2 in this case)
+            this.translateY(-delta * this.state.speed);
             this.position.z = (Math.sin(this.position.y)); 
         } 
     }
