@@ -1,17 +1,12 @@
 import {
     Group,
-    LoadingManager,
     Line,
     BufferGeometry,
     LineBasicMaterial,
     Vector3,
 } from 'three';
 
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import TWEEN from 'three/examples/jsm/libs/tween.module.js';
-
 import SeedScene from '../scenes/SeaScene';
-import { Geometry } from 'three/examples/jsm/deprecated/Geometry.js';
 
 // Import flower model as a URL using Vite's syntax
 

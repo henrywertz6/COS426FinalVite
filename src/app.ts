@@ -72,54 +72,37 @@ controls.minDistance = 4;
 controls.maxDistance = 16;
 controls.update();
 
+
 window.addEventListener(
     'pointermove',
     (event) => handlePointerMove(event, pointer),
     false
 );
-window.addEventListener('mousedown', (event) => handleMouseDown(event, scene), false);
+window.addEventListener('mousedown', (event) => handleMouseDown(event, scene, sounds, playSound), false);
 
+// --------RENDERING -----------------------------------------
 let currApp = false;
-
-// Define a function for rendering logic
+// rendering loop (outside so we can pause it)
 const renderScene = () => {
     controls.update();
     renderer.render(scene, camera);
     scene.update && scene.update(clock.getDelta());
     handleCharacterControls(scene, pointer, raycaster, camera);
-    handleCollisions(scene);
+    handleCollisions(scene, sounds, playSound);
     updateScore(scene.state.score, scene.state.numBait);
     if (scene.state.numBait === 0) {
         endGame(scene.state.score);
     }
 };
-
 // Render loop
 const onAnimationFrameHandler = () => {
-    // raycaster.setFromCamera(pointer, camera);
-    
     if (currApp) {
         // console.log(pointer);
         renderScene();
         window.requestAnimationFrame(onAnimationFrameHandler);
     }
-
-    // if(currApp) {
-    //     // console.log(pointer);
-    //     controls.update();
-    //     renderer.render(scene, camera);
-    //     scene.update && scene.update(clock.getDelta());
-    //     handleCharacterControls(scene, pointer, raycaster, camera);
-    //     handleCollisions(scene);
-    //     updateScore(scene.state.score, scene.state.numBait);
-    //     if(scene.state.numBait == 0) {
-    //         endGame(scene.state.score);
-    //     }
-    //     window.requestAnimationFrame(onAnimationFrameHandler);
-    // }
 };
 window.requestAnimationFrame(onAnimationFrameHandler);
-
 
 // Function to reset the render loop
 const resetRenderLoop = () => {
@@ -128,6 +111,8 @@ const resetRenderLoop = () => {
     
     onAnimationFrameHandler();
 };
+
+// --------RESIZING -----------------------------------------
 
 // Resize Handler
 const windowResizeHandler = () => {
@@ -138,7 +123,6 @@ const windowResizeHandler = () => {
     // find right edge of screen in 3D coordinates
     scene.state.center = visibleWidthAtZDepth(0, camera) / 2;
 };
-
 // used from
 // https://discourse.threejs.org/t/functions-to-calculate-the-visible-width-height-at-a-given-z-depth-from-a-perspective-camera/269
 const visibleHeightAtZDepth = (depth: number, camera: PerspectiveCamera) => {
@@ -162,16 +146,27 @@ const visibleWidthAtZDepth = (depth: number, camera: PerspectiveCamera) => {
 windowResizeHandler();
 window.addEventListener('resize', windowResizeHandler, false);
 
+
+// --------IN GAME -----------------------------------------
+
 // switch to end game screen
 function endGame(finalScore: number) {
     let score = document.getElementById('score');
     if(score != null) {
         score.textContent = `Total fish caught: ${finalScore}`;
     }
-
+    backgroundMusic.stop();
     document.getElementById('app')!.style.display = 'none';
     document.getElementById('end-screen')!.style.display = 'initial';
 }
+
+// restock bait! 
+  document.getElementById('bait-button')!.addEventListener('click', () => {
+    if(playSound){
+        sounds['refillBait'].play();
+    }
+    scene.spawnBait();
+});
 
 // Update score on screen
 function updateScore(newScore: number, newBait: number) {
@@ -197,58 +192,108 @@ function updateScore(newScore: number, newBait: number) {
         baitButton.style.display = 'none';
     }
     }
-
   }  
+  
+// -------------- AUDIO ------------------------
+// globals vars for sound
+const sounds: { [key: string]: Audio } = {};
+let backgroundMusic : Audio;
+let playSound = true;
 
-  
-//   // Add this function somewhere in your code
-//   function toggleBackgroundMusic(shouldPlay: boolean) {
-//       if (scene.backgroundMusic) {
-//           if (shouldPlay) {
-//               scene.backgroundMusic.play();
-//           } else {
-//               scene.backgroundMusic.pause();
-//           }
-//       }
-//   }
-  
     // to toggle background music
     const music = document.getElementById('background_music') as HTMLInputElement;
     // Add an event listener to the checkbox
     music!.addEventListener('change', () => {
         if(music.checked) {
-            var context = new AudioContext();
-            // Inside the SeaScene class constructor or setup method
-            const listener = new AudioListener();
-            const audioLoader = new AudioLoader();
-            console.log(context.state);
-        const backgroundMusic = new Audio(listener);
-
-        audioLoader.load('./audio/meow.mp3', (buffer) => {
-        backgroundMusic.setBuffer(buffer);
-        backgroundMusic.setLoop(true);
-        backgroundMusic.setVolume(0.5); // Adjust the volume as needed
-        backgroundMusic.play();
+            backgroundMusic.play();
         }
-        )
-    }});
-    // to toggle background music
+        else {
+            backgroundMusic.stop();
+        }        
+    });
+
+    // to toggle sound effects
     const soundFX = document.getElementById('sound_effects') as HTMLInputElement;
     // Add an event listener to the checkbox
     soundFX!.addEventListener('change', () => {
-        // CREATE FUNC IN HANDLER that mutes/enables sound
-        // pass through soundFX.checked (true = sound effects)
+        if(soundFX.checked){
+            playSound = true;
+        }
+        else {
+            playSound = false;
+        }
     });
 
-
-  // restock bait! 
-  document.getElementById('bait-button')!.addEventListener('click', () => {
-    scene.spawnBait();
-});
-
+    // meow when space
+    document.addEventListener('keydown', function(event) {
+        if (event.key === ' ') { 
+            sounds['meow'].play(); 
+        }
+      });
+// --------SWITCH SCREENS -----------------------------------------
 
   // switch from start to app 
   document.getElementById('start-button')!.addEventListener('click', () => {
+
+    // INITIALIZE AUDIO
+    const listener = new AudioListener();
+    const audioLoader = new AudioLoader();
+    backgroundMusic = new Audio(listener);
+    // ADD OUR BACKGROUND MUSIC
+    // not explosions lol . this is for testing :D
+    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', (buffer) => {
+    backgroundMusic.setBuffer(buffer);
+    backgroundMusic.setLoop(true);
+    backgroundMusic.setVolume(0.5); // Adjust the volume as needed
+    backgroundMusic.play();
+    })
+    // ADD OUR SOUND FX
+    const meow = new Audio(listener);
+    const shock = new Audio(listener);
+    const reelFish = new Audio(listener);
+    const refillBait = new Audio(listener);
+    const collision = new Audio(listener);
+    const turtleSpin = new Audio(listener);
+
+    sounds['meow'] = meow;
+    sounds['shock'] = shock;
+    sounds['reelFish'] = reelFish;
+    sounds['refillBait'] = refillBait;
+    sounds['collision'] = collision;
+    sounds['turtleSpin'] = turtleSpin;
+    // SUB IN OUR SOUND
+    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+        meow.setBuffer(buffer);
+        meow.setLoop(false);
+        meow.setVolume(0.4);
+    });
+    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+        shock.setBuffer(buffer);
+        shock.setLoop(false);
+        shock.setVolume(0.4);
+    });
+    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+        reelFish.setBuffer(buffer);
+        reelFish.setLoop(false);
+        reelFish.setVolume(0.4);
+    });
+    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+        refillBait.setBuffer(buffer);
+        refillBait.setLoop(false);
+        refillBait.setVolume(0.4);
+    });
+    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+        collision.setBuffer(buffer);
+        collision.setLoop(false);
+        collision.setVolume(0.4);
+    });
+    audioLoader.load('https://raw.githubusercontent.com/harveyw24/Glider/main/src/sounds/explosion.wav', function(buffer) {
+        turtleSpin.setBuffer(buffer);
+        turtleSpin.setLoop(false);
+        turtleSpin.setVolume(0.4);
+    });
+
+    // NON-audio things
     currApp = true;
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';
@@ -273,9 +318,8 @@ function updateScore(newScore: number, newBait: number) {
 });
 
   // switch from pause to app 
-  document.getElementById('play-again')!.addEventListener('click', () => {
+document.getElementById('play-again')!.addEventListener('click', () => {
     resetRenderLoop();
-    
     document.getElementById('app')!.style.display = 'initial';
     document.getElementById('start-screen')!.style.display = 'none';
     document.getElementById('end-screen')!.style.display = 'none';
