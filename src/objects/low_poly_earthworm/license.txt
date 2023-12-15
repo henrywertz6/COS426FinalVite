@@ -1,0 +1,11 @@
+Model Information:
+* title:	Low Poly Earthworm
+* source:	https://sketchfab.com/3d-models/low-poly-earthworm-c7bc8062678741539908de4a29facaa5
+* author:	singingstranger (https://sketchfab.com/singingstranger)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Low Poly Earthworm" (https://sketchfab.com/3d-models/low-poly-earthworm-c7bc8062678741539908de4a29facaa5) by singingstranger (https://sketchfab.com/singingstranger) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

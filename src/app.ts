@@ -85,8 +85,8 @@ const renderScene = () => {
     scene.update && scene.update(clock.getDelta());
     handleCharacterControls(scene, pointer, raycaster, camera);
     handleCollisions(scene);
-    updateScore(scene.state.score, scene.state.bait);
-    if (scene.state.bait === 0) {
+    updateScore(scene.state.score, scene.state.numBait);
+    if (scene.state.numBait === 0) {
         endGame(scene.state.score);
     }
 };
@@ -108,8 +108,8 @@ const onAnimationFrameHandler = () => {
     //     scene.update && scene.update(clock.getDelta());
     //     handleCharacterControls(scene, pointer, raycaster, camera);
     //     handleCollisions(scene);
-    //     updateScore(scene.state.score, scene.state.bait);
-    //     if(scene.state.bait == 0) {
+    //     updateScore(scene.state.score, scene.state.numBait);
+    //     if(scene.state.numBait == 0) {
     //         endGame(scene.state.score);
     //     }
     //     window.requestAnimationFrame(onAnimationFrameHandler);

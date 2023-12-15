@@ -77,6 +77,7 @@ export function handleCharacterControls(
     camera: any
 ) {
     let hook = scene.getObjectByName('hook');
+    let bait = scene.getObjectByName('bait');
     let reel = scene.getObjectByName('reel');
     let gamePlane = scene.getObjectByName('gamePlane');
     let y_intersection;
@@ -103,6 +104,7 @@ export function handleCharacterControls(
         if (y_intersection < 5.8) {
             reel.changeLength(y_intersection);
             hook.changeHook(y_intersection);
+            bait.changeBait(y_intersection);
             if (hook.state.fish) {
                 hook.state.fish.position.y = y_intersection - 1;
             }
@@ -122,6 +124,7 @@ export function handleCollisions(
 ) {
     let hook = scene.getObjectByName('hook');
     let reel = scene.getObjectByName('reel');
+    let bait = scene.getObjectByName('bait');
 
     if(hook && reel) {
         // if we hit a jellyfish at any time!
@@ -136,7 +139,7 @@ export function handleCollisions(
                 if(intHook || intReel) {
                     jelly.state.active = false;
                     // shock reel and get rid of one bait
-                    scene.state.bait -= 1;
+                    scene.state.numBait -= 1;
                     jelly.state.speed = 7;
                     reel.shakeLine();
                 

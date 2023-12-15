@@ -9,6 +9,7 @@ import Fish from '../objects/Fish';
 import Cat from '../objects/Cat';
 import Reel from '../objects/Reel';
 import Hook from '../objects/Hook';
+import Bait from '../objects/Bait';
 import GamePlane from '../objects/GamePlane';
 import Shark from '../objects/Shark';
 import Jellyfish from '../objects/Jellyfish';
@@ -38,7 +39,7 @@ class SeedScene extends Scene {
         blowList: Array<Blowfish>;
         center: number;
         score: number;
-        bait: number;
+        numBait: number;
         fishSpeed: number;
     };
 
@@ -59,7 +60,7 @@ class SeedScene extends Scene {
             blowList: [],
             center: 0,
             score: 0,
-            bait: 3,
+            numBait: 3,
             fishSpeed: 2,
         };
 
@@ -74,8 +75,9 @@ class SeedScene extends Scene {
         const cat = new Cat(this, loadManager);
         const reel = new Reel(this);
         const hook = new Hook(this, loadManager);
+        const bait = new Bait(this, loadManager);
         const lights = new BasicLights();
-        this.add(lights, boat, turtle, rod, cat, hook, plane, reel);
+        this.add(lights, boat, turtle, rod, cat, hook, plane, reel, bait);
 
         // Populate GUI
         this.state.gui.add(this.state, 'rotationSpeed', -5, 5);
