@@ -1,11 +1,4 @@
-import {
-    Group,
-    AnimationMixer,
-    Clock,
-    LoadingManager,
-    Mesh,
-    MeshStandardMaterial,
-} from 'three';
+import { Group, Clock, LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import SeedScene from '../scenes/SeaScene';
@@ -19,7 +12,7 @@ class Bait extends Group {
         speed: number;
         active: boolean;
     };
-    constructor(parent: SeedScene, loadManager: LoadingManager) {
+    constructor(parent: SeedScene, loadManager?: LoadingManager) {
         // Call parent Group() constructor
         super();
 
@@ -47,7 +40,14 @@ class Bait extends Group {
     changeBait(y: number): void {
         this.position.y = y - 0.6;
     }
-    update(timeStamp: number): void {}
+    update(timeStamp: number): void {
+        let delta = this.state.clock.getDelta();
+
+        if (!this.state.active) {
+            this.translateY(-delta * this.state.speed);
+            this.position.z = Math.sin(this.position.y);
+        }
+    }
 }
 
 export default Bait;

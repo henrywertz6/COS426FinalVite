@@ -1,7 +1,7 @@
 import dat from 'dat.gui';
 import { Scene, Color, LoadingManager, Box3, Object3D, Clock } from 'three';
 
-import BasicLights from '../lights/BasicLights';
+import BasicLights from '../lights/BasicLightsNight';
 import Turtle from '../objects/Turtle';
 import Boat from '../objects/Boat';
 import Rod from '../objects/Rod';

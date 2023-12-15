@@ -13,7 +13,7 @@ class Hook extends Group {
         fishHooked: boolean;
         fish: Fish | undefined;
     };
-    constructor(parent: SeedScene, loadManager: LoadingManager) {
+    constructor(parent: SeedScene, loadManager?: LoadingManager) {
         // Call parent Group() constructor
         super();
 

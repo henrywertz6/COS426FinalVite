@@ -1,5 +1,12 @@
 import dat from 'dat.gui';
-import { Scene, Color, LoadingManager, Box3, Object3D, Clock } from 'three';
+import {
+    Scene,
+    Color,
+    LoadingManager,
+    Audio,
+    AudioListener,
+    AudioLoader,
+} from 'three';
 
 import BasicLights from '../lights/BasicLights';
 import Turtle from '../objects/Turtle';
@@ -11,6 +18,7 @@ import Reel from '../objects/Reel';
 import Hook from '../objects/Hook';
 import Bait from '../objects/Bait';
 import GamePlane from '../objects/GamePlane';
+// import Wave from '../objects/Wave';
 import Shark from '../objects/Shark';
 import Jellyfish from '../objects/Jellyfish';
 import Blowfish from '../objects/Blowfish';
@@ -41,17 +49,12 @@ class SeedScene extends Scene {
         score: number;
         numBait: number;
         fishSpeed: number;
-        stage: number;
-        elapsedTime: number;
-        spawnIntervals: { [key: string]: number };
-        spawnTimers: { [key: string]: number };
-        timeOfDay: string;
+        hasBait: boolean;
     };
 
     constructor(loadManager: LoadingManager) {
         // Call parent Scene() constructor
         super();
-
         // Init state
         this.state = {
             gui: new dat.GUI(), // Create GUI for scene
@@ -67,17 +70,7 @@ class SeedScene extends Scene {
             score: 0,
             numBait: 3,
             fishSpeed: 2,
-            stage: 0,
-            elapsedTime: 0,
-            spawnIntervals: {
-                fish: 3,
-                pufferfish: 4,
-            },
-            spawnTimers: {
-                fish: 0,
-                pufferfish: 0,
-            },
-            timeOfDay: 'day',
+            hasBait: true,
         };
 
         // Set background to a nice color
@@ -87,6 +80,7 @@ class SeedScene extends Scene {
 
         // Add meshes to scene
         const plane = new GamePlane(this);
+        // const wave = new Wave(this, loadManager);
         const turtle = new Turtle(this, loadManager);
         const boat = new Boat(this, loadManager);
         const rod = new Rod(this, loadManager);
@@ -144,57 +138,22 @@ class SeedScene extends Scene {
         this.state.blowList.push(blow);
         this.add(blow);
     }
-    updateSpawners(deltaTime: number): void {
-        this.state.elapsedTime += deltaTime;
 
-        if (this.state.elapsedTime >= this.getStageDuration()) {
-            this.advanceToNextStage();
+    spawnBait(): void {
+        let oldBait = this.getObjectByName('bait');
+        if (oldBait != null) {
+            this.remove(oldBait);
         }
-
-        for (const objectType in this.state.spawnIntervals) {
-            if (
-                this.state.spawnTimers[objectType] >=
-                this.state.spawnIntervals[objectType]
-            ) {
-                console.log('I got here');
-                this.spawnObject(objectType);
-                this.state.spawnTimers[objectType] = 0;
-            } else {
-                this.state.spawnTimers[objectType] += deltaTime;
-            }
+        this.state.hasBait = true;
+        let newBait = new Bait(this, undefined);
+        let hook = this.getObjectByName('hook');
+        let newPos = hook?.position;
+        if (newPos != null) {
+            newBait.position.set(newPos.x, newPos?.y - 0.2, newPos.z);
         }
+        this.add(newBait);
     }
 
-    getStageDuration(): number {
-        switch (this.state.stage) {
-            case 0:
-                return 10;
-            case 1:
-                return 15;
-            default:
-                return 0;
-        }
-    }
-    spawnObject(objectType: string): void {
-        if (objectType == 'fish') {
-            this.spawnFish();
-        } else if (objectType == 'pufferfish') {
-            this.spawnBlowfish();
-        }
-    }
-    advanceToNextStage() {
-        this.state.stage++;
-        this.state.elapsedTime = 0;
-
-        switch (this.state.stage) {
-            case 1:
-                this.state.spawnIntervals['fish'] = 3;
-                break;
-            case 2:
-                this.state.spawnIntervals['fish'] = 2;
-                break;
-        }
-    }
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;

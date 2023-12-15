@@ -1,10 +1,19 @@
+@font-face {
+  font-family: 'juice'; 
+  src: url('fonts/orange juice 2.0.ttf') format('truetype');
+}
+
+body {
+  font-family: 'monospace'; /* Use your custom font for the entire document */
+}
+
 #title {
-    font-family: Monaco, monospace;
+    font-family: monospace;
     color: white;
     font-size: 4rem;
 }
 p {
-    font-family: Monaco, monospace;
+    font-family: 'juice', monospace;
     font-size: 16px;
 }
 #loading-screen {
@@ -76,7 +85,7 @@ p {
   border: 4px solid white;
   border-radius: 10px; /* Make the button smaller with rounded corners */
   padding: 0px 10px; /* Adjust padding to make the button smaller */
-  font-size: 30px; /* Adjust font size for the button text */
+  font-size: 40px; /* Adjust font size for the button text */
 }
 
 #start-screen p.instructions {
@@ -98,6 +107,59 @@ p {
   align-items: center;
 }
 
+.start-button {
+  background-color: tan;
+  border: white;
+  font-family: Monaco, monospace;
+  cursor: pointer;
+  color: white;
+  width: 350px;
+  height: 100px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 12px;
+}
+.start-button:hover {
+  background-color: rgb(208, 191, 169); /* Adjust the hover color */
+}
+
+#pause-screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: row; /* Set to row for a horizontal layout */
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(109.6deg, rgba(156,252,248,1) 11.2%, rgba(110,123,251,1) 91.1%);
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+  }
+
+#resume-button {
+  border: 4px solid white;
+  border-radius: 10px; /* Make the button smaller with rounded corners */
+  padding: 0px 10px; /* Adjust padding to make the button smaller */
+  font-size: 40px; /* Adjust font size for the button text */
+}
+
+.resume-button {
+  background-color: tan;
+  border: white;
+  font-family: Monaco, monospace;
+  cursor: pointer;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  border-radius: 12px;
+}
+.resume-button:hover {
+  background-color: rgb(208, 191, 169); /* Adjust the hover color */
+}
+
+
+
 .pause-button {
   position: fixed;
   top: 10px;
@@ -112,6 +174,23 @@ p {
 }
 .pause-button:hover {
   color: #ADD8E6; /* Adjust the hover color */
+}
+
+.bait-button {
+  position: fixed;
+  top: 70px;
+  left: 10px;
+  background-color: tan;
+  border: white;
+  font-size: 24px;
+  font-family: Monaco, monospace;
+  cursor: pointer;
+  color: White;
+  border-radius: 12px;
+  display: none;
+}
+.bait-button:hover {
+  background-color: rgb(208, 191, 169); /* Adjust the hover color */
 }
 
 .score {
@@ -130,4 +209,11 @@ p {
     left: 10px;
     color: white;
     font-size: 24px;
+  }
+
+  #resume-button {
+    border: 4px solid white;
+    border-radius: 10px; /* Make the button smaller with rounded corners */
+    padding: 0px 10px; /* Adjust padding to make the button smaller */
+    font-size: 30px; /* Adjust font size for the button text */
   }

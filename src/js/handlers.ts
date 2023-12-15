@@ -104,7 +104,9 @@ export function handleCharacterControls(
         if (y_intersection < 5.8) {
             reel.changeLength(y_intersection);
             hook.changeHook(y_intersection);
-            bait.changeBait(y_intersection);
+            if(bait.state.active) {
+               bait.changeBait(y_intersection);
+            }
             if (hook.state.fish) {
                 hook.state.fish.position.y = y_intersection - 1;
             }
@@ -126,7 +128,8 @@ export function handleCollisions(
     let reel = scene.getObjectByName('reel');
     let bait = scene.getObjectByName('bait');
 
-    if(hook && reel) {
+    // jellyfish collisions only happen when we have bait on the hook
+    if(hook && reel && scene.state.hasBait) {
         // if we hit a jellyfish at any time!
         let hookBox = new Box3().setFromObject(hook);
         let reelBox = new Box3().setFromObject(reel);
@@ -141,9 +144,11 @@ export function handleCollisions(
                     // shock reel and get rid of one bait
                     scene.state.numBait -= 1;
                     jelly.state.speed = 7;
+                    bait.state.active = false;
+                    scene.state.hasBait = false;
                     reel.shakeLine();
                 
-                    // get rid of rish if on hook when jelly hit
+                    // get rid of fish if on hook when jelly hit
                     if(hook.state.fish) {
                         hook.state.fish.rotateX(Math.PI/2);
                         hook.state.fish.state.speed = 4;
@@ -154,8 +159,8 @@ export function handleCollisions(
             }
         }
     }
-
-    if (hook && !hook.state.fish) {
+    // if no fish on hook yet but we have bait, we can catch a fish
+    if (hook && !hook.state.fish && scene.state.hasBait) {
         let hookBox = new Box3().setFromObject(hook);
         for (let fish of scene.state.fishList) {
             let fishBox = new Box3().setFromObject(fish);

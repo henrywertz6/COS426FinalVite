@@ -21,7 +21,7 @@ class Cat extends Group {
         // Load object
         const loader = new GLTFLoader(loadManager);
         this.state = {
-            mixer: new AnimationMixer(),
+            mixer: new AnimationMixer(this),
             clock: new Clock(),
             speed: 2,
         };
