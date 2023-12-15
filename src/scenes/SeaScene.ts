@@ -277,7 +277,6 @@ class SeedScene extends Scene {
                 break;
             case 4:
                 this.state.fishSpeed = 8;
-                this.state.spawnIntervals['shark'] = 18;
                 this.state.spawnSet.add('pufferfish');
                 this.state.spawnSet.add('shark');
                 break;
