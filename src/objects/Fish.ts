@@ -40,7 +40,7 @@ class Fish extends Group {
 
         // Add self to parent's update list
         parent.addToUpdateList(this);
-        this.position.y = Math.floor(Math.random() * 8) - 7;
+        this.position.y = Math.floor(Math.random() * 8) - 6;
         let chooseSide = Math.random();
         if (chooseSide < 0.5) {
             this.state.directionGoing = 'right';

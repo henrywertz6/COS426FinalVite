@@ -36,7 +36,7 @@ class Shark extends Group {
         // Add self to parent's update list
         parent.addToUpdateList(this);
         this.position.z = parent.state.center * 6;
-        this.position.x = -65;
+        this.position.x = -75;
         this.position.y = -40;
         this.rotateY(Math.PI);
     }

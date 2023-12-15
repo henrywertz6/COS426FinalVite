@@ -1,9 +1,4 @@
-import {
-    Scene,
-    Color,
-    LoadingManager,
-    FogExp2,
-} from 'three';
+import { Scene, Color, LoadingManager, FogExp2 } from 'three';
 
 import BasicLightsNight from '../lights/BasicLightsNight';
 import BasicLights from '../lights/BasicLights';
@@ -45,7 +40,7 @@ class SeedScene extends Scene {
         bubbleList: Array<Bubble>;
         fishList: Array<Fish>;
         obstacleList: Array<SwimTurtle>;
-        cloudList:Array<Cloud>;
+        cloudList: Array<Cloud>;
         sharkList: Array<Shark>;
         jellyList: Array<Jellyfish>;
         blowList: Array<Blowfish>;
@@ -92,7 +87,7 @@ class SeedScene extends Scene {
                 shark: 18,
                 jellyfish: 4,
                 turtle: 6,
-                bait: 15
+                bait: 15,
             },
             spawnTimers: {
                 fish: 0,
@@ -101,7 +96,7 @@ class SeedScene extends Scene {
                 jellyfish: 0,
                 turtle: 0,
                 bubble: 0,
-                bait: 0
+                bait: 0,
             },
             timeOfDay: mode,
             spawnSet: new Set(),
@@ -213,7 +208,7 @@ class SeedScene extends Scene {
     spawnBonusBait(): void {
         const bait = new ExtraBait(this);
         this.state.bonusBait.push(bait);
-        this.add(bait); 
+        this.add(bait);
     }
 
     updateSpawners(deltaTime: number): void {
@@ -264,8 +259,7 @@ class SeedScene extends Scene {
             this.spawnShark();
         } else if (objectType == 'turtle') {
             this.spawnTurtle();
-        }
-        else if(objectType == 'bonusbait') {
+        } else if (objectType == 'bonusbait') {
             this.spawnBonusBait();
         }
     }
@@ -319,7 +313,10 @@ class SeedScene extends Scene {
 
         // if cloud is out of view
         for (let cloud of this.state.cloudList) {
-            if (cloud.state.active && cloud.position.z < -this.state.center - 10) {
+            if (
+                cloud.state.active &&
+                cloud.position.z < -this.state.center - 10
+            ) {
                 cloud.state.active = false;
                 this.removeFromUpdateList(cloud);
                 this.remove(cloud);
