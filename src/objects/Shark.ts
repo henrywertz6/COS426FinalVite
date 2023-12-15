@@ -37,14 +37,14 @@ class Shark extends Group {
         parent.addToUpdateList(this);
         this.position.z = parent.state.center * 6;
         this.position.x = -65;
-        this.position.y = Math.floor(Math.random() * 9) - 8;
+        this.position.y = -40;
         this.rotateY(Math.PI);
     }
 
     update(timeStamp: number): void {
         let delta = this.state.clock.getDelta();
         this.translateZ(delta * this.state.speed);
-        this.position.y = 0.5 * Math.sin(0.25 * this.position.z) - 3;
+        this.position.y = 0.5 * Math.sin(0.25 * this.position.z) - 16;
     }
 }
 

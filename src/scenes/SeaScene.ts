@@ -116,7 +116,7 @@ class SeedScene extends Scene {
         } else {
             this.background = new Color(0x0059b3);
         }
-        this.fog = new FogExp2(0x161e57, 0.02);
+        this.fog = new FogExp2(0x161e57, 0.01);
         // Add meshes to scene
         const plane = new GamePlane(this);
         const ocean = new Ocean(this, this.state.timeOfDay != 'night');
@@ -234,6 +234,8 @@ class SeedScene extends Scene {
                 return 15;
             case 2:
                 return 20;
+            case 3:
+                return 20;
             default:
                 return 0;
         }
@@ -265,6 +267,8 @@ class SeedScene extends Scene {
                 this.state.spawnSet.add('shark');
                 this.state.spawnIntervals['fish'] = 2;
                 break;
+            case 3:
+                this.state.spawnSet.add('jellyfish');
         }
     }
     update(timeStamp: number): void {
@@ -342,6 +346,7 @@ class SeedScene extends Scene {
             } else {
                 if (shark.position.z < -this.state.center * 6 - 12) {
                     shark.position.x = 0;
+                    shark.position.y = Math.floor(Math.random() * 9) - 8;
                     shark.state.speed = 7;
                     shark.rotateY(Math.PI);
                     shark.state.approach = false;
