@@ -15,6 +15,8 @@ class Turtle extends Group {
         speed: number;
         obstacle?: boolean;
         active: boolean;
+        original_y: number;
+        saved: number;
     };
     constructor(
         parent: SeedScene,
@@ -32,6 +34,8 @@ class Turtle extends Group {
             speed: 2,
             obstacle: isObstacle,
             active: true,
+            original_y: 2,
+            saved: 0,
         };
         // Load object
         const loader = new GLTFLoader(loadManager);
@@ -53,6 +57,7 @@ class Turtle extends Group {
             this.translateX(0.6);
             this.rotateY(Math.PI / 2);
         }
+        this.state.original_y = this.position.y;
     }
     spin(): void {
         // Add a simple twirl
@@ -80,12 +85,10 @@ class Turtle extends Group {
             this.state.twirl -= Math.PI / 8;
             this.rotation.y += Math.PI / 8;
         }
-        if (this.state.obstacle) {
-            let delta = this.state.clock.getDelta();
-            this.translateZ(delta * this.state.speed);
-        }
-
-        // TWEEN.update();
+        let delta = this.state.clock.getDelta();
+        this.state.saved += delta * 2;
+        let sine_offset = Math.sin(this.state.saved)/8;
+        this.position.y = this.state.original_y + sine_offset;
     }
 }
 

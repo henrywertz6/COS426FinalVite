@@ -11,6 +11,8 @@ class Cat extends Group {
         mixer: AnimationMixer;
         clock: Clock;
         speed: number;
+        original_y: number;
+        saved: number;
     };
     constructor(parent: SeedScene, loadManager: LoadingManager) {
         // Call parent Group() constructor
@@ -24,6 +26,8 @@ class Cat extends Group {
             mixer: new AnimationMixer(this),
             clock: new Clock(),
             speed: 2,
+            original_y: 0,
+            saved: 0,
         };
         this.name = 'cat';
         loader.load(MODEL, (gltf) => {
@@ -40,11 +44,15 @@ class Cat extends Group {
         this.translateZ(2.5);
         this.translateY(3);
         this.rotateY((3 * Math.PI) / 4);
+        this.state.original_y = this.position.y;
     }
 
     update(timeStamp: number): void {
         let delta = this.state.clock.getDelta();
         this.state.mixer.update(delta / 4);
+        this.state.saved += delta * 2;
+        let sine_offset = Math.sin(this.state.saved)/8;
+        this.position.y = this.state.original_y + sine_offset;
     }
 }
 
