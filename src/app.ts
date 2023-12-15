@@ -71,6 +71,7 @@ controls.enableDamping = true;
 controls.enablePan = false;
 controls.minDistance = 4;
 controls.maxDistance = 16;
+controls.enabled = false;
 controls.update();
 
 

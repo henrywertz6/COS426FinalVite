@@ -166,7 +166,6 @@ export function handleCollisions(
                     jelly.state.speed = 7;
                     bait.state.active = false;
                     scene.state.hasBait = false;
-                    reel.shakeLine();
                     if (playSound) {
                         sounds['shock'].play();
                     }
@@ -194,7 +193,6 @@ export function handleCollisions(
                     shark.state.speed = 7;
                     bait.state.active = false;
                     scene.state.hasBait = false;
-                    reel.shakeLine();
                     if (playSound) {
                         sounds['sharkSound'].play();
                     }
