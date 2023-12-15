@@ -25,6 +25,7 @@ import Reel from '../objects/Reel';
 import Hook from '../objects/Hook';
 import Bait from '../objects/Bait';
 import GamePlane from '../objects/GamePlane';
+import Sky from '../objects/Sky';
 import Ocean from '../objects/Ocean';
 import Shark from '../objects/Shark';
 import Jellyfish from '../objects/Jellyfish';
@@ -116,7 +117,8 @@ class SeedScene extends Scene {
         this.fog = new FogExp2(0x161e57, 0.02);
         // Add meshes to scene
         const plane = new GamePlane(this);
-        const ocean = new Ocean(this);
+        const ocean = new Ocean(this, this.state.timeOfDay != 'night');
+        const sky = new Sky(this, this.state.timeOfDay != 'night');
         const turtle = new Turtle(this, loadManager);
         const boat = new Boat(this, loadManager);
         const rod = new Rod(this, loadManager);
@@ -134,7 +136,8 @@ class SeedScene extends Scene {
             plane,
             reel,
             bait,
-            ocean
+            ocean,
+            sky
         );
     }
 
