@@ -40,6 +40,7 @@ class Cloud extends Group {
     update(timeStamp: number): void {
         let delta = this.state.clock.getDelta();
         this.translateZ(-delta * this.state.speed);
+        delta = timeStamp;
     }
 }
 

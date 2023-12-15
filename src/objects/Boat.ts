@@ -1,7 +1,5 @@
-import { Group, LoadingManager, Clock, Vector2, Vector3 } from 'three';
+import { Group, LoadingManager, Clock } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import TWEEN from 'three/examples/jsm/libs/tween.module.js';
-
 import SeedScene from '../scenes/SeaScene';
 
 // Import flower model as a URL using Vite's syntax
@@ -40,6 +38,7 @@ class Boat extends Group {
         this.state.saved += delta * 2;
         let sine_offset = Math.sin(this.state.saved)/8;
         this.position.y = this.state.original_y + sine_offset;
+        delta = timeStamp;
     }
 }
 

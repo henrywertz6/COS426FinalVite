@@ -16,7 +16,6 @@ class Bait extends Group {
         // Call parent Group() constructor
         super();
 
-        // Init state
 
         // Load object
         const loader = new GLTFLoader(loadManager);
@@ -47,6 +46,7 @@ class Bait extends Group {
             this.translateY(-delta * this.state.speed);
             this.position.z = Math.sin(this.position.y);
         }
+        delta = timeStamp;
     }
 }
 

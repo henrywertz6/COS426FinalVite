@@ -41,6 +41,7 @@ class ExtraBait extends Group {
         let delta = this.state.clock.getDelta();
         this.translateZ(delta * this.state.speed);
         this.position.y = 0.5 * Math.sin(0.25 * this.position.z) - 3;
+        delta = timeStamp;
     }
 }
 

@@ -1,4 +1,4 @@
-import { Group, AnimationMixer, Clock, LoadingManager } from 'three';
+import { Group, AnimationMixer, Clock } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import SeedScene from '../scenes/SeaScene';
@@ -60,9 +60,9 @@ class Fish extends Group {
             if (this.state.mixer) {
                 this.state.mixer.update(delta);
             }
-            this.translateZ(delta * this.state.speed);
-            // this.position.y = Math.sin(this.position.z);
+            this.translateZ(delta * this.state.speed)
         }
+        delta = timeStamp;
     }
 }
 

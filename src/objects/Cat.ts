@@ -53,6 +53,7 @@ class Cat extends Group {
         this.state.saved += delta * 2;
         let sine_offset = Math.sin(this.state.saved)/8;
         this.position.y = this.state.original_y + sine_offset;
+        delta = timeStamp;
     }
 }
 

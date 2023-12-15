@@ -1,17 +1,12 @@
 import {
     Group,
-    AnimationMixer,
     Clock,
     SphereGeometry,
     Mesh,
     MeshBasicMaterial,
 } from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import SeedScene from '../scenes/SeaScene';
-
-// Import flower model as a URL using Vite's syntax
-import MODEL from './sphere/scene.gltf?url';
 
 class Bubble extends Group {
     state: {
@@ -33,10 +28,6 @@ class Bubble extends Group {
             transparent: true,
         });
         const sphere = new Mesh(geometry, material);
-        // sphere.material.opacity = 0.8;
-        // sphere.material.transparent = true;
-
-        //scene.add( sphere );
         this.position.z = Math.floor(
             Math.random() * parent.state.center * 2 - parent.state.center
         );
@@ -64,6 +55,7 @@ class Bubble extends Group {
             let sine_offset = Math.sin(this.position.y);
             this.position.z = this.state.original_z + sine_offset;
         }
+        delta = timeStamp;
     }
 }
 

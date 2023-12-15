@@ -11,14 +11,8 @@ class BasicLights extends Group {
     constructor() {
         // Invoke parent Group() constructor
         super();
-
-        // const dir = new SpotLight(0xffffff, 1.6, 15, 0.8, 1, 1);
         const ambi = new AmbientLight(0x404040, 5);
-        const hemi = new HemisphereLight(0xffffbb, 0x080820, 2.3);
-
-        // dir.position.set(10, 2, 5);
         ambi.position.set(10, 2, 5);
-        // dir.target.position.set(0, 0, 0);
 
         let hemiLight = new HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 300, 0);
@@ -56,19 +50,24 @@ class BasicLights extends Group {
         waterLight2.decay = 0;
         waterLight2.power = 200;
 
-        const helper1 = new SpotLightHelper(dirLight, 0xffffff);
-        const helper2 = new SpotLightHelper(dirLight2, 0xffffff);
-        const helper3 = new SpotLightHelper(waterLight, 0xffffff);
-        const helper4 = new SpotLightHelper(waterLight2, 0xffffff);
-        const helper5 = new SpotLightHelper(regularLight, 0xffffff);
-        const axesHelper = new AxesHelper(2);
+        let helper1 = new SpotLightHelper(dirLight, 0xffffff);
+        let helper2 = new SpotLightHelper(dirLight2, 0xffffff);
+        let helper3 = new SpotLightHelper(waterLight, 0xffffff);
+        let helper4 = new SpotLightHelper(waterLight2, 0xffffff);
+        let helper5 = new SpotLightHelper(regularLight, 0xffffff);
+        let axesHelper = new AxesHelper(2);
+        helper1 = helper1;
+        helper2 = helper2;
+        helper3 = helper3;
+        helper4 = helper4;
+        helper5 = helper5;
+        axesHelper = axesHelper;
         this.add(
             dirLight,
             dirLight2,
             waterLight,
             waterLight2,
             regularLight,
-            // helper5
         );
     }
 }
