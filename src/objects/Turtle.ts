@@ -9,7 +9,6 @@ import MODEL from './cool_turtle/scene.gltf?url';
 
 class Turtle extends Group {
     state: {
-        gui: dat.GUI;
         spin: () => void;
         twirl: number;
         clock: Clock;
@@ -17,19 +16,22 @@ class Turtle extends Group {
         obstacle?: boolean;
         active: boolean;
     };
-    constructor(parent: SeedScene, loadManager?: LoadingManager, isObstacle?: boolean) {
+    constructor(
+        parent: SeedScene,
+        loadManager?: LoadingManager,
+        isObstacle?: boolean
+    ) {
         // Call parent Group() constructor
         super();
 
         // Init state
         this.state = {
-            gui: parent.state.gui,
             spin: () => this.spin(), // or this.spin.bind(this)
             twirl: 0,
             clock: new Clock(),
             speed: 2,
             obstacle: isObstacle,
-            active : true
+            active: true,
         };
         // Load object
         const loader = new GLTFLoader(loadManager);
@@ -38,7 +40,7 @@ class Turtle extends Group {
         loader.load(MODEL, (gltf) => {
             this.add(gltf.scene);
         });
-        if(isObstacle) {
+        if (isObstacle) {
             // Add self to parent's update list
             parent.addToUpdateList(this);
             this.position.y = Math.floor(Math.random() * 9) - 8;
@@ -50,10 +52,7 @@ class Turtle extends Group {
             this.translateY(3.3);
             this.translateX(0.7);
             this.rotateY(Math.PI / 2);
-
-            this.state.gui.add(this.state, 'spin');
         }
-        
     }
     spin(): void {
         // Add a simple twirl
@@ -85,7 +84,7 @@ class Turtle extends Group {
             let delta = this.state.clock.getDelta();
             this.translateZ(delta * this.state.speed);
         }
-        
+
         // TWEEN.update();
     }
 }

@@ -9,7 +9,6 @@ import MODEL from './boat_lowpoly.glb?url';
 
 class Boat extends Group {
     state: {
-        gui: dat.GUI;
         spin: () => void;
         twirl: number;
     };
@@ -19,7 +18,6 @@ class Boat extends Group {
 
         // Init state
         this.state = {
-            gui: parent.state.gui,
             spin: () => this.spin(), // or this.spin.bind(this)
             twirl: 0,
         };
@@ -34,7 +32,6 @@ class Boat extends Group {
         // Add self to parent's update list
         parent.addToUpdateList(this);
 
-        this.state.gui.add(this.state, 'spin');
         this.position.y = 2;
         this.position.z = 3;
         this.scale.set(0.01, 0.01, 0.01);
