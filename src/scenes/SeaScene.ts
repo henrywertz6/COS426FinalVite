@@ -86,7 +86,7 @@ class SeedScene extends Scene {
             elapsedTime: 0,
             spawnIntervals: {
                 fish: 3,
-                pufferfish: 10,
+                pufferfish: 3,
                 shark: 5,
                 jellyfish: 4,
                 turtle: 6,
@@ -97,6 +97,7 @@ class SeedScene extends Scene {
                 shark: 0,
                 jellyfish: 0,
                 turtle: 0,
+                bubble: 0,
             },
             timeOfDay: mode,
             spawnSet: new Set(),
@@ -205,17 +206,15 @@ class SeedScene extends Scene {
         if (this.state.elapsedTime >= this.getStageDuration()) {
             this.advanceToNextStage();
         }
-        for (const objectType in this.state.spawnSet) {
-            for (const objectType in this.state.spawnIntervals) {
-                if (
-                    this.state.spawnTimers[objectType] >=
-                    this.state.spawnIntervals[objectType]
-                ) {
-                    this.spawnObject(objectType);
-                    this.state.spawnTimers[objectType] = 0;
-                } else {
-                    this.state.spawnTimers[objectType] += deltaTime;
-                }
+        for (const objectType of this.state.spawnSet) {
+            if (
+                this.state.spawnTimers[objectType] >=
+                this.state.spawnIntervals[objectType]
+            ) {
+                this.spawnObject(objectType);
+                this.state.spawnTimers[objectType] = 0;
+            } else {
+                this.state.spawnTimers[objectType] += deltaTime;
             }
         }
     }
@@ -249,6 +248,7 @@ class SeedScene extends Scene {
 
         switch (this.state.stage) {
             case 1:
+                this.state.spawnSet.add('pufferfish');
                 this.state.spawnIntervals['fish'] = 3;
                 break;
             case 2:
@@ -259,11 +259,13 @@ class SeedScene extends Scene {
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
+        console.log(this.state.stage);
         this.updateSpawners(timeStamp);
         // randomly generate fish at each time step
-        // let randomNum = random(0, 1500);
-        // if (randomNum < 8) {
-        //     this.spawnFish();
+        let randomNum = random(0, 1500);
+        if (randomNum < 8) {
+            this.spawnBubble();
+        }
         // } else if (randomNum < 10 && this.state.sharkList.length < 1) {
         //     this.spawnShark();
         // } else if (randomNum < 12 && this.state.blowList.length < 3) {
