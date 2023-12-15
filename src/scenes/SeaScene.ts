@@ -91,7 +91,7 @@ class SeedScene extends Scene {
             spawnIntervals: {
                 fish: 3,
                 pufferfish: 5.5,
-                shark: 10,
+                shark: 18,
                 jellyfish: 4,
                 turtle: 6,
             },

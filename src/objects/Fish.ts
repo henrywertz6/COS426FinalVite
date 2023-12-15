@@ -44,10 +44,10 @@ class Fish extends Group {
         let chooseSide = Math.random();
         if (chooseSide < 0.5) {
             this.state.directionGoing = 'right';
-            this.position.z = parent.state.center;
+            this.position.z = parent.state.center * 1.3;
             this.rotateY(Math.PI);
         } else {
-            this.position.z = -parent.state.center;
+            this.position.z = -parent.state.center * 1.3;
         }
 
         let scaleFactor = 7;
