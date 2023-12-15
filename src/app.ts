@@ -31,7 +31,7 @@ import {
 // Initialize core ThreeJS components
 const manager = new LoadingManager();
 manager.onStart = function () {
-    document.getElementById('loading-screen')!.style.display = 'flexx';
+    document.getElementById('loading-screen')!.style.display = 'flex';
     console.log('loading starting');
 };
 manager.onLoad = function () {
@@ -39,8 +39,9 @@ manager.onLoad = function () {
     console.log('loading complete');
 };
 const camera = new PerspectiveCamera();
-let mode = 'light';
+let mode = 'day';
 let scene = new SeaScene(manager, mode);
+let nightScene = new SeaScene(manager, 'night');
 const renderer = new WebGLRenderer({ antialias: true });
 const clock = new Clock();
 
@@ -361,7 +362,7 @@ let playSound = true;
     var nightModeRadio = document.getElementById('night-mode') as HTMLInputElement;
     if (nightModeRadio != null && nightModeRadio.checked) {
         mode = 'night';
-        resetRenderLoop(mode);
+        scene = nightScene;
     }
 
     // NON-audio things
