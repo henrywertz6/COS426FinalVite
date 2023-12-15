@@ -11,6 +11,7 @@ class Shark extends Group {
         clock: Clock;
         speed: number;
         active: boolean;
+        approach: boolean;
     };
     constructor(parent: SeedScene, loadManager?: LoadingManager) {
         // Call parent Group() constructor
@@ -19,8 +20,9 @@ class Shark extends Group {
         // Init state
         this.state = {
             clock: new Clock(),
-            speed: 1.5,
+            speed: 10,
             active: true,
+            approach: true,
         };
         // Load object
         const loader = new GLTFLoader(loadManager);
@@ -33,13 +35,16 @@ class Shark extends Group {
         this.scale.set(3, 3, 3);
         // Add self to parent's update list
         parent.addToUpdateList(this);
-        this.position.z = -parent.state.center * 1.2;
+        this.position.z = parent.state.center * 6;
+        this.position.x = -65;
         this.position.y = Math.floor(Math.random() * 9) - 8;
+        this.rotateY(Math.PI);
     }
 
     update(timeStamp: number): void {
         let delta = this.state.clock.getDelta();
         this.translateZ(delta * this.state.speed);
+        this.position.y = 0.5 * Math.sin(0.25 * this.position.z) - 3;
     }
 }
 

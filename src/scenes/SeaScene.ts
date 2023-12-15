@@ -9,6 +9,8 @@ import {
     Object3D,
     Clock,
     Group,
+    Fog,
+    FogExp2,
 } from 'three';
 
 import BasicLightsNight from '../lights/BasicLightsNight';
@@ -82,12 +84,12 @@ class SeedScene extends Scene {
             numBait: 3,
             fishSpeed: 4,
             hasBait: true,
-            stage: 0,
+            stage: 1,
             elapsedTime: 0,
             spawnIntervals: {
                 fish: 3,
-                pufferfish: 3,
-                shark: 5,
+                pufferfish: 5.5,
+                shark: 10,
                 jellyfish: 4,
                 turtle: 6,
             },
@@ -111,7 +113,7 @@ class SeedScene extends Scene {
         } else {
             this.background = new Color(0x0059b3);
         }
-
+        this.fog = new FogExp2(0x161e57, 0.02);
         // Add meshes to scene
         const plane = new GamePlane(this);
         const ocean = new Ocean(this);
@@ -225,6 +227,8 @@ class SeedScene extends Scene {
                 return 10;
             case 1:
                 return 15;
+            case 2:
+                return 20;
             default:
                 return 0;
         }
@@ -252,6 +256,8 @@ class SeedScene extends Scene {
                 this.state.spawnIntervals['fish'] = 3;
                 break;
             case 2:
+                this.state.spawnSet.delete('pufferfish');
+                this.state.spawnSet.add('shark');
                 this.state.spawnIntervals['fish'] = 2;
                 break;
         }
@@ -259,7 +265,6 @@ class SeedScene extends Scene {
     update(timeStamp: number): void {
         const { rotationSpeed, updateList } = this.state;
         this.rotation.y = (rotationSpeed * timeStamp) / 10000;
-        console.log(this.state.stage);
         this.updateSpawners(timeStamp);
         // randomly generate fish at each time step
         let randomNum = random(0, 1500);
@@ -322,11 +327,20 @@ class SeedScene extends Scene {
         }
         // if shark has passed "out of view", then stop updating + remove from GUI
         for (let shark of this.state.sharkList) {
-            if (shark.position.z > this.state.center + 2) {
-                let index = this.state.sharkList.indexOf(shark);
-                this.state.sharkList.splice(index, 1);
-                this.removeFromUpdateList(shark);
-                this.remove(shark);
+            if (!shark.state.approach) {
+                if (shark.position.z > this.state.center + 8) {
+                    let index = this.state.sharkList.indexOf(shark);
+                    this.state.sharkList.splice(index, 1);
+                    this.removeFromUpdateList(shark);
+                    this.remove(shark);
+                }
+            } else {
+                if (shark.position.z < -this.state.center * 6 - 12) {
+                    shark.position.x = 0;
+                    shark.state.speed = 7;
+                    shark.rotateY(Math.PI);
+                    shark.state.approach = false;
+                }
             }
         }
         // if jellyfish has passed "out of view", then stop updating + remove from GUI
