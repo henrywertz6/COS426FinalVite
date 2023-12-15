@@ -1,12 +1,113 @@
-<!doctype html>
+<!-- adapted from lightsaber dojo bc they also used typescript! :) -->
+<!-- https://github.com/arcturus3/lightsaber-dojo/blob/master/src/main.ts#L47 -->
+
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" href="/cos426finalproject-vite/favicon.ico" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>COS 426 Final Project</title>
-      <script type="module" crossorigin src="/cos426finalproject-vite/assets/index-zAiDthBL.js"></script>
-    </head>
-    <body>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat Fishing</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
+    <script type="module" crossorigin src="/cos426finalproject-vite/assets/index-BjOfkNq_.js"></script>
+    <link rel="stylesheet" crossorigin href="/cos426finalproject-vite/assets/index-jaSdWDer.css">
+  </head>
+  <body>
+    
+    <div id="app" style="display: none;">
+        <div id="scoreElement" class="score"></div>
+        <div id="baitCount" class="bait"></div>
+        <button id='bait-button' class="bait-button"><img src="/cos426finalproject-vite/assets/bait-ribv_WYY.png" alt="Button Image" width="30" height="30"> Restock Bait!</button>        
+        <button id="pause-button" class="pause-button">Pause Game</button>
+    </div>
+
+    <div id="loading-screen">
+        <div class="water"></div>
+    </div>
+    
+    <div id="start-screen" >
+        <div>
+            <img src="/cos426finalproject-vite/assets/sleeping-cat-xx5AlXOX.gif" width="700" alt="Sleeping Cat">
+        </div>
+        <div>
+            <p>Feline Fishing Frenzy</p>
+        
+            <button id="start-button" class="start-button">
+                Play Game!
+            </button>
+            <br>
+            <br>
+            <div>
+                <div class="pretty p-switch" style="font-size: 24px; font-family: secondary">
+                    <input type="radio" name="mode-switch" id="day-mode" checked/>
+                    <div class="state">
+                        <label>Day Mode</label>
+                    </div>
+                </div>
+                
+                <div class="pretty p-switch p-fill" style="font-size: 24px; font-family: secondary;">
+                    <input type="radio" name="mode-switch" id="night-mode"/>
+                    <div class="state">
+                        <label>Night Mode</label>
+                    </div>
+                </div>
+        </div>
+            <ul>
+                <p class="instructions">Instructions</p>
+                <li>Welcome to Feline Fishing Frenzy!</li>
+                <li>Your goal is to catch as many fish as possible.</li>
+                <li>Use your mouse to move your line up and down to catch fish. Click when above water to "reel in" the fish.</li>
+                <li>But watch out for obstacles! Sharks will eat your bait, and jellyfish will shock your line.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="pause-screen"  style="display: none;">
+        <div style="width: 100%; height: 100%; position: fixed; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div id="resume-button" class="resume-button">
+                Resume Game
+            </div>
+            <br>
+
+            <div class="pretty p-icon p-round p-jelly p-bigger">
+                <input name="background_music" type="checkbox" class="pause-form-input" id="background_music" checked>
+                <div class="state p-primary">
+                    <i class="icon mdi mdi-check"></i>
+                    <label style= "font-family: secondary; font-size: 20px">Background Music</label>
+                </div>
+            </div>
+        
+            <br>
+
+            <div class="pretty p-icon p-round p-jelly p-bigger">
+                <input name="sound_effects" type="checkbox" class="pause-form-input" id="sound_effects" checked>
+                <div class="state p-primary">
+                    <i class="icon mdi mdi-check"></i>
+                    <label style= "font-family: secondary; font-size: 20px">Sound effects</label>
+                </div>
+            </div>
+
+            <ul style="font-size: 24px;">
+                <p style="font-size: 35px;">Instructions</p>
+                <li>Welcome to Feline Fishing Frenzy!</li>
+                <li>Your goal is to catch as many fish as possible.</li>
+                <li>Use your mouse to move your line up and down to catch fish. Click when above water to "reel in" the fish.</li>
+                <li>But watch out for obstacles! Sharks will eat your bait, and jellyfish will shock your line.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="end-screen" style="display: none;">
+        <div>
+            <img src="/cos426finalproject-vite/assets/waking-up-cat--bINTE95.gif" width="400" alt="Cat Waking Up">
+        </div>
+        <div>
+            <p id="score">0 fish caught</p>
+            <p class="message" id="gameMessage"></p>
+            <button id="play-again" class="play-again">
+                Play Again!
+            </button>
+        </div>
+    </div>
+    
+  </body>
 </html>
