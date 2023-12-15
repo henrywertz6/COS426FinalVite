@@ -25,7 +25,7 @@ class ExtraBait extends Group {
             speed: 2,
             active: true,
         };
-        this.name = 'bait';
+        this.name = 'extrabait';
         loader.load(MODEL, (gltf) => {
             this.add(gltf.scene);
         });
