@@ -3,6 +3,7 @@ import {
     PlaneGeometry,
     Vector3,
     Mesh,
+    Clock,
     MeshBasicMaterial,
     DoubleSide,
     ObjectSpaceNormalMap,
@@ -15,6 +16,7 @@ import SeedScene from '../scenes/SeaScene';
 class Ocean extends Group {
     state: {
         ocean: Mesh;
+        clock: Clock;
     };
     constructor(parent: SeedScene, day: boolean) {
         // Call parent Group() constructor
@@ -24,6 +26,7 @@ class Ocean extends Group {
 
         // Create custom shader material for water effect
         let material = new ShaderMaterial({
+        side: DoubleSide,
         vertexShader: `
             varying vec2 vUv;
 
@@ -74,12 +77,11 @@ class Ocean extends Group {
 
         this.state = {
             ocean: mesh,
+            clock: new Clock(),
         };
         this.add(this.state.ocean);
     }
     update(timeStamp: number): void {
-        //this.state.ocean.rotation.x += timeStamp;
-        // this.state.ocean.rotation.y += timeStamp;
     }
 }
 
