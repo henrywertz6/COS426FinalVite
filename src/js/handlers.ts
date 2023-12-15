@@ -104,7 +104,9 @@ export function handleCharacterControls(
         if (y_intersection < 5.8) {
             reel.changeLength(y_intersection);
             hook.changeHook(y_intersection);
-            bait.changeBait(y_intersection);
+            if(bait.state.active) {
+               bait.changeBait(y_intersection); 
+            }
             if (hook.state.fish) {
                 hook.state.fish.position.y = y_intersection - 1;
             }
@@ -141,9 +143,10 @@ export function handleCollisions(
                     // shock reel and get rid of one bait
                     scene.state.numBait -= 1;
                     jelly.state.speed = 7;
+                    bait.state.active = false;
                     reel.shakeLine();
                 
-                    // get rid of rish if on hook when jelly hit
+                    // get rid of fish if on hook when jelly hit
                     if(hook.state.fish) {
                         hook.state.fish.rotateX(Math.PI/2);
                         hook.state.fish.state.speed = 4;

@@ -11,6 +11,7 @@ class Bait extends Group {
         clock: Clock;
         speed: number;
         active: boolean;
+        startFall: number;
     };
     constructor(parent: SeedScene, loadManager: LoadingManager) {
         // Call parent Group() constructor
@@ -23,7 +24,8 @@ class Bait extends Group {
         this.state = {
             clock: new Clock(),
             speed: 2,
-            active: true
+            active: true,
+            startFall: 0
         };
         this.name = 'bait';
         loader.load(MODEL, (gltf) => {
@@ -49,7 +51,14 @@ class Bait extends Group {
     changeBait(y: number): void {
         this.position.y = y - 0.6;
     }
-    update(timeStamp: number): void {}
+    update(timeStamp: number): void {
+        let delta = this.state.clock.getDelta();
+
+        if (!this.state.active) {
+            this.translateY(-delta * this.state.speed); // Adjust the speed and direction by modifying the coefficient (2 in this case)
+            this.position.z = (Math.sin(this.position.y)); 
+        } 
+    }
 }
 
 export default Bait;
