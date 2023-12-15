@@ -33,7 +33,7 @@ class Cloud extends Group {
         this.scale.set(0.005, 0.005, 0.005);
         parent.addToUpdateList(this);
         this.position.z = parent.state.center * 1.8;
-        this.position.y = 5 + Math.floor(Math.random() * 6);
+        this.position.y = 6 + Math.floor(Math.random() * 6);
         this.position.x = -3 - Math.floor(Math.random() * 6);
     }
 
