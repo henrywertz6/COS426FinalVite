@@ -17,7 +17,7 @@ import {
 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-import SeaScene from './scenes/SeaSceneNight.ts';
+import SeaScene from './scenes/SeaScene.ts';
 import {
     handlePointerMove,
     handleCharacterControls,

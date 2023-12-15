@@ -7,7 +7,7 @@ import {
     DoubleSide,
 } from 'three';
 
-import SeedScene from '../scenes/SeaSceneNight';
+import SeedScene from '../scenes/SeaScene';
 
 class GamePlane extends Group {
     state: {

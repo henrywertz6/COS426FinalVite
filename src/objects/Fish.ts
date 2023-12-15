@@ -1,7 +1,7 @@
 import { Group, AnimationMixer, Clock, LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-import SeedScene from '../scenes/SeaSceneNight';
+import SeedScene from '../scenes/SeaScene';
 
 // Import flower model as a URL using Vite's syntax
 import MODEL from './fish/scene.gltf?url';
