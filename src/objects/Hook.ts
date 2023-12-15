@@ -1,6 +1,5 @@
 import { Group, LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 
 import SeedScene from '../scenes/SeaScene';
 import Fish from '../objects/Fish';
@@ -40,7 +39,9 @@ class Hook extends Group {
     changeHook(y: number): void {
         this.position.y = y - 0.4;
     }
-    update(timeStamp: number): void {}
+    update(timeStamp: number): void {
+        timeStamp = timeStamp;
+    }
 }
 
 export default Hook;

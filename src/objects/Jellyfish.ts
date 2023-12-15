@@ -1,4 +1,4 @@
-import { Group, LoadingManager, Clock, Vector3 } from 'three';
+import { Group, LoadingManager, Clock } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import SeedScene from '../scenes/SeaScene';
@@ -39,6 +39,7 @@ class Jellyfish extends Group {
     update(timeStamp: number): void {
         let delta = this.state.clock.getDelta();
         this.translateZ(delta * this.state.speed);
+        delta = timeStamp;
     }
 }
 

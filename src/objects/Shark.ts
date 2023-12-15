@@ -49,6 +49,7 @@ class Shark extends Group {
         } else {
             this.position.y = 0.5 * Math.sin(0.25 * this.position.z) - 3;
         }
+        delta = timeStamp;
     }
 }
 

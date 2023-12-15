@@ -4,21 +4,16 @@ import {
     Vector3,
     Mesh,
     Clock,
-    MeshBasicMaterial,
     DoubleSide,
-    ObjectSpaceNormalMap,
-    LoadingManager,
     ShaderMaterial
 } from 'three';
-
-import SeedScene from '../scenes/SeaScene';
 
 class Ocean extends Group {
     state: {
         ocean: Mesh;
         clock: Clock;
     };
-    constructor(parent: SeedScene, day: boolean) {
+    constructor(day: boolean) {
         // Call parent Group() constructor
         super();
         this.name = 'ocean';
@@ -80,8 +75,6 @@ class Ocean extends Group {
             clock: new Clock(),
         };
         this.add(this.state.ocean);
-    }
-    update(timeStamp: number): void {
     }
 }
 

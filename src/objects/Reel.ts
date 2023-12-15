@@ -31,7 +31,6 @@ class Reel extends Group {
             line: new Line(geo, mat),
         };
         // Init state
-        // 5.5y 0.15z
 
         this.name = 'reel';
         this.add(this.state.line);
@@ -39,40 +38,6 @@ class Reel extends Group {
         // Add self to parent's update list
         parent.addToUpdateList(this);
     }
-
-    // Function to make the line shake
-    shakeLine () {
-        const initialPosition = this.state.line.position.clone();
-        console.log(initialPosition);
-
-        const duration = 0.5; // Duration of the shake in seconds
-        const magnitude = 0.1; // Magnitude of the shake
-  
-        const startTime = Date.now();
-  
-        const updatePosition = () => {
-          const elapsed = (Date.now() - startTime) / 1000; // Convert to seconds
-          if (elapsed < duration) {
-            const progress = elapsed / duration;
-            const angle = progress * Math.PI * 2;
-            const offsetX = Math.sin(angle) * magnitude;
-            const offsetY = Math.cos(angle) * magnitude;
-  
-            this.state.line.position.set(
-              initialPosition.x + offsetX,
-              initialPosition.y + offsetY,
-              initialPosition.z
-            );
-  
-            requestAnimationFrame(updatePosition);
-          } else {
-            // Reset position after the shake is complete
-            this.state.line.position.copy(initialPosition);
-          }
-        };
-  
-        updatePosition();
-      };  
 
 
     changeLength(y: number): void {
@@ -82,7 +47,9 @@ class Reel extends Group {
         let geo = new BufferGeometry().setFromPoints(points);
         this.state.line.geometry = geo;
     }
-    update(timeStamp: number): void {}
+    update(timeStamp: number): void {
+      timeStamp = timeStamp;
+    }
 }
 
 export default Reel;

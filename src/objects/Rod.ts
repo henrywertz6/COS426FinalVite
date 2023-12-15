@@ -1,6 +1,5 @@
 import { Group, LoadingManager } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 
 import SeedScene from '../scenes/SeaScene';
 
@@ -30,7 +29,9 @@ class Rod extends Group {
         this.scale.set(0.01, 0.01, 0.01);
     }
 
-    update(timeStamp: number): void {}
+    update(timeStamp: number): void {
+        timeStamp = timeStamp;
+    }
 }
 
 export default Rod;

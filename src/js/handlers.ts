@@ -28,6 +28,7 @@ export function handleMouseDown(
     sounds: any,
     playSound: boolean
 ) {
+    event = event;
     let hook = scene.getObjectByName('hook');
     // CHANGE Y POS to wherever we want the ocean to be
     if (hook.position.y > 3 && hook.state.fish) {
@@ -86,16 +87,6 @@ export function handleCharacterControls(
 
     gamePlane.updateMatrixWorld();
 
-    // To see the rays casted from the point of the mouse, uncomment this
-    // scene.add(
-    //     new ArrowHelper(
-    //         raycaster.ray.direction,
-    //         raycaster.ray.origin,
-    //         20,
-    //         0x00ff00
-    //     )
-    // );
-
     raycaster.setFromCamera(pointer, camera);
 
     const intersects = raycaster.intersectObject(gamePlane);
@@ -130,13 +121,9 @@ function fishCollision(hook: Hook, sounds: any, playSound: boolean) {
 
 // handle collisions with sea creatures
 export function handleCollisions(
-    // document: any,
     scene: any,
-    // reel: any,
-    // screens: any,
     sounds: any,
     playSound: boolean
-    // camera: any
 ) {
     let hook = scene.getObjectByName('hook');
     let reel = scene.getObjectByName('reel');

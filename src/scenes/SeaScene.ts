@@ -117,9 +117,9 @@ class SeedScene extends Scene {
         }
         this.fog = new FogExp2(0x161e57, 0.01);
         // Add meshes to scene
-        const plane = new GamePlane(this);
-        const ocean = new Ocean(this, this.state.timeOfDay != 'night');
-        const sky = new Sky(this, this.state.timeOfDay != 'night');
+        const plane = new GamePlane();
+        const ocean = new Ocean(this.state.timeOfDay != 'night');
+        const sky = new Sky(this.state.timeOfDay != 'night');
         const turtle = new Turtle(this, loadManager);
         const boat = new Boat(this, loadManager);
         const rod = new Rod(this, loadManager);
@@ -177,7 +177,6 @@ class SeedScene extends Scene {
     }
 
     spawnJelly(): void {
-        // console.log('turtle spawned!');
         const jellyfish = new Jellyfish(this, undefined);
         this.state.jellyList.push(jellyfish);
         this.add(jellyfish);
@@ -190,7 +189,7 @@ class SeedScene extends Scene {
     }
 
     spawnBlowfish(): void {
-        // console.log('fish spawned!');
+
         const blow = new Blowfish(this);
         this.state.blowList.push(blow);
         this.add(blow);

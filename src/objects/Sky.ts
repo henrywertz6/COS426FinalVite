@@ -7,13 +7,11 @@ import {
     DoubleSide,
 } from 'three';
 
-import SeedScene from '../scenes/SeaScene';
-
 class Sky extends Group {
     state: {
         sky: Mesh;
     };
-    constructor(parent: SeedScene, day: boolean) {
+    constructor(day: boolean) {
         // Call parent Group() constructor
         super();
         this.name = 'sky';
