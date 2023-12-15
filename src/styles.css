@@ -2,6 +2,10 @@
   font-family: 'juice'; 
   src: url('fonts/orange juice 2.0.ttf') format('truetype');
 }
+@font-face {
+  font-family: 'secondary'; 
+  src: url('fonts/Study_Alone.tf') format('truetype');
+}
 
 body {
   font-family: 'monospace'; /* Use your custom font for the entire document */
