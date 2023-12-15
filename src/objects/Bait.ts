@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import SeedScene from '../scenes/SeaScene';
 
 // Import earthworm model as a URL using Vite's syntax
-import MODEL from './worm2/worm2.gltf?url';
+import MODEL from './worm2.glb?url';
 
 class Bait extends Group {
     state: {
@@ -15,7 +15,6 @@ class Bait extends Group {
     constructor(parent: SeedScene, loadManager?: LoadingManager) {
         // Call parent Group() constructor
         super();
-
 
         // Load object
         const loader = new GLTFLoader(loadManager);
