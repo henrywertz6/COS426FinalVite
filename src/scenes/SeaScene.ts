@@ -87,7 +87,7 @@ class SeedScene extends Scene {
                 shark: 18,
                 jellyfish: 4,
                 turtle: 6,
-                bait: 15,
+                bonusbait: 20,
             },
             spawnTimers: {
                 fish: 0,
@@ -96,7 +96,7 @@ class SeedScene extends Scene {
                 jellyfish: 0,
                 turtle: 0,
                 bubble: 0,
-                bait: 0,
+                bonusbait: 0,
             },
             timeOfDay: mode,
             spawnSet: new Set(),
@@ -206,6 +206,7 @@ class SeedScene extends Scene {
     }
 
     spawnBonusBait(): void {
+        console.log('bonus bait spawned!');
         const bait = new ExtraBait(this);
         this.state.bonusBait.push(bait);
         this.add(bait);
