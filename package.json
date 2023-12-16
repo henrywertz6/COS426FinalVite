@@ -1,6 +1,6 @@
 {
     "$schema": "https://json.schemastore.org/package.json",
-    "repository": "cos426finalprojectvite",
+    "repository": "COS426FinalVite",
     "name": "feline-fishing-frenzy",
     "type": "module",
     "version": "1.0.0",
