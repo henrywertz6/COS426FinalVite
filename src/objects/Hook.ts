@@ -5,7 +5,7 @@ import SeedScene from '../scenes/SeaScene';
 import Fish from '../objects/Fish';
 
 // Import flower model as a URL using Vite's syntax
-import MODEL from './fish_hook/scene.gltf?url';
+import MODEL from './fish_hook.glb?url';
 
 class Hook extends Group {
     state: {

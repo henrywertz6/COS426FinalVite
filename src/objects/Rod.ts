@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import SeedScene from '../scenes/SeaScene';
 
 // Import flower model as a URL using Vite's syntax
-import MODEL from './fishing_rod/scene.gltf?url';
+import MODEL from './fishing_rod.glb?url';
 
 class Rod extends Group {
     constructor(parent: SeedScene, loadManager: LoadingManager) {

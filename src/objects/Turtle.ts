@@ -5,7 +5,7 @@ import TWEEN from 'three/examples/jsm/libs/tween.module.js';
 import SeedScene from '../scenes/SeaScene';
 
 // Import flower model as a URL using Vite's syntax
-import MODEL from './cool_turtle/scene.gltf?url';
+import MODEL from './cool_turtle.glb?url';
 
 class Turtle extends Group {
     state: {
